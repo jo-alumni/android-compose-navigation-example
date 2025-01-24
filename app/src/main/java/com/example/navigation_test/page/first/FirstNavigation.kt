@@ -1,4 +1,4 @@
-package com.example.navigation_test.feature.second
+package com.example.navigation_test.page.first
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -9,25 +9,25 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.navigation_test.Route
 
-fun NavGraphBuilder.registerSecondNavigation(
+fun NavGraphBuilder.registerFirstNavigation(
     navController: NavController,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
 ) {
-    val navigateFirstScreen: () -> Unit = {
-        navController.navigate(route = Route.First) {
-            popUpTo<Route.First> {
+    val navigateSecondScreen: () -> Unit = {
+        navController.navigate(route = Route.Second) {
+            popUpTo<Route.Second> {
                 inclusive = true
             }
             launchSingleTop = true
         }
     }
 
-    composable<Route.Second> { backstack ->
-        val viewModel: SecondViewModel = viewModel(backstack)
-        SecondScreen(
+    composable<Route.First> { backstack ->
+        val viewModel: FirstViewModel = viewModel(backstack)
+        FirstScreen(
             modifier = Modifier.padding(paddingValues),
             uiState = viewModel.uiState,
-            navigateFirstScreen = navigateFirstScreen
+            navigateSecondScreen = navigateSecondScreen
         )
     }
 }

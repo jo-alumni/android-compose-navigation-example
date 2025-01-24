@@ -1,8 +1,8 @@
-package com.example.navigation_test.feature.first
+package com.example.navigation_test.page.first
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.navigation_test.feature.first.state.FirstUiState
+import com.example.navigation_test.page.first.state.FirstUiState
 
 internal class FirstViewModel : ViewModel() {
     val uiState = FirstUiState()

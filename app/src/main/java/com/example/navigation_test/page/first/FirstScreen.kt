@@ -1,23 +1,22 @@
-package com.example.navigation_test.feature.second
+package com.example.navigation_test.page.first
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.navigation_test.feature.second.state.SecondUiState
-
+import com.example.navigation_test.page.first.state.FirstUiState
 
 @Composable
-internal fun SecondScreen(
+internal fun FirstScreen(
     modifier: Modifier = Modifier,
-    uiState: SecondUiState,
-    navigateFirstScreen: () -> Unit,
+    uiState: FirstUiState,
+    navigateSecondScreen: () -> Unit,
 ) {
     Column(modifier = modifier) {
         Text(text = uiState.text)
-        Button(onClick = navigateFirstScreen) {
-            Text("navigate first screen")
+        Button(onClick = navigateSecondScreen) {
+            Text("navigate second screen")
         }
     }
 }

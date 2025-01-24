@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.navigation_test.feature.first.registerFirstNavigation
-import com.example.navigation_test.feature.second.registerSecondNavigation
+import com.example.navigation_test.page.first.registerFirstNavigation
+import com.example.navigation_test.page.second.registerSecondNavigation
 import kotlinx.serialization.Serializable
 
 sealed class Route {
