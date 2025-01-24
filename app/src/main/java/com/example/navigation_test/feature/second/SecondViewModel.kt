@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.navigation_test.feature.second.state.SecondUiState
 
-class SecondViewModel : ViewModel() {
+internal class SecondViewModel : ViewModel() {
     val uiState = SecondUiState()
     override fun onCleared() {
         Log.d("SecondViewModel", "onCleared")
