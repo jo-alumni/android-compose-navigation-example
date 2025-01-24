@@ -6,9 +6,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.navigation_test.feature.first.registerFirstNavigation
 import com.example.navigation_test.feature.second.registerSecondNavigation
+import kotlinx.serialization.Serializable
 
 sealed class Route {
+    @Serializable
     data object First : Route()
+
+    @Serializable
     data object Second : Route()
 }
 
