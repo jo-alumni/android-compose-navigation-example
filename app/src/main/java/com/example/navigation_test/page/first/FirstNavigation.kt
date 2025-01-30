@@ -13,21 +13,19 @@ fun NavGraphBuilder.registerFirstNavigation(
     navController: NavController,
     paddingValues: PaddingValues,
 ) {
-    val navigateSecondScreen: () -> Unit = {
-        navController.navigate(route = Route.Second) {
-            popUpTo<Route.Second> {
-                inclusive = true
-            }
-            launchSingleTop = true
-        }
-    }
-
     composable<Route.First> { backstack ->
         val viewModel: FirstViewModel = viewModel(backstack)
         FirstScreen(
             modifier = Modifier.padding(paddingValues),
             uiState = viewModel.uiState,
-            navigateSecondScreen = navigateSecondScreen
+            navigateSecondScreen = {
+                navController.navigate(route = Route.Second) {
+                    popUpTo<Route.Second> {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
+            }
         )
     }
 }
