@@ -5,10 +5,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.navigation_test.page.first.state.FirstUiState
 
 @Composable
-internal fun FirstScreen(
+fun FirstScreen(
     modifier: Modifier = Modifier,
     uiState: FirstUiState,
     navigateSecondScreen: () -> Unit,
