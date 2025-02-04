@@ -1,4 +1,4 @@
-package com.example.navigation_test.page.tweet
+package com.example.navigation_test.page.home
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.example.navigation_test.Route
 import com.example.navigation_test.entity.Tweet
 import com.example.navigation_test.ui.component.AppNavigationDrawer
 import com.example.navigation_test.ui.theme.AppTheme
@@ -33,21 +32,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun TweetScreen(
     modifier: Modifier = Modifier,
-    route: Route,
-    uiState: TweetUiState,
+    uiState: HomeUiState,
     navigateSecondScreen: () -> Unit,
-    navigateThirdScreen: () -> Unit,
-    navigateFourthScreen: () -> Unit,
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
 ) {
     val lazyListState = rememberLazyListState()
     val scope = rememberCoroutineScope()
     AppNavigationDrawer(
         modifier = modifier,
-        route = route,
         onClickProfileDrawerItem = navigateSecondScreen,
-        onClickThirdDrawerItem = navigateThirdScreen,
-        onClickFourthDrawerItem = navigateFourthScreen,
         drawerState = drawerState
     ) {
         Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
@@ -68,7 +61,7 @@ fun TweetScreen(
                 Icon(Icons.Default.Add, contentDescription = null)
             }
         }) { paddingValues ->
-            TweetScreenContent(
+            HomeContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
@@ -93,15 +86,12 @@ fun TweetScreenClosedPreview(
 ) {
     AppTheme {
         TweetScreen(
-            route = Route.Tweet,
-            uiState = TweetUiState(tweets = (1..50).map {
+            uiState = HomeUiState(tweets = (1..50).map {
                 Tweet(
                     id = it, name = "name$it", content = "content$it"
                 )
             }),
             navigateSecondScreen = {},
-            navigateThirdScreen = {},
-            navigateFourthScreen = {},
             drawerState = rememberDrawerState(drawerValue),
         )
     }

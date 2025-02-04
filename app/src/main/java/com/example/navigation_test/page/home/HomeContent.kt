@@ -1,4 +1,4 @@
-package com.example.navigation_test.page.tweet
+package com.example.navigation_test.page.home
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,9 +13,9 @@ import com.example.navigation_test.entity.Tweet
 
 
 @Composable
-fun TweetScreenContent(
+fun HomeContent(
     modifier: Modifier = Modifier,
-    uiState: TweetUiState,
+    uiState: HomeUiState,
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
     LazyColumn(
@@ -40,9 +40,9 @@ fun TweetScreenContent(
 
 @Preview
 @Composable
-fun TweetScreenContentPreview() {
-    TweetScreenContent(
-        uiState = TweetUiState(tweets = (1..50).map {
+fun HomeContentPreview() {
+    HomeContent(
+        uiState = HomeUiState(tweets = (1..50).map {
             Tweet(
                 id = it, name = "name$it", content = "content$it"
             )

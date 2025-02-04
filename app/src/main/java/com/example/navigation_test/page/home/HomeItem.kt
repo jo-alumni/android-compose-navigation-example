@@ -1,4 +1,4 @@
-package com.example.navigation_test.page.tweet
+package com.example.navigation_test.page.home
 
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text

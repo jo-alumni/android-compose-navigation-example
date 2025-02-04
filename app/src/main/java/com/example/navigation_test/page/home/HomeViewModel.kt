@@ -1,10 +1,10 @@
-package com.example.navigation_test.page.tweet
+package com.example.navigation_test.page.home
 
 import androidx.lifecycle.ViewModel
 import com.example.navigation_test.entity.Tweet
 
-class TweetViewModel : ViewModel() {
-    val uiState = TweetUiState(
+class HomeViewModel : ViewModel() {
+    val uiState = HomeUiState(
         tweets = (1..50).map {
             Tweet(
                 id = it,

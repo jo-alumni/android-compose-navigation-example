@@ -22,20 +22,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import com.example.navigation_test.Route
 import com.example.navigation_test.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun AppNavigationDrawer(
     modifier: Modifier = Modifier,
-    route: Route,
     onClickProfileDrawerItem: () -> Unit,
-    onClickThirdDrawerItem: () -> Unit,
-    onClickFourthDrawerItem: () -> Unit,
     drawerState: DrawerState,
     content: @Composable () -> Unit,
 ) {
@@ -66,36 +60,10 @@ fun AppNavigationDrawer(
                     )
                     NavigationDrawerItem(
                         label = { Text("Profile") },
-                        selected = route == Route.Profile,
+                        selected = false,
                         icon = { Icon(Icons.Default.AccountCircle, contentDescription = null) },
                         onClick = {
                             onClickProfileDrawerItem()
-                            scope.launch { drawerState.close() }
-                        }
-                    )
-
-                    HorizontalDivider()
-
-                    Text(
-                        "Section 2",
-                        modifier = Modifier.padding(16.dp),
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                    NavigationDrawerItem(
-                        label = { Text("Third Screen") },
-                        selected = route == Route.Third,
-                        icon = { Icon(Icons.Default.AccountCircle, contentDescription = null) },
-                        onClick = {
-                            onClickThirdDrawerItem()
-                            scope.launch { drawerState.close() }
-                        }
-                    )
-                    NavigationDrawerItem(
-                        label = { Text("Fourth Screen") },
-                        selected = route == Route.Fourth,
-                        icon = { Icon(Icons.Default.AccountCircle, contentDescription = null) },
-                        onClick = {
-                            onClickFourthDrawerItem()
                             scope.launch { drawerState.close() }
                         }
                     )
@@ -107,26 +75,12 @@ fun AppNavigationDrawer(
     }
 }
 
-private class RouteParameterProvider : PreviewParameterProvider<Route> {
-    override val values: Sequence<Route> = sequenceOf(
-        Route.Tweet,
-        Route.Profile,
-        Route.Third,
-        Route.Fourth,
-    )
-}
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun AppNavigationDrawerPreview(
-    @PreviewParameter(RouteParameterProvider::class) route: Route,
-) {
+fun AppNavigationDrawerPreview() {
     AppTheme {
         AppNavigationDrawer(
-            route = route,
             onClickProfileDrawerItem = {},
-            onClickThirdDrawerItem = {},
-            onClickFourthDrawerItem = {},
             drawerState = rememberDrawerState(DrawerValue.Open)
         ) {
 
