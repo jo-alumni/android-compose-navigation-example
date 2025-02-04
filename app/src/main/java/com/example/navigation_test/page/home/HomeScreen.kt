@@ -33,14 +33,15 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
-    navigateSecondScreen: () -> Unit,
+    navigateProfileMine: () -> Unit = {},
+    navigateTweet: (Tweet) -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
 ) {
     val lazyListState = rememberLazyListState()
     val scope = rememberCoroutineScope()
     AppNavigationDrawer(
         modifier = modifier,
-        onClickProfileDrawerItem = navigateSecondScreen,
+        onClickProfileDrawerItem = navigateProfileMine,
         drawerState = drawerState
     ) {
         Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
@@ -67,6 +68,7 @@ fun HomeScreen(
                     .padding(paddingValues),
                 uiState = uiState,
                 lazyListState = lazyListState,
+                navigateTweet = navigateTweet
             )
         }
     }
@@ -91,7 +93,6 @@ private fun HomeScreenPreview(
                     id = it, name = "name$it", content = "content$it"
                 )
             }),
-            navigateSecondScreen = {},
             drawerState = rememberDrawerState(drawerValue),
         )
     }

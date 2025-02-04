@@ -1,5 +1,6 @@
 package com.example.navigation_test.page.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,9 +13,10 @@ import com.example.navigation_test.entity.Tweet
 fun HomeItem(
     modifier: Modifier = Modifier,
     tweet: Tweet,
+    onclick: (Tweet) -> Unit = {},
 ) {
     Card(
-        modifier = modifier
+        modifier = modifier.clickable { onclick(tweet) }
     ) {
         Text(tweet.name)
         Text(tweet.content)

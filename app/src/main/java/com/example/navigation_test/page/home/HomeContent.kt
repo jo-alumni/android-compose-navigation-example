@@ -17,6 +17,7 @@ fun HomeContent(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
     lazyListState: LazyListState = rememberLazyListState(),
+    navigateTweet: (Tweet) -> Unit = {},
 ) {
     LazyColumn(
         modifier = modifier,
@@ -31,6 +32,7 @@ fun HomeContent(
                     .fillMaxWidth()
                     .padding(8.dp),
                 tweet = uiState.tweets[it],
+                onclick = navigateTweet
             )
         }
 
