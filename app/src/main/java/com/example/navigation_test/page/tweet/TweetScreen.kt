@@ -1,4 +1,4 @@
-package com.example.navigation_test.page.first
+package com.example.navigation_test.page.tweet
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,10 +19,10 @@ import com.example.navigation_test.ui.component.AppScaffold
 import com.example.navigation_test.ui.theme.AppTheme
 
 @Composable
-fun FirstScreen(
+fun TweetScreen(
     modifier: Modifier = Modifier,
     route: Route,
-    uiState: FirstUiState,
+    uiState: TweetUiState,
     navigateSecondScreen: () -> Unit,
     navigateThirdScreen: () -> Unit,
     navigateFourthScreen: () -> Unit,
@@ -43,7 +43,7 @@ fun FirstScreen(
             onClickTitleIcon = {},
             drawerState = drawerState
         ) { paddingValues ->
-            FirstScreenContent(
+            TweetScreenContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
@@ -55,9 +55,9 @@ fun FirstScreen(
 }
 
 @Composable
-private fun FirstScreenContent(
+private fun TweetScreenContent(
     modifier: Modifier = Modifier,
-    uiState: FirstUiState,
+    uiState: TweetUiState,
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
     LazyColumn(
@@ -77,13 +77,13 @@ private class DrawerValueParameterProvider : PreviewParameterProvider<DrawerValu
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun FirstScreenClosedPreview(
+fun TweetScreenClosedPreview(
     @PreviewParameter(DrawerValueParameterProvider::class) drawerValue: DrawerValue,
 ) {
     AppTheme {
-        FirstScreen(
-            route = Route.First,
-            uiState = FirstUiState(),
+        TweetScreen(
+            route = Route.Tweet,
+            uiState = TweetUiState(),
             navigateSecondScreen = {},
             navigateThirdScreen = {},
             navigateFourthScreen = {},

@@ -64,7 +64,7 @@ fun AppNavigationDrawer(
                     )
                     NavigationDrawerItem(
                         label = { Text("First Screen") },
-                        selected = route == Route.First,
+                        selected = route == Route.Tweet,
                         icon = { Icon(Icons.Default.AccountCircle, contentDescription = null) },
                         onClick = onClickFirstDrawerItem
                     )
@@ -104,7 +104,7 @@ fun AppNavigationDrawer(
 
 private class RouteParameterProvider : PreviewParameterProvider<Route> {
     override val values: Sequence<Route> = sequenceOf(
-        Route.First,
+        Route.Tweet,
         Route.Second,
         Route.Third,
         Route.Fourth,

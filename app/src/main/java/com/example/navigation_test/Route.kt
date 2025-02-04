@@ -7,15 +7,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.example.navigation_test.page.first.FirstScreen
-import com.example.navigation_test.page.first.FirstViewModel
 import com.example.navigation_test.page.second.SecondScreen
 import com.example.navigation_test.page.second.SecondViewModel
+import com.example.navigation_test.page.tweet.TweetScreen
+import com.example.navigation_test.page.tweet.TweetViewModel
 import kotlinx.serialization.Serializable
 
 sealed class Route {
     @Serializable
-    data object First : Route()
+    data object Tweet : Route()
 
     @Serializable
     data object Second : Route()
@@ -32,11 +32,11 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Route.First
+        startDestination = Route.Tweet
     ) {
-        composable<Route.First> { backstack ->
-            val viewModel: FirstViewModel = viewModel(backstack)
-            FirstScreen(route = backstack.toRoute<Route>(),
+        composable<Route.Tweet> { backstack ->
+            val viewModel: TweetViewModel = viewModel(backstack)
+            TweetScreen(route = backstack.toRoute<Route>(),
                 uiState = viewModel.uiState,
                 navigateSecondScreen = {
                     navController.navigate(route = Route.Second) {
@@ -53,8 +53,8 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             SecondScreen(
                 uiState = viewModel.uiState,
                 navigateFirstScreen = {
-                    navController.navigate(route = Route.First) {
-                        popUpTo<Route.First> { inclusive = true }
+                    navController.navigate(route = Route.Tweet) {
+                        popUpTo<Route.Tweet> { inclusive = true }
                         launchSingleTop = true
                     }
                 }
