@@ -1,5 +1,7 @@
 package com.example.navigation_test.page.tweet
 
+import com.example.navigation_test.entity.Tweet
+
 data class TweetUiState(
-    val text: String = "first ui state",
+    val tweets: List<Tweet> = emptyList(),
 )
