@@ -36,7 +36,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
         startDestination = Route.Tweet
     ) {
         composable<Route.Tweet> { backstack ->
-            val viewModel: TweetViewModel = viewModel(backstack)
+            val viewModel: TweetViewModel = viewModel()
             TweetScreen(
                 route = backstack.toRoute<Route.Tweet>(),
                 uiState = viewModel.uiState,
@@ -51,7 +51,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             )
         }
         composable<Route.Profile> { backstack ->
-            val viewModel: ProfileViewModel = viewModel(backstack)
+            val viewModel: ProfileViewModel = viewModel()
             ProfileScreen(
                 uiState = viewModel.uiState,
                 navigateFirstScreen = {
