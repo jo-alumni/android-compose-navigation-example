@@ -23,7 +23,7 @@ fun HomeItem(
 
 @Preview(widthDp = 300)
 @Composable
-fun HomeItemPreview() {
+private fun HomeItemPreview() {
     HomeItem(
         tweet = Tweet(
             id = 1,

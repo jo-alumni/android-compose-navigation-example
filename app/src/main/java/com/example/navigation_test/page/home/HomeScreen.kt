@@ -81,7 +81,7 @@ private class DrawerValueParameterProvider : PreviewParameterProvider<DrawerValu
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun HomeScreenPreview(
+private fun HomeScreenPreview(
     @PreviewParameter(DrawerValueParameterProvider::class) drawerValue: DrawerValue,
 ) {
     AppTheme {

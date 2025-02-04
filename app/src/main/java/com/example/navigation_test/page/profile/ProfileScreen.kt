@@ -45,7 +45,7 @@ fun ProfileScreen(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ProfileScreenPreview() {
+private fun ProfileScreenPreview() {
     AppTheme {
         ProfileScreen(
             uiState = ProfileUiState(),

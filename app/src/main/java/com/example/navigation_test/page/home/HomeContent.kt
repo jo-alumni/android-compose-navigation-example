@@ -40,7 +40,7 @@ fun HomeContent(
 
 @Preview
 @Composable
-fun HomeContentPreview() {
+private fun HomeContentPreview() {
     HomeContent(
         uiState = HomeUiState(tweets = (1..50).map {
             Tweet(
