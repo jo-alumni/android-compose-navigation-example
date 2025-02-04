@@ -19,6 +19,7 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -26,6 +27,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.example.navigation_test.Route
 import com.example.navigation_test.ui.theme.AppTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun AppNavigationDrawer(
@@ -38,6 +40,7 @@ fun AppNavigationDrawer(
     drawerState: DrawerState,
     content: @Composable () -> Unit,
 ) {
+    val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
         modifier = modifier,
         drawerState = drawerState,
@@ -66,13 +69,19 @@ fun AppNavigationDrawer(
                         label = { Text("First Screen") },
                         selected = route == Route.Tweet,
                         icon = { Icon(Icons.Default.AccountCircle, contentDescription = null) },
-                        onClick = onClickFirstDrawerItem
+                        onClick = {
+                            onClickFirstDrawerItem()
+                            scope.launch { drawerState.close() }
+                        }
                     )
                     NavigationDrawerItem(
                         label = { Text("Second Screen") },
                         selected = route == Route.Second,
                         icon = { Icon(Icons.Default.AccountCircle, contentDescription = null) },
-                        onClick = onClickSecondDrawerItem
+                        onClick = {
+                            onClickSecondDrawerItem()
+                            scope.launch { drawerState.close() }
+                        }
                     )
 
                     HorizontalDivider()
@@ -86,13 +95,19 @@ fun AppNavigationDrawer(
                         label = { Text("Third Screen") },
                         selected = route == Route.Third,
                         icon = { Icon(Icons.Default.AccountCircle, contentDescription = null) },
-                        onClick = onClickThirdDrawerItem
+                        onClick = {
+                            onClickThirdDrawerItem()
+                            scope.launch { drawerState.close() }
+                        }
                     )
                     NavigationDrawerItem(
                         label = { Text("Fourth Screen") },
                         selected = route == Route.Fourth,
                         icon = { Icon(Icons.Default.AccountCircle, contentDescription = null) },
-                        onClick = onClickFourthDrawerItem
+                        onClick = {
+                            onClickFourthDrawerItem()
+                            scope.launch { drawerState.close() }
+                        }
                     )
                 }
             }

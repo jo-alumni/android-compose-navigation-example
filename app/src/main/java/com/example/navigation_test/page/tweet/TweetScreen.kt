@@ -7,6 +7,7 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -16,6 +17,7 @@ import com.example.navigation_test.entity.Tweet
 import com.example.navigation_test.ui.component.AppNavigationDrawer
 import com.example.navigation_test.ui.component.AppScaffold
 import com.example.navigation_test.ui.theme.AppTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun TweetScreen(
@@ -28,6 +30,7 @@ fun TweetScreen(
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
 ) {
     val lazyListState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
     AppNavigationDrawer(
         modifier = modifier,
         route = route,
@@ -39,7 +42,7 @@ fun TweetScreen(
     ) {
         AppScaffold(
             modifier = Modifier.fillMaxSize(),
-            onClickTitleIcon = {},
+            onClickTitleIcon = { scope.launch { lazyListState.animateScrollToItem(0) } },
             drawerState = drawerState
         ) { paddingValues ->
             TweetScreenContent(

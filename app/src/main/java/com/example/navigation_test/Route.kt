@@ -13,6 +13,7 @@ import com.example.navigation_test.page.tweet.TweetScreen
 import com.example.navigation_test.page.tweet.TweetViewModel
 import kotlinx.serialization.Serializable
 
+@Serializable
 sealed class Route {
     @Serializable
     data object Tweet : Route()
@@ -36,7 +37,8 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
     ) {
         composable<Route.Tweet> { backstack ->
             val viewModel: TweetViewModel = viewModel(backstack)
-            TweetScreen(route = backstack.toRoute<Route>(),
+            TweetScreen(
+                route = backstack.toRoute<Route.Tweet>(),
                 uiState = viewModel.uiState,
                 navigateSecondScreen = {
                     navController.navigate(route = Route.Second) {
