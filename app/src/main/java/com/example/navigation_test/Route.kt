@@ -50,16 +50,11 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                 navigateFourthScreen = {}
             )
         }
-        composable<Route.Profile> { backstack ->
+        composable<Route.Profile> {
             val viewModel: ProfileViewModel = viewModel()
             ProfileScreen(
                 uiState = viewModel.uiState,
-                navigateFirstScreen = {
-                    navController.navigate(route = Route.Tweet) {
-                        popUpTo<Route.Tweet> { inclusive = true }
-                        launchSingleTop = true
-                    }
-                }
+                navigateBack = { navController.popBackStack() }
             )
         }
     }
