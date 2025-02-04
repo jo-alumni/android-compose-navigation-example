@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.navigation_test.page.home.HomeViewModel
-import com.example.navigation_test.page.home.TweetScreen
+import com.example.navigation_test.page.home.HomeScreen
 import com.example.navigation_test.page.profile.ProfileScreen
 import com.example.navigation_test.page.profile.ProfileViewModel
 import kotlinx.serialization.Serializable
@@ -37,7 +37,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
     ) {
         composable<Route.Home> {
             val viewModel: HomeViewModel = viewModel()
-            TweetScreen(
+            HomeScreen(
                 uiState = viewModel.uiState,
                 navigateSecondScreen = { navController.navigate(route = Route.Profile.Mine) },
             )

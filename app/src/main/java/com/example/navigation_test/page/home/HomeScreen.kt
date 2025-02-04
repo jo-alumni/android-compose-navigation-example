@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TweetScreen(
+fun HomeScreen(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
     navigateSecondScreen: () -> Unit,
@@ -81,11 +81,11 @@ private class DrawerValueParameterProvider : PreviewParameterProvider<DrawerValu
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun TweetScreenClosedPreview(
+fun HomeScreenPreview(
     @PreviewParameter(DrawerValueParameterProvider::class) drawerValue: DrawerValue,
 ) {
     AppTheme {
-        TweetScreen(
+        HomeScreen(
             uiState = HomeUiState(tweets = (1..50).map {
                 Tweet(
                     id = it, name = "name$it", content = "content$it"
