@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.example.navigation_test.page.first.FirstScreen
 import com.example.navigation_test.page.first.FirstViewModel
 import com.example.navigation_test.page.second.SecondScreen
@@ -18,6 +19,12 @@ sealed class Route {
 
     @Serializable
     data object Second : Route()
+
+    @Serializable
+    data object Third : Route()
+
+    @Serializable
+    data object Fourth : Route()
 }
 
 @Composable
@@ -29,14 +36,16 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
     ) {
         composable<Route.First> { backstack ->
             val viewModel: FirstViewModel = viewModel(backstack)
-            FirstScreen(
+            FirstScreen(route = backstack.toRoute<Route>(),
                 uiState = viewModel.uiState,
                 navigateSecondScreen = {
                     navController.navigate(route = Route.Second) {
                         popUpTo<Route.Second> { inclusive = true }
                         launchSingleTop = true
                     }
-                }
+                },
+                navigateThirdScreen = {},
+                navigateFourthScreen = {}
             )
         }
         composable<Route.Second> { backstack ->

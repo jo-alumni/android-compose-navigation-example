@@ -2,7 +2,6 @@ package com.example.navigation_test.ui.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -30,6 +29,7 @@ import com.example.navigation_test.ui.theme.AppTheme
 
 @Composable
 fun AppNavigationDrawer(
+    modifier: Modifier = Modifier,
     route: Route,
     onClickFirstDrawerItem: () -> Unit,
     onClickSecondDrawerItem: () -> Unit,
@@ -39,7 +39,7 @@ fun AppNavigationDrawer(
     content: @Composable () -> Unit,
 ) {
     ModalNavigationDrawer(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
