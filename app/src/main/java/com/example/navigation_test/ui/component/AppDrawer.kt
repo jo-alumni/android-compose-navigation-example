@@ -33,8 +33,7 @@ import kotlinx.coroutines.launch
 fun AppNavigationDrawer(
     modifier: Modifier = Modifier,
     route: Route,
-    onClickFirstDrawerItem: () -> Unit,
-    onClickSecondDrawerItem: () -> Unit,
+    onClickProfileDrawerItem: () -> Unit,
     onClickThirdDrawerItem: () -> Unit,
     onClickFourthDrawerItem: () -> Unit,
     drawerState: DrawerState,
@@ -66,20 +65,11 @@ fun AppNavigationDrawer(
                         style = MaterialTheme.typography.titleMedium
                     )
                     NavigationDrawerItem(
-                        label = { Text("First Screen") },
-                        selected = route == Route.Tweet,
-                        icon = { Icon(Icons.Default.AccountCircle, contentDescription = null) },
-                        onClick = {
-                            onClickFirstDrawerItem()
-                            scope.launch { drawerState.close() }
-                        }
-                    )
-                    NavigationDrawerItem(
-                        label = { Text("Second Screen") },
+                        label = { Text("Profile") },
                         selected = route == Route.Profile,
                         icon = { Icon(Icons.Default.AccountCircle, contentDescription = null) },
                         onClick = {
-                            onClickSecondDrawerItem()
+                            onClickProfileDrawerItem()
                             scope.launch { drawerState.close() }
                         }
                     )
@@ -134,8 +124,7 @@ fun AppNavigationDrawerPreview(
     AppTheme {
         AppNavigationDrawer(
             route = route,
-            onClickFirstDrawerItem = {},
-            onClickSecondDrawerItem = {},
+            onClickProfileDrawerItem = {},
             onClickThirdDrawerItem = {},
             onClickFourthDrawerItem = {},
             drawerState = rememberDrawerState(DrawerValue.Open)

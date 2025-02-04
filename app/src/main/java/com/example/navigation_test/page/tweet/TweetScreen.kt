@@ -45,8 +45,7 @@ fun TweetScreen(
     AppNavigationDrawer(
         modifier = modifier,
         route = route,
-        onClickFirstDrawerItem = {},
-        onClickSecondDrawerItem = navigateSecondScreen,
+        onClickProfileDrawerItem = navigateSecondScreen,
         onClickThirdDrawerItem = navigateThirdScreen,
         onClickFourthDrawerItem = navigateFourthScreen,
         drawerState = drawerState
