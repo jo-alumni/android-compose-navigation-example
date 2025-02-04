@@ -7,8 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.example.navigation_test.page.second.SecondScreen
-import com.example.navigation_test.page.second.SecondViewModel
+import com.example.navigation_test.page.profile.ProfileScreen
+import com.example.navigation_test.page.profile.ProfileViewModel
 import com.example.navigation_test.page.tweet.TweetScreen
 import com.example.navigation_test.page.tweet.TweetViewModel
 import kotlinx.serialization.Serializable
@@ -19,7 +19,7 @@ sealed class Route {
     data object Tweet : Route()
 
     @Serializable
-    data object Second : Route()
+    data object Profile : Route()
 
     @Serializable
     data object Third : Route()
@@ -41,8 +41,8 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                 route = backstack.toRoute<Route.Tweet>(),
                 uiState = viewModel.uiState,
                 navigateSecondScreen = {
-                    navController.navigate(route = Route.Second) {
-                        popUpTo<Route.Second> { inclusive = true }
+                    navController.navigate(route = Route.Profile) {
+                        popUpTo(Route.Profile)
                         launchSingleTop = true
                     }
                 },
@@ -50,9 +50,9 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                 navigateFourthScreen = {}
             )
         }
-        composable<Route.Second> { backstack ->
-            val viewModel: SecondViewModel = viewModel(backstack)
-            SecondScreen(
+        composable<Route.Profile> { backstack ->
+            val viewModel: ProfileViewModel = viewModel(backstack)
+            ProfileScreen(
                 uiState = viewModel.uiState,
                 navigateFirstScreen = {
                     navController.navigate(route = Route.Tweet) {

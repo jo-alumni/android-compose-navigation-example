@@ -1,4 +1,4 @@
-package com.example.navigation_test.page.second
+package com.example.navigation_test.page.profile
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 
 
 @Composable
-fun SecondScreen(
+fun ProfileScreen(
     modifier: Modifier = Modifier,
-    uiState: SecondUiState,
+    uiState: ProfileUiState,
     navigateFirstScreen: () -> Unit,
 ) {
     Column(modifier = modifier) {

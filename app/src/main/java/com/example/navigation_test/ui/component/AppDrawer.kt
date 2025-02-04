@@ -76,7 +76,7 @@ fun AppNavigationDrawer(
                     )
                     NavigationDrawerItem(
                         label = { Text("Second Screen") },
-                        selected = route == Route.Second,
+                        selected = route == Route.Profile,
                         icon = { Icon(Icons.Default.AccountCircle, contentDescription = null) },
                         onClick = {
                             onClickSecondDrawerItem()
@@ -120,7 +120,7 @@ fun AppNavigationDrawer(
 private class RouteParameterProvider : PreviewParameterProvider<Route> {
     override val values: Sequence<Route> = sequenceOf(
         Route.Tweet,
-        Route.Second,
+        Route.Profile,
         Route.Third,
         Route.Fourth,
     )
