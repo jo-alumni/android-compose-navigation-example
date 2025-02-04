@@ -9,7 +9,7 @@ import com.example.navigation_test.entity.Tweet
 
 
 @Composable
-fun TweetItem(
+fun HomeItem(
     modifier: Modifier = Modifier,
     tweet: Tweet,
 ) {
@@ -23,8 +23,8 @@ fun TweetItem(
 
 @Preview(widthDp = 300)
 @Composable
-fun TweetItemPreview() {
-    TweetItem(
+fun HomeItemPreview() {
+    HomeItem(
         tweet = Tweet(
             id = 1,
             name = "name",

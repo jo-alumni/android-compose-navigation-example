@@ -26,7 +26,7 @@ fun HomeContent(
             count = uiState.tweets.size,
             key = { index -> uiState.tweets[index].name },
         ) {
-            TweetItem(
+            HomeItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
