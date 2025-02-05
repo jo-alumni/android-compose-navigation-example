@@ -49,7 +49,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                 navigateTweet = { navController.navigate(route = Route.TweetRoute(it.id)) }
             )
         }
-        composable<Route.ProfileRoute> {
+        composable<Route.ProfileRoute.MineRoute> {
             val viewModel = viewModel<ProfileViewModel>()
             ProfileScreen(
                 uiState = viewModel.uiState,
