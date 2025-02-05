@@ -1,6 +1,7 @@
 package com.example.navigation_test
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -17,20 +18,20 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class Route {
     @Serializable
-    data object Home : Route()
+    data object HomeRoute : Route()
 
     @Serializable
-    sealed class Profile : Route() {
+    sealed class ProfileRoute : Route() {
 
         @Serializable
-        data object Mine : Route()
+        data object MineRoute : Route()
 
         @Serializable
-        data object Other : Route()
+        data object OtherRoute : Route()
     }
 
     @Serializable
-    data class Tweet(val tweet: com.example.navigation_test.entity.Tweet) : Route()
+    data class TweetRoute(val id: Int) : Route()
 }
 
 @Composable
@@ -38,26 +39,27 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Route.Home
+        startDestination = Route.HomeRoute
     ) {
-        composable<Route.Home> {
+        composable<Route.HomeRoute> {
             val viewModel = viewModel<HomeViewModel>()
             HomeScreen(
                 uiState = viewModel.uiState,
-                navigateProfileMine = { navController.navigate(route = Route.Profile.Mine) },
+                navigateProfileMine = { navController.navigate(route = Route.ProfileRoute.MineRoute) },
             )
         }
-        composable<Route.Profile> {
+        composable<Route.ProfileRoute> {
             val viewModel = viewModel<ProfileViewModel>()
             ProfileScreen(
                 uiState = viewModel.uiState,
                 navigateBack = { navController.popBackStack() }
             )
         }
-        composable<Route.Tweet> { backstack ->
+        composable<Route.TweetRoute> { backstack ->
             val viewModel = viewModel<TweetViewModel>()
+            val tweet = viewModel.tweet.collectAsState().value
             TweetScreen(
-                tweet = viewModel.tweet,
+                tweet = tweet,
                 navigateBack = { navController.popBackStack() }
             )
         }

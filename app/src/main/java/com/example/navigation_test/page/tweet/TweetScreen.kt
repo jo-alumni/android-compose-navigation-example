@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,7 +22,7 @@ import com.example.navigation_test.ui.theme.AppTheme
 @Composable
 fun TweetScreen(
     modifier: Modifier = Modifier,
-    tweet: Tweet,
+    tweet: Tweet?,
     navigateBack: () -> Unit = {},
 ) {
     Scaffold(
@@ -39,7 +40,7 @@ fun TweetScreen(
         },
     ) { paddingValues ->
         Box(modifier = modifier.padding(paddingValues)) {
-
+            Text(text = tweet.toString())
         }
     }
 }
