@@ -46,6 +46,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             HomeScreen(
                 uiState = viewModel.uiState,
                 navigateProfileMine = { navController.navigate(route = Route.ProfileRoute.MineRoute) },
+                navigateTweet = { navController.navigate(route = Route.TweetRoute(it.id)) }
             )
         }
         composable<Route.ProfileRoute> {
