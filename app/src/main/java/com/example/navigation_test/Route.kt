@@ -11,8 +11,8 @@ import com.example.navigation_test.page.home.HomeScreen
 import com.example.navigation_test.page.home.HomeViewModel
 import com.example.navigation_test.page.profile.ProfileScreen
 import com.example.navigation_test.page.profile.ProfileViewModel
-import com.example.navigation_test.page.tweet.TweetScreen
-import com.example.navigation_test.page.tweet.TweetViewModel
+import com.example.navigation_test.page.tweetDetail.TweetDetailScreen
+import com.example.navigation_test.page.tweetDetail.TweetDetailViewModel
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -31,7 +31,7 @@ sealed class Route {
     }
 
     @Serializable
-    data class TweetRoute(val id: Int) : Route()
+    data class TweetDetailRoute(val id: Int) : Route()
 }
 
 @Composable
@@ -46,7 +46,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             HomeScreen(
                 uiState = viewModel.uiState,
                 navigateProfileMine = { navController.navigate(route = Route.ProfileRoute.MineRoute) },
-                navigateTweet = { navController.navigate(route = Route.TweetRoute(it.id)) }
+                navigateTweet = { navController.navigate(route = Route.TweetDetailRoute(it.id)) }
             )
         }
         composable<Route.ProfileRoute.MineRoute> {
@@ -56,10 +56,10 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                 navigateBack = { navController.popBackStack() }
             )
         }
-        composable<Route.TweetRoute> { backstack ->
-            val viewModel = viewModel<TweetViewModel>()
+        composable<Route.TweetDetailRoute> { backstack ->
+            val viewModel = viewModel<TweetDetailViewModel>()
             val tweet = viewModel.tweet.collectAsState().value
-            TweetScreen(
+            TweetDetailScreen(
                 tweet = tweet,
                 navigateBack = { navController.popBackStack() }
             )

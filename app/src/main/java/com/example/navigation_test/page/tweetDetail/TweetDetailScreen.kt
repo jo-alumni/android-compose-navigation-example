@@ -1,4 +1,4 @@
-package com.example.navigation_test.page.tweet
+package com.example.navigation_test.page.tweetDetail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +20,7 @@ import com.example.navigation_test.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TweetScreen(
+fun TweetDetailScreen(
     modifier: Modifier = Modifier,
     tweet: Tweet?,
     navigateBack: () -> Unit = {},
@@ -49,7 +49,7 @@ fun TweetScreen(
 @Composable
 private fun TweetScreenPreview() {
     AppTheme {
-        TweetScreen(
+        TweetDetailScreen(
             tweet = Tweet(
                 id = 1,
                 name = "name",

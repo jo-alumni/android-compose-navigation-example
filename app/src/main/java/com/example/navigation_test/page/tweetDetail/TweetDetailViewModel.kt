@@ -1,4 +1,4 @@
-package com.example.navigation_test.page.tweet
+package com.example.navigation_test.page.tweetDetail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class TweetViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
-    private val tweetId = savedStateHandle.toRoute<Route.TweetRoute>().id
+class TweetDetailViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
+    private val tweetId = savedStateHandle.toRoute<Route.TweetDetailRoute>().id
     private val _tweet = MutableStateFlow<Tweet?>(null)
 
     val tweet = _tweet.asStateFlow()
