@@ -56,7 +56,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
                 navigateBack = { navController.popBackStack() }
             )
         }
-        composable<Route.TweetDetailRoute> { backstack ->
+        composable<Route.TweetDetailRoute> {
             val viewModel = viewModel<TweetDetailViewModel>()
             val tweet = viewModel.tweet.collectAsState().value
             TweetDetailScreen(
