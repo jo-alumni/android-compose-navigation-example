@@ -29,3 +29,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "navigation-test"
 include(":app")
+include(":feature:home")
