@@ -1,4 +1,4 @@
-package com.example.navigation_test.page.home
+package com.example.navigationtest.page.home
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,9 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.example.navigation_test.entity.Tweet
-import com.example.navigation_test.ui.component.AppNavigationDrawer
-import com.example.navigation_test.ui.theme.AppTheme
+import com.example.navigationtest.entity.Tweet
+import com.example.navigationtest.ui.component.AppNavigationDrawer
+import com.example.navigationtest.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,43 +42,52 @@ fun HomeScreen(
     AppNavigationDrawer(
         modifier = modifier,
         onClickProfileDrawerItem = navigateProfileMine,
-        drawerState = drawerState
+        drawerState = drawerState,
     ) {
-        Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
-            CenterAlignedTopAppBar(title = {
-                IconButton(onClick = { scope.launch { lazyListState.animateScrollToItem(0) } }) {
-                    Icon(Icons.Default.Build, contentDescription = null)
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = {
+                        IconButton(onClick = { scope.launch { lazyListState.animateScrollToItem(0) } }) {
+                            Icon(Icons.Default.Build, contentDescription = null)
+                        }
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { scope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() } }) {
+                            Icon(Icons.Default.Menu, contentDescription = null)
+                        }
+                    },
+                )
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    shape = FloatingActionButtonDefaults.shape,
+                    onClick = { /*TODO*/ },
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = null)
                 }
-            }, navigationIcon = {
-                IconButton(onClick = { scope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() } }) {
-                    Icon(Icons.Default.Menu, contentDescription = null)
-                }
-            })
-        }, floatingActionButton = {
-            FloatingActionButton(
-                shape = FloatingActionButtonDefaults.shape,
-                onClick = { /*TODO*/ },
-            ) {
-                Icon(Icons.Default.Add, contentDescription = null)
-            }
-        }) { paddingValues ->
+            },
+        ) { paddingValues ->
             HomeContent(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
                 uiState = uiState,
                 lazyListState = lazyListState,
-                navigateTweet = navigateTweet
+                navigateTweet = navigateTweet,
             )
         }
     }
 }
 
 private class DrawerValueParameterProvider : PreviewParameterProvider<DrawerValue> {
-    override val values: Sequence<DrawerValue> = sequenceOf(
-        DrawerValue.Closed,
-        DrawerValue.Open,
-    )
+    override val values: Sequence<DrawerValue> =
+        sequenceOf(
+            DrawerValue.Closed,
+            DrawerValue.Open,
+        )
 }
 
 @Preview(showBackground = true, showSystemUi = true)
@@ -88,11 +97,17 @@ private fun HomeScreenPreview(
 ) {
     AppTheme {
         HomeScreen(
-            uiState = HomeUiState(tweets = (1..50).map {
-                Tweet(
-                    id = it, name = "name$it", content = "content$it"
-                )
-            }),
+            uiState =
+                HomeUiState(
+                    tweets =
+                        (1..50).map {
+                            Tweet(
+                                id = it,
+                                name = "name$it",
+                                content = "content$it",
+                            )
+                        },
+                ),
             drawerState = rememberDrawerState(drawerValue),
         )
     }

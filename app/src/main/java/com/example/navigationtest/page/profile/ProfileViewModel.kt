@@ -1,4 +1,4 @@
-package com.example.navigation_test.page.profile
+package com.example.navigationtest.page.profile
 
 import androidx.lifecycle.ViewModel
 

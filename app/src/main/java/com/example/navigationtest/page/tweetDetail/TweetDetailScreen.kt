@@ -1,4 +1,4 @@
-package com.example.navigation_test.page.tweetDetail
+package com.example.navigationtest.page.tweetDetail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,9 +14,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.navigation_test.entity.Tweet
-import com.example.navigation_test.ui.theme.AppTheme
-
+import com.example.navigationtest.entity.Tweet
+import com.example.navigationtest.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,11 +31,12 @@ fun TweetDetailScreen(
                 title = {},
                 navigationIcon = {
                     IconButton(
-                        onClick = navigateBack
+                        onClick = navigateBack,
                     ) {
                         Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
                     }
-                })
+                },
+            )
         },
     ) { paddingValues ->
         Box(modifier = modifier.padding(paddingValues)) {
@@ -50,11 +50,12 @@ fun TweetDetailScreen(
 private fun TweetScreenPreview() {
     AppTheme {
         TweetDetailScreen(
-            tweet = Tweet(
-                id = 1,
-                name = "name",
-                content = "content"
-            ),
+            tweet =
+                Tweet(
+                    id = 1,
+                    name = "name",
+                    content = "content",
+                ),
         )
     }
 }

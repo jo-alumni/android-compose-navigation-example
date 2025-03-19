@@ -1,4 +1,4 @@
-package com.example.navigation_test
+package com.example.navigationtest
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -7,12 +7,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.navigation_test.page.home.HomeScreen
-import com.example.navigation_test.page.home.HomeViewModel
-import com.example.navigation_test.page.profile.ProfileScreen
-import com.example.navigation_test.page.profile.ProfileViewModel
-import com.example.navigation_test.page.tweetDetail.TweetDetailScreen
-import com.example.navigation_test.page.tweetDetail.TweetDetailViewModel
+import com.example.navigationtest.page.home.HomeScreen
+import com.example.navigationtest.page.home.HomeViewModel
+import com.example.navigationtest.page.profile.ProfileScreen
+import com.example.navigationtest.page.profile.ProfileViewModel
+import com.example.navigationtest.page.tweetDetail.TweetDetailScreen
+import com.example.navigationtest.page.tweetDetail.TweetDetailViewModel
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -22,7 +22,6 @@ sealed class Route {
 
     @Serializable
     sealed class ProfileRoute : Route() {
-
         @Serializable
         data object MineRoute : Route()
 
@@ -31,29 +30,34 @@ sealed class Route {
     }
 
     @Serializable
-    data class TweetDetailRoute(val id: Int) : Route()
+    data class TweetDetailRoute(
+        val id: Int,
+    ) : Route()
 }
 
 @Composable
-fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+fun AppNavHost(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+) {
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Route.HomeRoute
+        startDestination = Route.HomeRoute,
     ) {
         composable<Route.HomeRoute> {
             val viewModel = viewModel<HomeViewModel>()
             HomeScreen(
                 uiState = viewModel.uiState,
                 navigateProfileMine = { navController.navigate(route = Route.ProfileRoute.MineRoute) },
-                navigateTweet = { navController.navigate(route = Route.TweetDetailRoute(it.id)) }
+                navigateTweet = { navController.navigate(route = Route.TweetDetailRoute(it.id)) },
             )
         }
         composable<Route.ProfileRoute.MineRoute> {
             val viewModel = viewModel<ProfileViewModel>()
             ProfileScreen(
                 uiState = viewModel.uiState,
-                navigateBack = { navController.popBackStack() }
+                navigateBack = { navController.popBackStack() },
             )
         }
         composable<Route.TweetDetailRoute> {
@@ -61,7 +65,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             val tweet = viewModel.tweet.collectAsState().value
             TweetDetailScreen(
                 tweet = tweet,
-                navigateBack = { navController.popBackStack() }
+                navigateBack = { navController.popBackStack() },
             )
         }
     }

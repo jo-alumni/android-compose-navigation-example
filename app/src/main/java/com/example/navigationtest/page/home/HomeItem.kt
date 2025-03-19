@@ -1,4 +1,4 @@
-package com.example.navigation_test.page.home
+package com.example.navigationtest.page.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Card
@@ -6,8 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.navigation_test.entity.Tweet
-
+import com.example.navigationtest.entity.Tweet
 
 @Composable
 fun HomeItem(
@@ -16,7 +15,7 @@ fun HomeItem(
     onclick: (Tweet) -> Unit = {},
 ) {
     Card(
-        modifier = modifier.clickable { onclick(tweet) }
+        modifier = modifier.clickable { onclick(tweet) },
     ) {
         Text(tweet.name)
         Text(tweet.content)
@@ -27,10 +26,11 @@ fun HomeItem(
 @Composable
 private fun HomeItemPreview() {
     HomeItem(
-        tweet = Tweet(
-            id = 1,
-            name = "name",
-            content = "content"
-        )
+        tweet =
+            Tweet(
+                id = 1,
+                name = "name",
+                content = "content",
+            ),
     )
 }

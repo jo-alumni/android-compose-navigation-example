@@ -1,4 +1,4 @@
-package com.example.navigation_test.page.profile
+package com.example.navigationtest.page.profile
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,8 +13,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.navigation_test.ui.theme.AppTheme
-
+import com.example.navigationtest.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,15 +29,15 @@ fun ProfileScreen(
                 title = {},
                 navigationIcon = {
                     IconButton(
-                        onClick = navigateBack
+                        onClick = navigateBack,
                     ) {
                         Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
                     }
-                })
+                },
+            )
         },
     ) { paddingValues ->
         Box(modifier = modifier.padding(paddingValues)) {
-
         }
     }
 }

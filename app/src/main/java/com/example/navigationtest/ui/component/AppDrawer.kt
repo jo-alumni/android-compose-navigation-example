@@ -1,4 +1,4 @@
-package com.example.navigation_test.ui.component
+package com.example.navigationtest.ui.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +23,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.navigation_test.ui.theme.AppTheme
+import com.example.navigationtest.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -40,15 +40,16 @@ fun AppNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
                 Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .verticalScroll(rememberScrollState())
+                    modifier =
+                        Modifier
+                            .padding(16.dp)
+                            .verticalScroll(rememberScrollState()),
                 ) {
                     Spacer(Modifier.height(12.dp))
                     Text(
                         "Drawer Title",
                         modifier = Modifier.padding(16.dp),
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.titleLarge,
                     )
 
                     HorizontalDivider()
@@ -56,7 +57,7 @@ fun AppNavigationDrawer(
                     Text(
                         "Section 1",
                         modifier = Modifier.padding(16.dp),
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
                     )
                     NavigationDrawerItem(
                         label = { Text("Profile") },
@@ -65,11 +66,11 @@ fun AppNavigationDrawer(
                         onClick = {
                             onClickProfileDrawerItem()
                             scope.launch { drawerState.close() }
-                        }
+                        },
                     )
                 }
             }
-        }
+        },
     ) {
         content()
     }
@@ -81,9 +82,8 @@ private fun AppNavigationDrawerPreview() {
     AppTheme {
         AppNavigationDrawer(
             onClickProfileDrawerItem = {},
-            drawerState = rememberDrawerState(DrawerValue.Open)
+            drawerState = rememberDrawerState(DrawerValue.Open),
         ) {
-
         }
     }
 }
