@@ -3,6 +3,7 @@ plugins {
     id("com.example.navigation_test.primitive.android.application")
     id("com.example.navigation_test.primitive.android.compose")
     id("com.example.navigation_test.primitive.android.kotlin")
+    id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
 }
 
 android {
