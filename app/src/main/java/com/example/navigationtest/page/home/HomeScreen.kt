@@ -41,7 +41,7 @@ fun HomeScreen(
     val scope = rememberCoroutineScope()
     AppNavigationDrawer(
         modifier = modifier,
-        onClickProfileDrawerItem = navigateProfileMine,
+        navigateProfile = navigateProfileMine,
         drawerState = drawerState,
     ) {
         Scaffold(

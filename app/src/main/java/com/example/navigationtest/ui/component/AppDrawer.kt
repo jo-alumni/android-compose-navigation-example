@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun AppNavigationDrawer(
     modifier: Modifier = Modifier,
-    onClickProfileDrawerItem: () -> Unit,
+    navigateProfile: () -> Unit,
     drawerState: DrawerState,
     content: @Composable () -> Unit,
 ) {
@@ -64,7 +64,7 @@ fun AppNavigationDrawer(
                         selected = false,
                         icon = { Icon(Icons.Default.AccountCircle, contentDescription = null) },
                         onClick = {
-                            onClickProfileDrawerItem()
+                            navigateProfile()
                             scope.launch { drawerState.close() }
                         },
                     )
@@ -81,7 +81,7 @@ fun AppNavigationDrawer(
 private fun AppNavigationDrawerPreview() {
     AppTheme {
         AppNavigationDrawer(
-            onClickProfileDrawerItem = {},
+            navigateProfile = {},
             drawerState = rememberDrawerState(DrawerValue.Open),
         ) {
         }
