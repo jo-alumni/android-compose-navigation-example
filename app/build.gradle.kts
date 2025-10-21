@@ -1,9 +1,9 @@
 plugins {
     kotlin("plugin.serialization") version "2.1.0"
-    id("com.example.navigation_test.primitive.android.application")
-    id("com.example.navigation_test.primitive.android.compose")
-    id("com.example.navigation_test.primitive.android.kotlin")
-    id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
+    alias(libs.plugins.navigationTest.app)
+    alias(libs.plugins.navigationTest.compose)
+    alias(libs.plugins.navigationTest.kotlin)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -42,7 +42,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

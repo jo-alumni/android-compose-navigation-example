@@ -11,6 +11,7 @@ activityCompose = "1.10.0"
 composeBom = "2025.01.00"
 navigationCompose = "2.8.5"
 kotlinxCoroutines = "1.8.1"
+ktlint = "12.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,11 +41,15 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+
+
+# local definition plugins
+navigationTest-app = { id = "com.exmample.navigation_test.primitive.android.application" }
+navigationTest-compose = { id = "com.example.navigation_test.primitive.android.compose" }
+navigationTest-kotlin = { id = "com.example.navigation_test.primitive.android.kotlin" }
+navigationTest-feature = { id = "com.example.navigation_test.convention.android.feature" }
+
 
 [bundles]
-plugins = [
-    "android-gradle-plugin",
-    "kotlin-gradle-plugin",
-    "compose-compiler-gradle-plugin",
-    "kotlinx-serialization-gradle-plugin",
-]
+plugins = ["android-gradle-plugin", "kotlin-gradle-plugin", "compose-compiler-gradle-plugin", "kotlinx-serialization-gradle-plugin"]

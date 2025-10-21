@@ -1,5 +1,5 @@
 plugins {
-    id("com.example.navigation_test.convention.android.feature")
+    alias(libs.plugins.navigationTest.feature)
 }
 
 android.namespace = "com.example.navigation_test.feature.home"

@@ -34,21 +34,21 @@ gradlePlugin {
     this.plugins {
         // primitive plugins
         register("android-application") {
-            id = "com.example.navigation_test.primitive.android.application"
+            id = libs.plugins.navigationTest.app.get().pluginId
             implementationClass = "primitive.AndroidApplicationPlugin"
         }
         register("android-compose") {
-            id = "com.example.navigation_test.primitive.android.compose"
+            id = libs.plugins.navigationTest.compose.get().pluginId
             implementationClass = "primitive.AndroidComposePlugin"
         }
         register("android-kotlin") {
-            id = "com.example.navigation_test.primitive.android.kotlin"
+            id = libs.plugins.navigationTest.kotlin.get().pluginId
             implementationClass = "primitive.AndroidKotlinPlugin"
         }
 
         // convention plugins
         register("android-feature") {
-            id = "com.example.navigation_test.convention.android.feature"
+            id = libs.plugins.navigationTest.feature.get().pluginId
             implementationClass = "convention.AndroidFeaturePlugin"
         }
     }
