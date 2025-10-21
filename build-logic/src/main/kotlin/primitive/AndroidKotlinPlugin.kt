@@ -10,7 +10,8 @@ class AndroidKotlinPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply("org.jetbrains.kotlin.android")
+                apply(libs.findPlugin("kotlin-android").get().get().pluginId)
+                apply(libs.findPlugin("kotlin-serialization").get().get().pluginId)
             }
             tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java) {
                 compilerOptions {
