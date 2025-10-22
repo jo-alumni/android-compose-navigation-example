@@ -70,10 +70,9 @@ fun HomeScreen(
             },
         ) { paddingValues ->
             HomeContent(
-                modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
                 uiState = uiState,
                 lazyListState = lazyListState,
                 navigateTweet = navigateTweet,
