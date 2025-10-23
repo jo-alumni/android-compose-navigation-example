@@ -7,8 +7,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.navigationtest.home.HomeScreen
-import com.example.navigationtest.home.HomeViewModel
+import com.example.navigationtest.home.registerHome
 import com.example.navigationtest.page.profile.ProfileScreen
 import com.example.navigationtest.page.profile.ProfileViewModel
 import com.example.navigationtest.page.tweetDetail.TweetDetailScreen
@@ -45,14 +44,10 @@ fun AppNavHost(
         navController = navController,
         startDestination = Route.HomeRoute,
     ) {
-        composable<Route.HomeRoute> {
-            val viewModel = viewModel<HomeViewModel>()
-            HomeScreen(
-                uiState = viewModel.uiState,
-                navigateProfileMine = { navController.navigate(route = Route.ProfileRoute.MineRoute) },
-                navigateTweet = { navController.navigate(route = Route.TweetDetailRoute(it.id)) },
-            )
-        }
+        registerHome(
+            navigateProfileMine = { /* TODO */ },
+            navigateTweet = { /* TODO */ },
+        )
         composable<Route.ProfileRoute.MineRoute> {
             val viewModel = viewModel<ProfileViewModel>()
             ProfileScreen(
