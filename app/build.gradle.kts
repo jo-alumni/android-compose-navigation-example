@@ -63,5 +63,6 @@ dependencies {
     implementation(projects.core)
     implementation(projects.domain)
     implementation(projects.feature.home)
-
+    implementation(projects.feature.profile)
+    implementation(projects.feature.tweetDetail)
 }

@@ -30,5 +30,7 @@ dependencyResolutionManagement {
 rootProject.name = "navigation-test"
 include(":app")
 include(":feature:home")
+include(":feature:profile")
+include(":feature:tweetDetail")
 include(":core")
 include(":domain")
