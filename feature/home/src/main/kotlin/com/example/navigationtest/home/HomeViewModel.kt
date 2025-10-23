@@ -1,7 +1,7 @@
-package com.example.navigationtest.page.home
+package com.example.navigationtest.home
 
 import androidx.lifecycle.ViewModel
-import com.example.navigationtest.entity.Tweet
+import com.example.navigationtest.core.ui.entity.Tweet
 
 class HomeViewModel : ViewModel() {
     val uiState =

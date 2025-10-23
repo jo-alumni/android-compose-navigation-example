@@ -1,4 +1,4 @@
-package com.example.navigationtest.page.home
+package com.example.navigationtest.home
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,8 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.navigationtest.core.ui.component.AppNavigationDrawer
+import com.example.navigationtest.core.ui.entity.Tweet
 import com.example.navigationtest.core.ui.theme.AppTheme
-import com.example.navigationtest.entity.Tweet
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -7,8 +7,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.navigationtest.page.home.HomeScreen
-import com.example.navigationtest.page.home.HomeViewModel
+import com.example.navigationtest.home.HomeScreen
+import com.example.navigationtest.home.HomeViewModel
 import com.example.navigationtest.page.profile.ProfileScreen
 import com.example.navigationtest.page.profile.ProfileViewModel
 import com.example.navigationtest.page.tweetDetail.TweetDetailScreen

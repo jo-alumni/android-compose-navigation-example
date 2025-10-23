@@ -22,6 +22,7 @@ class AndroidComposePlugin : Plugin<Project> {
                 implementation(libs.library("androidx-core-ktx"))
                 implementation(libs.library("androidx-ui"))
                 implementation(libs.library("androidx-material3"))
+                implementation(libs.library("androidx-material-icon"))
                 implementation(libs.library("androidx-ui-tooling-preview"))
                 implementation(libs.library("androidx-navigation-compose"))
                 testImplementation(libs.library("junit"))

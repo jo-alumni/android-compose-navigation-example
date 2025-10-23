@@ -3,3 +3,7 @@ plugins {
 }
 
 android.namespace = "com.example.navigation_test.feature.home"
+
+dependencies {
+    implementation(projects.core)
+}
