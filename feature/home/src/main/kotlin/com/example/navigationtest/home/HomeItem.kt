@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.navigationtest.core.ui.entity.Tweet
+import com.example.navigationtest.core.ui.theme.AppTheme
 
 @Composable
 fun HomeItem(
@@ -25,12 +26,14 @@ fun HomeItem(
 @Preview(widthDp = 300)
 @Composable
 private fun HomeItemPreview() {
-    HomeItem(
-        tweet =
-            Tweet(
-                id = 1,
-                name = "name",
-                content = "content",
-            ),
-    )
+    AppTheme {
+        HomeItem(
+            tweet =
+                Tweet(
+                    id = 1,
+                    name = "name",
+                    content = "content",
+                ),
+        )
+    }
 }

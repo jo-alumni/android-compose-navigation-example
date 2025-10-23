@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.navigationtest.core.ui.entity.Tweet
+import com.example.navigationtest.core.ui.theme.AppTheme
 
 @Composable
 fun HomeContent(
@@ -41,17 +42,19 @@ fun HomeContent(
 @Preview
 @Composable
 private fun HomeContentPreview() {
-    HomeContent(
-        uiState =
-            HomeUiState(
-                tweets =
-                    (1..50).map {
-                        Tweet(
-                            id = it,
-                            name = "name$it",
-                            content = "content$it",
-                        )
-                    },
-            ),
-    )
+    AppTheme {
+        HomeContent(
+            uiState =
+                HomeUiState(
+                    tweets =
+                        (1..50).map {
+                            Tweet(
+                                id = it,
+                                name = "name$it",
+                                content = "content$it",
+                            )
+                        },
+                ),
+        )
+    }
 }
