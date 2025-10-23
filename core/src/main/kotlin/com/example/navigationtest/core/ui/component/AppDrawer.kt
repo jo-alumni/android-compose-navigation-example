@@ -1,4 +1,4 @@
-package com.example.navigationtest.ui.component
+package com.example.navigationtest.core.ui.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +23,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.navigationtest.ui.theme.AppTheme
+import com.example.navigationtest.core.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
 @Composable
