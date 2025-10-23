@@ -9,7 +9,7 @@ class AndroidFeaturePlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply(libs.findPlugin("navigationTest.app").get().get().pluginId)
+                apply("com.android.library")
                 apply(libs.findPlugin("navigationTest.compose").get().get().pluginId)
                 apply(libs.findPlugin("navigationTest.kotlin").get().get().pluginId)
             }
