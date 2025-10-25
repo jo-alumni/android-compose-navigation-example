@@ -7,7 +7,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.navigationtest.home.registerHome
+import com.example.navigationtest.home.homeScreen
 import com.example.navigationtest.page.profile.ProfileScreen
 import com.example.navigationtest.page.profile.ProfileViewModel
 import com.example.navigationtest.page.tweetDetail.TweetDetailScreen
@@ -44,7 +44,7 @@ fun AppNavHost(
         navController = navController,
         startDestination = Route.HomeRoute,
     ) {
-        registerHome(
+        homeScreen(
             navigateProfileMine = { /* TODO */ },
             navigateTweet = { /* TODO */ },
         )
