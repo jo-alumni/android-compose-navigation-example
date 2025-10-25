@@ -1,4 +1,4 @@
-package com.example.navigationtest.core.ui.entity
+package com.example.navigationtest.core.entity
 
 import kotlinx.serialization.Serializable
 

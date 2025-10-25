@@ -1,7 +1,7 @@
 package com.example.navigationtest.home
 
 import androidx.lifecycle.ViewModel
-import com.example.navigationtest.core.ui.entity.Tweet
+import com.example.navigationtest.core.entity.Tweet
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

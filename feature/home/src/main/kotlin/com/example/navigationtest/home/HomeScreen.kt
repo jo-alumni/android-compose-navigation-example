@@ -23,8 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.example.navigationtest.core.entity.Tweet
 import com.example.navigationtest.core.ui.component.AppNavigationDrawer
-import com.example.navigationtest.core.ui.entity.Tweet
 import com.example.navigationtest.core.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
