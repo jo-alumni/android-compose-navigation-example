@@ -3,7 +3,9 @@ package com.example.navigationtest.profile
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
 
@@ -22,3 +24,5 @@ fun NavGraphBuilder.tweetDetailScreen(
         )
     }
 }
+
+fun NavController.navigateToTweetDetail(id: Int, navOptions: NavOptions? = null) = navigate(TweetDetail(id), navOptions)

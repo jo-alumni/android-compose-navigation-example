@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.navigationtest.home.Home
 import com.example.navigationtest.home.homeScreen
+import com.example.navigationtest.profile.navigateToProfile
+import com.example.navigationtest.profile.navigateToTweetDetail
 import com.example.navigationtest.profile.profileScreen
 import com.example.navigationtest.profile.tweetDetailScreen
 
@@ -20,8 +22,8 @@ fun AppNavHost(
         startDestination = Home,
     ) {
         homeScreen(
-            navigateProfileMine = { /* TODO */ },
-            navigateTweet = { /* TODO */ },
+            navigateProfileMine = { navController.navigateToProfile() },
+            navigateTweet = { tweet -> navController.navigateToTweetDetail(tweet.id) },
         )
         profileScreen(
             navigateBack = { navController.popBackStack() },

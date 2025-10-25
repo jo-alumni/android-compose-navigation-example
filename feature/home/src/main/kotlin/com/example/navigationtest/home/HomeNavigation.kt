@@ -27,6 +27,6 @@ fun NavGraphBuilder.homeScreen(
     }
 }
 
-fun NavController.navigateHome(navOptions: NavOptions) = navigate(route = Home, navOptions = navOptions)
+fun NavController.navigateHome(navOptions: NavOptions? = null) = navigate(route = Home, navOptions = navOptions)
 
 
