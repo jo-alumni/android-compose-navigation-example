@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.navigationtest.core.entity.Tweet
 import com.example.navigationtest.core.ui.component.AppNavigationDrawer
 import com.example.navigationtest.core.ui.theme.AppTheme
+import com.example.navigationtest.core.util.LoadingState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -81,33 +82,25 @@ fun HomeScreen(
     }
 }
 
-private class DrawerValueParameterProvider : PreviewParameterProvider<DrawerValue> {
-    override val values: Sequence<DrawerValue> =
+private class HomeUiStateParameterProvider : PreviewParameterProvider<HomeUiState> {
+    override val values: Sequence<HomeUiState> =
         sequenceOf(
-            DrawerValue.Closed,
-            DrawerValue.Open,
+            HomeUiState(LoadingState.Loading),
+            HomeUiState(
+                LoadingState.Success(
+                    (1..50).map { Tweet(id = it, name = "name$it", content = "content$it") },
+                ),
+            ),
+            HomeUiState(LoadingState.Failure),
         )
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun HomeScreenPreview(
-    @PreviewParameter(DrawerValueParameterProvider::class) drawerValue: DrawerValue,
+    @PreviewParameter(HomeUiStateParameterProvider::class) uiState: HomeUiState,
 ) {
     AppTheme {
-        HomeScreen(
-            uiState =
-                HomeUiState(
-                    tweets =
-                        (1..50).map {
-                            Tweet(
-                                id = it,
-                                name = "name$it",
-                                content = "content$it",
-                            )
-                        },
-                ),
-            drawerState = rememberDrawerState(drawerValue),
-        )
+        HomeScreen(uiState = uiState)
     }
 }
