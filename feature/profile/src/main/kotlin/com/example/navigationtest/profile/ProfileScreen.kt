@@ -1,4 +1,4 @@
-package com.example.navigationtest.page.profile
+package com.example.navigationtest.profile
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

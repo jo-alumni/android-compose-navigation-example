@@ -1,4 +1,4 @@
-package com.example.navigationtest.page.profile
+package com.example.navigationtest.profile
 
 data class ProfileUiState(
     val text: String = "second ui state",

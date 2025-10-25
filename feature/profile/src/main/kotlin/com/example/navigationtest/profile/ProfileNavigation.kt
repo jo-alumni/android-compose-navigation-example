@@ -1,0 +1,25 @@
+package com.example.navigationtest.profile
+
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object Profile
+
+fun NavGraphBuilder.profileScreen(
+    navigateBack: () -> Unit,
+) {
+    composable<Profile> {
+        val viewModel = viewModel<ProfileViewModel>()
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+        ProfileScreen(
+            uiState = uiState,
+            navigateBack = navigateBack,
+        )
+
+    }
+}
