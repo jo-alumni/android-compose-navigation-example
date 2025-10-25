@@ -25,6 +25,8 @@ class AndroidComposePlugin : Plugin<Project> {
                 implementation(libs.library("androidx-material-icon"))
                 implementation(libs.library("androidx-ui-tooling-preview"))
                 implementation(libs.library("androidx-navigation-compose"))
+                implementation(libs.library("coil-compose"))
+                implementation(libs.library("coil-okhttp"))
                 testImplementation(libs.library("junit"))
                 testImplementation(libs.library("androidx-espresso-core"))
                 testImplementation(libs.library("androidx-ui-test-junit4"))

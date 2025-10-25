@@ -22,7 +22,7 @@ fun AppNavHost(
         startDestination = Home,
     ) {
         homeScreen(
-            navigateProfileMine = { navController.navigateToProfile() },
+            navigateProfile = { profile -> navController.navigateToProfile(profile.id) },
             navigateTweet = { tweet -> navController.navigateToTweetDetail(tweet.id) },
         )
         profileScreen(

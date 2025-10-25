@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Tweet(
     val id: Int,
-    val name: String,
     val content: String,
+    val postUser: Profile,
 )

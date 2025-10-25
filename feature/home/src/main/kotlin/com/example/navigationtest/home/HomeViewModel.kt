@@ -2,6 +2,7 @@ package com.example.navigationtest.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.navigationtest.core.entity.Profile
 import com.example.navigationtest.core.entity.Tweet
 import com.example.navigationtest.core.util.LoadingState
 import kotlinx.coroutines.delay
@@ -27,7 +28,17 @@ class HomeViewModel : ViewModel() {
         _uiState.update {
             it.copy(
                 LoadingState.Success(
-                    (1..50).map { Tweet(id = it, name = "name$it", content = "content$it") },
+                    (1..50).map {
+                        Tweet(
+                            id = it,
+                            content = "content$it",
+                            postUser = Profile(
+                                id = it,
+                                name = "user_name_$it",
+                                description = "description_$it",
+                            ),
+                        )
+                    },
                 ),
             )
         }
