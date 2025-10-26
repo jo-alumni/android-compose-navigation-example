@@ -70,7 +70,7 @@ private fun HomeItemPreview() {
                 id = 1,
                 content = "content ".repeat(100),
                 postUser = Profile(
-                    id = 1,
+                    id = "user_id",
                     name = "user_name",
                     description = "user_description",
                 ),

@@ -25,7 +25,7 @@ class TweetDetailViewModel(
                     id = route.id,
                     content = "content${route.id}",
                     postUser = Profile(
-                        id = route.id,
+                        id = "user_${route.id}",
                         name = "user_name_${route.id}",
                         description = "description_${route.id}",
                     ),

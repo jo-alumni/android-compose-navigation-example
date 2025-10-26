@@ -56,7 +56,7 @@ private fun TweetScreenPreview() {
                     id = 1,
                     content = "content",
                     postUser = Profile(
-                        id = 1,
+                        id = "user_id",
                         name = "user_name",
                         description = "description",
                     ),

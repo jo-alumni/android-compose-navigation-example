@@ -70,11 +70,15 @@ private fun HomeScreen(
     val scope = rememberCoroutineScope()
     AppNavigationDrawer(
         modifier = modifier,
-        navigateProfile = { navigateProfile(Profile(
-            id = 1,
-            name = "John Doe",
-            description = "John Doe's description"
-        )) },
+        navigateProfile = {
+            navigateProfile(
+                Profile(
+                    id = "john_doe",
+                    name = "John Doe",
+                    description = "John Doe's description",
+                ),
+            )
+        },
         drawerState = drawerState,
     ) {
         Scaffold(
@@ -161,7 +165,7 @@ private class HomeUiStateParameterProvider : PreviewParameterProvider<HomeUiStat
                         id = it,
                         content = "content$it",
                         postUser = Profile(
-                            id = it,
+                            id = "user_id_$it",
                             name = "user_name_$it",
                             description = "description_$it",
                         ),

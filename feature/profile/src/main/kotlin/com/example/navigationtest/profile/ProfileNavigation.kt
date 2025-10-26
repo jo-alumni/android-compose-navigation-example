@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Profile(val id: Int)
+data class Profile(val id: String)
 
 fun NavGraphBuilder.profileScreen(
     navigateBack: () -> Unit,
@@ -26,4 +26,4 @@ fun NavGraphBuilder.profileScreen(
     }
 }
 
-fun NavController.navigateToProfile(id: Int, navOptions: NavOptions? = null) = navigate(Profile(id), navOptions)
+fun NavController.navigateToProfile(id: String, navOptions: NavOptions? = null) = navigate(Profile(id), navOptions)

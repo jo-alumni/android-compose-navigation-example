@@ -33,7 +33,7 @@ class HomeViewModel : ViewModel() {
                             id = it,
                             content = "content$it",
                             postUser = Profile(
-                                id = it,
+                                id = "user_id_$it",
                                 name = "user_name_$it",
                                 description = "description_$it",
                             ),
