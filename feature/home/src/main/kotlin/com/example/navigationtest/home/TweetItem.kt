@@ -44,7 +44,7 @@ fun TweetItem(
             .fillMaxWidth()
             .clickable { onClickTweet(tweet) }
             .heightIn(min = 100.dp, max = 200.dp)
-            .background(color = Color.White, shape = RoundedCornerShape(size = 8.dp))
+            .background(color = Color.White)
             .padding(all = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
