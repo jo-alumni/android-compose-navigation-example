@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,6 +27,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.navigation_test.core.R
+import com.example.navigationtest.core.entity.EntityFaker
 import com.example.navigationtest.core.entity.Profile
 import com.example.navigationtest.core.entity.Tweet
 import com.example.navigationtest.core.ui.theme.AppTheme
@@ -79,34 +79,16 @@ fun TweetItem(
 private class TweetParameterProvider : PreviewParameterProvider<Tweet> {
     override val values: Sequence<Tweet> = sequenceOf(
         // basic
-        Tweet(
-            id = 1,
-            content = "This is a sample tweet content for the preview.",
-            postUser = Profile(
-                id = "sample_user",
-                name = "Sample User",
-                description = "This is a sample user description.",
-            ),
-        ),
+        EntityFaker.fakeTweet(),
         // Too long name
-        Tweet(
-            id = 1,
-            content = "This is a sample tweet content for the preview.",
-            postUser = Profile(
-                id = "sample_user",
-                name = "Sample User ".repeat(10),
-                description = "This is a sample user description.",
+        EntityFaker.fakeTweet().copy(
+            postUser = EntityFaker.fakeProfile().copy(
+                name = "Too long name.".repeat(100)
             ),
         ),
         // Too long content
-        Tweet(
-            id = 1,
-            content = "This is a sample tweet content for the preview.",
-            postUser = Profile(
-                id = "sample_user",
-                name = "Sample User",
-                description = "This is a sample user description.".repeat(10),
-            ),
+        EntityFaker.fakeTweet().copy(
+            content = "Too long content.".repeat(100)
         ),
     )
 }

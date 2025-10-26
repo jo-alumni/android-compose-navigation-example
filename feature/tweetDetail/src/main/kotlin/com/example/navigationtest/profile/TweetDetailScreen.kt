@@ -14,7 +14,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.navigationtest.core.entity.Profile
+import com.example.navigationtest.core.entity.EntityFaker
 import com.example.navigationtest.core.entity.Tweet
 import com.example.navigationtest.core.ui.theme.AppTheme
 
@@ -51,16 +51,7 @@ fun TweetDetailScreen(
 private fun TweetScreenPreview() {
     AppTheme {
         TweetDetailScreen(
-            tweet =
-                Tweet(
-                    id = 1,
-                    content = "content",
-                    postUser = Profile(
-                        id = "user_id",
-                        name = "user_name",
-                        description = "description",
-                    ),
-                ),
+            tweet = EntityFaker.fakeTweet(),
         )
     }
 }
