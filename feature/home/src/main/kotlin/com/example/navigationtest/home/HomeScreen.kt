@@ -139,7 +139,7 @@ private fun HomeScreen(
                             count = uiState.tweets.data.size,
                             key = { index -> uiState.tweets.data[index].id },
                         ) {
-                            HomeItem(
+                            TweetItem(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(8.dp),
