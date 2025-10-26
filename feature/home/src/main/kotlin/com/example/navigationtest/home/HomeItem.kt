@@ -18,10 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.example.navigation_test.core.R
 import com.example.navigationtest.core.entity.Profile
 import com.example.navigationtest.core.entity.Tweet
 import com.example.navigationtest.core.ui.theme.AppTheme
@@ -56,6 +58,7 @@ fun HomeItem(
                 contentDescription = null,
             )
             Text(tweet.postUser.name)
+            Text(text = stringResource(R.string.user_id_prefix, tweet.postUser.id))
         }
         Text(text = tweet.content, overflow = TextOverflow.Ellipsis)
     }
