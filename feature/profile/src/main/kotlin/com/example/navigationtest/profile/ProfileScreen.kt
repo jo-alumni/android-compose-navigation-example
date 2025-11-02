@@ -19,12 +19,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.LoadingState
+import com.example.navigationtest.domain.entity.EntityFaker
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
-    uiState: LoadingState<ProfileUiState>,
+    uiState: ProfileUiState,
     navigateBack: () -> Unit,
 ) {
     Scaffold(
@@ -43,28 +44,28 @@ fun ProfileScreen(
         },
     ) { paddingValues ->
         Box(modifier = modifier.padding(paddingValues)) {
-            when (uiState) {
+            when (uiState.profile) {
                 LoadingState.Failure -> Text("Failure")
                 LoadingState.Loading -> CircularProgressIndicator()
-                is LoadingState.Success -> Text(uiState.data.text)
+                is LoadingState.Success -> Text("${uiState.profile}")
             }
         }
     }
 }
 
-private class UiStateParameterProvider : PreviewParameterProvider<LoadingState<ProfileUiState>> {
-    override val values: Sequence<LoadingState<ProfileUiState>>
+private class UiStateParameterProvider : PreviewParameterProvider<ProfileUiState> {
+    override val values: Sequence<ProfileUiState>
         get() = sequenceOf(
-            LoadingState.Loading,
-            LoadingState.Success(ProfileUiState("Success")),
-            LoadingState.Failure,
+            ProfileUiState(profile = LoadingState.Loading),
+            ProfileUiState(profile = LoadingState.Success(EntityFaker.fakeProfile())),
+            ProfileUiState(profile = LoadingState.Failure),
         )
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfileScreenPreview(
-    @PreviewParameter(UiStateParameterProvider::class) uiState: LoadingState<ProfileUiState>,
+    @PreviewParameter(UiStateParameterProvider::class) uiState: ProfileUiState,
 ) {
     AppTheme {
         ProfileScreen(
