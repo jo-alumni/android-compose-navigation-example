@@ -64,9 +64,7 @@ fun TweetView(
             contentDescription = null,
         )
         Column {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     modifier = Modifier.weight(1f),
                     text = buildAnnotatedString {
@@ -99,28 +97,20 @@ fun TweetView(
 private class TweetParameterProvider : PreviewParameterProvider<TweetParameterProvider.Parameter> {
     override val values: Sequence<Parameter> = sequenceOf(
         // default
-        Parameter.default(),
+        Parameter(),
         // Too long name
-        Parameter.default().copy(name = "Too long name.".repeat(100)),
+        Parameter().copy(name = "Too long name.".repeat(100)),
         // Too long userId
-        Parameter.default().copy(userId = "too_long_user_id-".repeat(100)),
+        Parameter().copy(userId = "too_long_user_id-".repeat(100)),
         // Too long content
-        Parameter.default().copy(content = "Too long content.".repeat(100)),
+        Parameter().copy(content = "Too long content.".repeat(100)),
     )
 
     data class Parameter(
-        val name: String,
-        val userId: String,
-        val content: String,
-    ) {
-        companion object {
-            fun default() = Parameter(
-                name = "Sample User",
-                userId = "sample_user",
-                content = "This is a sample tweet content.",
-            )
-        }
-    }
+        val name: String = "Sample User",
+        val userId: String = "sample_user",
+        val content: String = "This is a sample tweet content.",
+    )
 }
 
 @Preview
