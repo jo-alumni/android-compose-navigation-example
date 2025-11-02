@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
-
     val uiState = _uiState.asStateFlow()
     suspend fun load() {
         _uiState.update { state -> state.copy(tweets = LoadingState.Loading) }
