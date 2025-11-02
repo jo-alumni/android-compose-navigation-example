@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,15 +15,17 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.navigationtest.core.ui.theme.AppTheme
+import com.example.navigationtest.core.util.LoadingState
 import com.example.navigationtest.domain.entity.EntityFaker
-import com.example.navigationtest.domain.entity.Tweet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TweetDetailScreen(
     modifier: Modifier = Modifier,
-    tweet: Tweet?,
+    uiState: LoadingState<TweetDetailUiState>,
     navigateBack: () -> Unit = {},
 ) {
     Scaffold(
@@ -41,17 +44,30 @@ fun TweetDetailScreen(
         },
     ) { paddingValues ->
         Box(modifier = modifier.padding(paddingValues)) {
-            Text(text = tweet.toString())
+            when (uiState) {
+                LoadingState.Failure -> Text("Failure")
+                LoadingState.Loading -> CircularProgressIndicator()
+                is LoadingState.Success -> Text(uiState.data.tweet.toString())
+            }
         }
     }
 }
 
+private class UiStatePreviewParameter : PreviewParameterProvider<LoadingState<TweetDetailUiState>> {
+    override val values: Sequence<LoadingState<TweetDetailUiState>>
+        get() = sequenceOf(
+            LoadingState.Loading,
+            LoadingState.Failure,
+            LoadingState.Success(TweetDetailUiState(EntityFaker.fakeTweet())),
+        )
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun TweetScreenPreview() {
+private fun TweetScreenPreview(
+    @PreviewParameter(UiStatePreviewParameter::class) uiState: LoadingState<TweetDetailUiState>,
+) {
     AppTheme {
-        TweetDetailScreen(
-            tweet = EntityFaker.fakeTweet(),
-        )
+        TweetDetailScreen(uiState = uiState)
     }
 }

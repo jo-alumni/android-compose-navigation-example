@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.example.navigationtest.core.util.LoadingState
 import com.example.navigationtest.domain.entity.Profile
 import com.example.navigationtest.domain.entity.Tweet
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,23 +14,27 @@ import kotlinx.coroutines.launch
 class TweetDetailViewModel(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val route = savedStateHandle.toRoute<TweetDetail>()
-    private val _tweet = MutableStateFlow<Tweet?>(null)
-
-    val tweet = _tweet.asStateFlow()
+    private val route = savedStateHandle.toRoute<TweetDetailDestination>()
+    private val _uiState = MutableStateFlow<LoadingState<TweetDetailUiState>>(LoadingState.Loading)
+    val uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            _tweet.value =
-                Tweet(
-                    id = route.id,
-                    content = "content${route.id}",
-                    postUser = Profile(
-                        id = "user_${route.id}",
-                        name = "user_name_${route.id}",
-                        description = "description_${route.id}",
+            _uiState.emit(
+                LoadingState.Success(
+                    TweetDetailUiState(
+                        Tweet(
+                            id = route.id,
+                            content = "content${route.id}",
+                            postUser = Profile(
+                                id = "user_${route.id}",
+                                name = "user_name_${route.id}",
+                                description = "description_${route.id}",
+                            ),
+                        ),
                     ),
-                )
+                ),
+            )
         }
     }
 }

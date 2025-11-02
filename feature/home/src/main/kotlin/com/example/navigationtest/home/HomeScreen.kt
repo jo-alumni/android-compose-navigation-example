@@ -155,7 +155,7 @@ private fun HomeScreen(
     }
 }
 
-private class HomeUiStateParameterProvider : PreviewParameterProvider<HomeUiState> {
+private class UiStateParameterProvider : PreviewParameterProvider<HomeUiState> {
     override val values: Sequence<HomeUiState> = sequenceOf(
         HomeUiState(LoadingState.Loading),
         HomeUiState(
@@ -180,7 +180,7 @@ private class HomeUiStateParameterProvider : PreviewParameterProvider<HomeUiStat
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun HomeScreenPreview(
-    @PreviewParameter(HomeUiStateParameterProvider::class) uiState: HomeUiState,
+    @PreviewParameter(UiStateParameterProvider::class) uiState: HomeUiState,
 ) {
     AppTheme {
         HomeScreen(

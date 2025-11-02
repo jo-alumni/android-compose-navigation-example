@@ -10,19 +10,19 @@ import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TweetDetail(val id: Int)
+internal data class TweetDetailDestination(val id: Int)
 
 fun NavGraphBuilder.tweetDetailScreen(
     navigateBack: () -> Unit,
 ) {
-    composable<TweetDetail> {
+    composable<TweetDetailDestination> {
         val viewModel = viewModel<TweetDetailViewModel>()
-        val tweet by viewModel.tweet.collectAsStateWithLifecycle()
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         TweetDetailScreen(
-            tweet = tweet,
+            uiState = uiState,
             navigateBack = navigateBack,
         )
     }
 }
 
-fun NavController.navigateToTweetDetail(id: Int, navOptions: NavOptions? = null) = navigate(TweetDetail(id), navOptions)
+fun NavController.navigateToTweetDetail(id: Int, navOptions: NavOptions? = null) = navigate(TweetDetailDestination(id), navOptions)

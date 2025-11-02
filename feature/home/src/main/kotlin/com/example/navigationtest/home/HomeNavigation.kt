@@ -14,13 +14,13 @@ import com.example.navigationtest.domain.entity.Tweet
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object Home
+internal data object HomeDestination
 
 fun NavGraphBuilder.homeScreen(
     navigateProfile: (Profile) -> Unit,
     navigateTweet: (Tweet) -> Unit,
 ) {
-    composable<Home> {
+    composable<HomeDestination> {
         val viewModel = viewModel<HomeViewModel>()
         HomeRoot(
             modifier = Modifier.fillMaxSize(),
@@ -32,6 +32,6 @@ fun NavGraphBuilder.homeScreen(
     }
 }
 
-fun NavController.navigateHome(navOptions: NavOptions? = null) = navigate(route = Home, navOptions = navOptions)
+fun NavController.navigateHome(navOptions: NavOptions? = null) = navigate(route = HomeDestination, navOptions = navOptions)
 
 

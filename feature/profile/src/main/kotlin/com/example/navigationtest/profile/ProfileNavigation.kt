@@ -10,12 +10,12 @@ import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Profile(val id: String)
+internal data class ProfileDestination(val id: String)
 
 fun NavGraphBuilder.profileScreen(
     navigateBack: () -> Unit,
 ) {
-    composable<Profile> {
+    composable<ProfileDestination> {
         val viewModel = viewModel<ProfileViewModel>()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         ProfileScreen(
@@ -26,4 +26,4 @@ fun NavGraphBuilder.profileScreen(
     }
 }
 
-fun NavController.navigateToProfile(id: String, navOptions: NavOptions? = null) = navigate(Profile(id), navOptions)
+fun NavController.navigateToProfile(id: String, navOptions: NavOptions? = null) = navigate(ProfileDestination(id), navOptions)

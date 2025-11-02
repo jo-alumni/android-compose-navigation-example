@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.navigationtest.home.Home
+import com.example.navigationtest.home.HomeDestination
 import com.example.navigationtest.home.homeScreen
 import com.example.navigationtest.profile.navigateToProfile
 import com.example.navigationtest.profile.navigateToTweetDetail
@@ -19,7 +19,7 @@ fun AppNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Home,
+        startDestination = HomeDestination,
     ) {
         homeScreen(
             navigateProfile = { profile -> navController.navigateToProfile(profile.id) },
