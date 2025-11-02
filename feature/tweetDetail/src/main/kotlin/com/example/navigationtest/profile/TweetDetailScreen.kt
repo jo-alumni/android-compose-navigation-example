@@ -25,7 +25,7 @@ import com.example.navigationtest.domain.entity.EntityFaker
 @Composable
 fun TweetDetailScreen(
     modifier: Modifier = Modifier,
-    uiState: LoadingState<TweetDetailUiState>,
+    uiState: TweetDetailUiState,
     navigateBack: () -> Unit = {},
 ) {
     Scaffold(
@@ -44,28 +44,28 @@ fun TweetDetailScreen(
         },
     ) { paddingValues ->
         Box(modifier = modifier.padding(paddingValues)) {
-            when (uiState) {
+            when (uiState.tweet) {
                 LoadingState.Failure -> Text("Failure")
                 LoadingState.Loading -> CircularProgressIndicator()
-                is LoadingState.Success -> Text(uiState.data.tweet.toString())
+                is LoadingState.Success -> Text(uiState.tweet.data.toString())
             }
         }
     }
 }
 
-private class UiStatePreviewParameter : PreviewParameterProvider<LoadingState<TweetDetailUiState>> {
-    override val values: Sequence<LoadingState<TweetDetailUiState>>
+private class UiStatePreviewParameter : PreviewParameterProvider<TweetDetailUiState> {
+    override val values: Sequence<TweetDetailUiState>
         get() = sequenceOf(
-            LoadingState.Loading,
-            LoadingState.Failure,
-            LoadingState.Success(TweetDetailUiState(EntityFaker.fakeTweet())),
+            TweetDetailUiState(LoadingState.Loading),
+            TweetDetailUiState(LoadingState.Failure),
+            TweetDetailUiState(LoadingState.Success((EntityFaker.fakeTweet()))),
         )
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun TweetScreenPreview(
-    @PreviewParameter(UiStatePreviewParameter::class) uiState: LoadingState<TweetDetailUiState>,
+    @PreviewParameter(UiStatePreviewParameter::class) uiState: TweetDetailUiState,
 ) {
     AppTheme {
         TweetDetailScreen(uiState = uiState)
