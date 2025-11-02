@@ -13,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -43,11 +44,39 @@ fun ProfileScreen(
             )
         },
     ) { paddingValues ->
-        Box(modifier = modifier.padding(paddingValues)) {
-            when (uiState.profile) {
-                LoadingState.Failure -> Text("Failure")
-                LoadingState.Loading -> CircularProgressIndicator()
-                is LoadingState.Success -> Text("${uiState.profile}")
+        when (uiState.profile) {
+            LoadingState.Failure -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                ) {
+                    Text(
+                        modifier = Modifier.align(Alignment.Center),
+                        text = "Failure",
+                    )
+                }
+            }
+
+            LoadingState.Loading -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                ) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+            }
+
+            is LoadingState.Success -> {
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                ) {
+                    Text("${uiState.profile}")
+                }
             }
         }
     }
