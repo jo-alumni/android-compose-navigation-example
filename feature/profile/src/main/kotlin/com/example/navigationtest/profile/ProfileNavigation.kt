@@ -22,7 +22,6 @@ fun NavGraphBuilder.profileScreen(
             uiState = uiState,
             navigateBack = navigateBack,
         )
-
     }
 }
 

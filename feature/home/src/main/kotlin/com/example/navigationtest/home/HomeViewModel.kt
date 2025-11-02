@@ -24,7 +24,7 @@ class HomeViewModel : ViewModel() {
 
     private suspend fun fetchTweets() {
         _uiState.update { it.copy(tweets = LoadingState.Loading) }
-        delay(10000)
+        delay(1000)
         _uiState.update {
             it.copy(
                 LoadingState.Success(

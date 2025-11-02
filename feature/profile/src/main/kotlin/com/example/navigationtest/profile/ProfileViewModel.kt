@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.navigationtest.core.util.LoadingState
 import com.example.navigationtest.domain.entity.Profile
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -14,11 +15,12 @@ class ProfileViewModel(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val route = savedStateHandle.toRoute<ProfileDestination>()
-    private val _uiState = MutableStateFlow(ProfileUiState.loading())
+    private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
+            delay(1000)
             _uiState.emit(
                 ProfileUiState(
                     profile = LoadingState.Success(
