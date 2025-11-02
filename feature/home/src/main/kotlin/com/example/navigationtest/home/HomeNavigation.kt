@@ -14,7 +14,7 @@ import com.example.navigationtest.domain.entity.Tweet
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object HomeDestination
+data object HomeDestination
 
 fun NavGraphBuilder.homeScreen(
     navigateProfile: (Profile) -> Unit,
