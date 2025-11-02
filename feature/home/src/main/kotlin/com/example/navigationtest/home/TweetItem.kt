@@ -27,10 +27,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.navigation_test.core.R
-import com.example.navigationtest.core.entity.EntityFaker
-import com.example.navigationtest.core.entity.Profile
-import com.example.navigationtest.core.entity.Tweet
 import com.example.navigationtest.core.ui.theme.AppTheme
+import com.example.navigationtest.domain.entity.EntityFaker
+import com.example.navigationtest.domain.entity.Profile
+import com.example.navigationtest.domain.entity.Tweet
 
 @Composable
 fun TweetItem(
@@ -83,12 +83,12 @@ private class TweetParameterProvider : PreviewParameterProvider<Tweet> {
         // Too long name
         EntityFaker.fakeTweet().copy(
             postUser = EntityFaker.fakeProfile().copy(
-                name = "Too long name.".repeat(100)
+                name = "Too long name.".repeat(100),
             ),
         ),
         // Too long content
         EntityFaker.fakeTweet().copy(
-            content = "Too long content.".repeat(100)
+            content = "Too long content.".repeat(100),
         ),
     )
 }

@@ -1,4 +1,4 @@
-package com.example.navigationtest.core.entity
+package com.example.navigationtest.domain.entity
 
 object EntityFaker {
     fun fakeTweet() = Tweet(

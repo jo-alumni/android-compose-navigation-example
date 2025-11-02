@@ -14,9 +14,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.navigationtest.core.entity.EntityFaker
-import com.example.navigationtest.core.entity.Tweet
 import com.example.navigationtest.core.ui.theme.AppTheme
+import com.example.navigationtest.domain.entity.EntityFaker
+import com.example.navigationtest.domain.entity.Tweet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

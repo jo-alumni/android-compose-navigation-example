@@ -32,11 +32,11 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.navigationtest.core.entity.Profile
-import com.example.navigationtest.core.entity.Tweet
 import com.example.navigationtest.core.ui.component.AppNavigationDrawer
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.LoadingState
+import com.example.navigationtest.domain.entity.Profile
+import com.example.navigationtest.domain.entity.Tweet
 import kotlinx.coroutines.launch
 
 @Composable

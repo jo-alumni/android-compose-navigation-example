@@ -2,9 +2,9 @@ package com.example.navigationtest.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.navigationtest.core.entity.Profile
-import com.example.navigationtest.core.entity.Tweet
 import com.example.navigationtest.core.util.LoadingState
+import com.example.navigationtest.domain.entity.Profile
+import com.example.navigationtest.domain.entity.Tweet
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
