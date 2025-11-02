@@ -10,8 +10,13 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -37,6 +42,7 @@ fun TweetView(
     content: String,
     onClickTweet: () -> Unit = {},
     onClickProfile: () -> Unit = {},
+    onClickMore: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
@@ -58,17 +64,32 @@ fun TweetView(
             contentDescription = null,
         )
         Column {
-            Text(
-                text = buildAnnotatedString {
-                    append(name)
-                    append(" ")
-                    withStyle(SpanStyle(color = Color.Gray)) {
-                        append(stringResource(R.string.user_id_prefix, userId))
-                    }
-                },
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = buildAnnotatedString {
+                        append(name)
+                        append(" ")
+                        withStyle(SpanStyle(color = Color.Gray)) {
+                            append(stringResource(R.string.user_id_prefix, userId))
+                        }
+                    },
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                )
+                IconButton(
+                    modifier = Modifier.size(20.dp),
+                    onClick = onClickMore,
+                ) {
+                    Icon(
+                        modifier = Modifier.size(20.dp),
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = null,
+                    )
+                }
+            }
 
             Text(text = content, overflow = TextOverflow.Ellipsis)
         }
