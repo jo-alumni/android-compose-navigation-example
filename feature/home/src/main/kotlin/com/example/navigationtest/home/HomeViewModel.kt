@@ -15,18 +15,11 @@ class HomeViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
 
     val uiState = _uiState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            fetchTweets()
-        }
-    }
-
-    private suspend fun fetchTweets() {
-        _uiState.update { it.copy(tweets = LoadingState.Loading) }
+    suspend fun load() {
+        _uiState.update { state -> state.copy(tweets = LoadingState.Loading) }
         delay(1000)
-        _uiState.update {
-            it.copy(
+        _uiState.update { state ->
+            state.copy(
                 LoadingState.Success(
                     (1..50).map {
                         Tweet(
@@ -42,5 +35,9 @@ class HomeViewModel : ViewModel() {
                 ),
             )
         }
+    }
+
+    init {
+        viewModelScope.launch { load() }
     }
 }
