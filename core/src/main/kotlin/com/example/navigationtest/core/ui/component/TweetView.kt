@@ -1,4 +1,4 @@
-package com.example.navigationtest.home
+package com.example.navigationtest.core.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,21 +28,20 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.navigation_test.core.R
 import com.example.navigationtest.core.ui.theme.AppTheme
-import com.example.navigationtest.domain.entity.EntityFaker
-import com.example.navigationtest.domain.entity.Profile
-import com.example.navigationtest.domain.entity.Tweet
 
 @Composable
-fun TweetItem(
+fun TweetView(
     modifier: Modifier = Modifier,
-    tweet: Tweet,
-    onClickTweet: (Tweet) -> Unit = {},
-    onClickProfile: (Profile) -> Unit = {},
+    name: String,
+    userId: String,
+    content: String,
+    onClickTweet: () -> Unit = {},
+    onClickProfile: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onClickTweet(tweet) }
+            .clickable { onClickTweet() }
             .heightIn(min = 100.dp, max = 200.dp)
             .background(color = Color.White)
             .padding(all = 8.dp),
@@ -53,7 +52,7 @@ fun TweetItem(
                 .size(35.dp)
                 .clip(CircleShape)
                 .background(Color.Black)
-                .clickable { onClickProfile(tweet.postUser) },
+                .clickable { onClickProfile() },
             model = "https://placehold.jp/200x200.png",
             contentScale = ContentScale.Crop,
             contentDescription = null,
@@ -61,42 +60,56 @@ fun TweetItem(
         Column {
             Text(
                 text = buildAnnotatedString {
-                    append(tweet.postUser.name)
+                    append(name)
                     append(" ")
                     withStyle(SpanStyle(color = Color.Gray)) {
-                        append(stringResource(R.string.user_id_prefix, tweet.postUser.id))
+                        append(stringResource(R.string.user_id_prefix, userId))
                     }
                 },
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
             )
 
-            Text(text = tweet.content, overflow = TextOverflow.Ellipsis)
+            Text(text = content, overflow = TextOverflow.Ellipsis)
         }
     }
 }
 
-private class TweetParameterProvider : PreviewParameterProvider<Tweet> {
-    override val values: Sequence<Tweet> = sequenceOf(
-        // basic
-        EntityFaker.fakeTweet(),
+private class TweetParameterProvider : PreviewParameterProvider<TweetParameterProvider.Parameter> {
+    override val values: Sequence<Parameter> = sequenceOf(
+        // default
+        Parameter.default(),
         // Too long name
-        EntityFaker.fakeTweet().copy(
-            postUser = EntityFaker.fakeProfile().copy(
-                name = "Too long name.".repeat(100),
-            ),
-        ),
+        Parameter.default().copy(name = "Too long name.".repeat(100)),
+        // Too long userId
+        Parameter.default().copy(userId = "too_long_user_id-".repeat(100)),
         // Too long content
-        EntityFaker.fakeTweet().copy(
-            content = "Too long content.".repeat(100),
-        ),
+        Parameter.default().copy(content = "Too long content.".repeat(100)),
     )
+
+    data class Parameter(
+        val name: String,
+        val userId: String,
+        val content: String,
+    ) {
+        companion object {
+            fun default() = Parameter(
+                name = "Sample User",
+                userId = "sample_user",
+                content = "This is a sample tweet content.",
+            )
+        }
+    }
 }
 
 @Preview
 @Composable
-private fun TweetItemPreview(@PreviewParameter(TweetParameterProvider::class) tweet: Tweet) {
+private fun TweetViewPreview(@PreviewParameter(TweetParameterProvider::class) parameter: TweetParameterProvider.Parameter) {
     AppTheme {
-        TweetItem(tweet = tweet)
+        TweetView(
+            name = parameter.name,
+            userId = parameter.userId,
+            content = parameter.content,
+        )
     }
 }

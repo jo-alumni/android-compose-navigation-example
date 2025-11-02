@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -33,6 +34,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.navigationtest.core.ui.component.AppNavigationDrawer
+import com.example.navigationtest.core.ui.component.TweetView
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.LoadingState
 import com.example.navigationtest.domain.entity.Profile
@@ -136,16 +138,18 @@ private fun HomeScreen(
                         state = lazyListState,
                     ) {
                         items(
-                            count = uiState.tweets.data.size,
-                            key = { index -> uiState.tweets.data[index].id },
+                            items = uiState.tweets.data,
+                            key = { it.id },
                         ) {
-                            TweetItem(
+                            TweetView(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(8.dp),
-                                tweet = uiState.tweets.data[it],
-                                onClickTweet = navigateTweet,
-                                onClickProfile = navigateProfile,
+                                name = it.postUser.name,
+                                userId = it.postUser.id,
+                                content = it.content,
+                                onClickTweet = { navigateTweet(it) },
+                                onClickProfile = { navigateProfile(it.postUser) },
                             )
                         }
                     }
