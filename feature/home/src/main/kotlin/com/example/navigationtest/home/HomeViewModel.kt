@@ -2,7 +2,6 @@ package com.example.navigationtest.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.navigationtest.core.util.LoadingState
 import com.example.navigationtest.domain.entity.Profile
 import com.example.navigationtest.domain.entity.Tweet
 import kotlinx.coroutines.delay
@@ -12,15 +11,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(HomeUiState())
+    private val _uiState = MutableStateFlow(HomeUiState.Default)
     val uiState = _uiState.asStateFlow()
-    suspend fun load() {
-        _uiState.update { state -> state.copy(tweets = LoadingState.Loading) }
-        delay(1000)
-        _uiState.update { state ->
-            state.copy(
-                LoadingState.Success(
-                    (1..50).map {
+    fun load() {
+        viewModelScope.launch {
+            _uiState.update { state -> HomeUiState.Loading(tweets = state.tweets) }
+            delay(1000)
+            _uiState.update { _ ->
+                HomeUiState.Success(
+                    tweets = (1..50).map {
                         Tweet(
                             id = it,
                             content = "content$it",
@@ -31,8 +30,8 @@ class HomeViewModel : ViewModel() {
                             ),
                         )
                     },
-                ),
-            )
+                )
+            }
         }
     }
 
