@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.render
-import com.example.navigationtest.domain.entity.EntityFaker
+import com.example.navigationtest.domain.entity.Profile
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,7 +85,7 @@ private class UiStateParameterProvider : PreviewParameterProvider<ProfileUiState
     override val values: Sequence<ProfileUiState>
         get() = sequenceOf(
             ProfileUiState.Loading(id = "1"),
-            ProfileUiState.Success(id = "1", profile = EntityFaker.fakeProfile()),
+            ProfileUiState.Success(id = "1", profile = Profile.fake()),
             ProfileUiState.Error(id = "1"),
         )
 }

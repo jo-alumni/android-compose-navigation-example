@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.render
-import com.example.navigationtest.domain.entity.EntityFaker
+import com.example.navigationtest.domain.entity.Tweet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,7 +85,7 @@ private class UiStatePreviewParameter : PreviewParameterProvider<TweetDetailUiSt
     override val values: Sequence<TweetDetailUiState>
         get() = sequenceOf(
             TweetDetailUiState.Loading(id = 1),
-            TweetDetailUiState.Success(id = 1, tweet = EntityFaker.fakeTweet()),
+            TweetDetailUiState.Success(id = 1, tweet = Tweet.fake()),
             TweetDetailUiState.Error(id = 1),
         )
 }
