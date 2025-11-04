@@ -21,6 +21,6 @@ sealed interface TweetDetailUiState : State {
     ) : TweetDetailUiState
 
     companion object {
-        fun default(tweetId: Int): TweetDetailUiState = Loading(tweetId)
+        fun default(id: Int): TweetDetailUiState = Loading(id)
     }
 }
