@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.navigationtest.core.ui.theme.AppTheme
-import com.example.navigationtest.core.util.LoadingState
+import com.example.navigationtest.core.util.render
 import com.example.navigationtest.domain.entity.EntityFaker
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,38 +45,36 @@ fun TweetDetailScreen(
         },
     ) { paddingValues ->
         Box(modifier = modifier.padding(paddingValues)) {
-            when (uiState.tweet) {
-                LoadingState.Failure -> {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(paddingValues),
-                    ) {
-                        Text(
-                            modifier = Modifier.align(Alignment.Center),
-                            text = "Failure",
-                        )
-                    }
+            uiState.render<TweetDetailUiState.Error> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                ) {
+                    Text(
+                        modifier = Modifier.align(Alignment.Center),
+                        text = "Failure",
+                    )
                 }
+            }
 
-                LoadingState.Loading -> {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(paddingValues),
-                    ) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                    }
+            uiState.render<TweetDetailUiState.Loading> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                ) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
+            }
 
-                is LoadingState.Success -> {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(paddingValues),
-                    ) {
-                        Text("${uiState.tweet}")
-                    }
+            uiState.render<TweetDetailUiState.Success> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                ) {
+                    Text("$tweet")
                 }
             }
         }
@@ -86,9 +84,9 @@ fun TweetDetailScreen(
 private class UiStatePreviewParameter : PreviewParameterProvider<TweetDetailUiState> {
     override val values: Sequence<TweetDetailUiState>
         get() = sequenceOf(
-            TweetDetailUiState(LoadingState.Loading),
-            TweetDetailUiState(LoadingState.Success((EntityFaker.fakeTweet()))),
-            TweetDetailUiState(LoadingState.Failure),
+            TweetDetailUiState.Loading(id = 1),
+            TweetDetailUiState.Success(id = 1, tweet = EntityFaker.fakeTweet()),
+            TweetDetailUiState.Error(id = 1),
         )
 }
 
