@@ -1,37 +1,29 @@
 package com.example.navigationtest.profile
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.example.navigationtest.core.util.LoadingState
+import com.example.navigationtest.core.util.StateViewModel
 import com.example.navigationtest.domain.entity.Profile
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     savedStateHandle: SavedStateHandle,
-) : ViewModel() {
-    private val route = savedStateHandle.toRoute<ProfileDestination>()
-    private val _uiState = MutableStateFlow(ProfileUiState())
-    val uiState = _uiState.asStateFlow()
-
+) : StateViewModel<ProfileUiState, ProfileUiEvent>(
+    initialState = ProfileUiState.default(savedStateHandle.toRoute<ProfileDestination>().id),
+) {
     suspend fun load() {
-        _uiState.update { state -> state.copy(profile = LoadingState.Loading) }
-
+        _uiState.update { state -> ProfileUiState.Loading(id = state.id) }
         delay(1000)
-
         _uiState.update { state ->
-            state.copy(
-                profile = LoadingState.Success(
-                    Profile(
-                        id = route.id,
-                        name = "name ${route.id}",
-                        description = "description ${route.id}",
-                    ),
+            ProfileUiState.Success(
+                id = state.id,
+                profile = Profile(
+                    id = state.id,
+                    name = "name ${state.id}",
+                    description = "description ${state.id}",
                 ),
             )
         }

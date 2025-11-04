@@ -158,7 +158,7 @@ private fun HomeScreen(
                                 Text(text = "Cancel")
                             }
                         },
-                        text = { Text(message) },
+                        text = { Text(text = cause?.message ?: "Unknown error") },
                     )
                 }
             }
@@ -183,8 +183,8 @@ private class UiStateParameterProvider : PreviewParameterProvider<HomeUiState> {
         HomeUiState.Success(tweets = tweets),
         HomeUiState.Loading(tweets = listOf()),
         HomeUiState.Loading(tweets = tweets),
-        HomeUiState.Error(tweets = listOf(), message = "error"),
-        HomeUiState.Error(tweets = tweets, message = "error"),
+        HomeUiState.Error(tweets = listOf(), cause = Exception("error")),
+        HomeUiState.Error(tweets = tweets, cause = Exception("error")),
     )
 }
 

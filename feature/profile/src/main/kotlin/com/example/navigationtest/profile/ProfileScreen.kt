@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.navigationtest.core.ui.theme.AppTheme
-import com.example.navigationtest.core.util.LoadingState
+import com.example.navigationtest.core.util.render
 import com.example.navigationtest.domain.entity.EntityFaker
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,50 +44,49 @@ fun ProfileScreen(
             )
         },
     ) { paddingValues ->
-        when (uiState.profile) {
-            LoadingState.Failure -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                ) {
-                    Text(
-                        modifier = Modifier.align(Alignment.Center),
-                        text = "Failure",
-                    )
-                }
-            }
-
-            LoadingState.Loading -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                ) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                }
-            }
-
-            is LoadingState.Success -> {
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                ) {
-                    Text("${uiState.profile}")
-                }
+        uiState.render<ProfileUiState.Error> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+            ) {
+                Text(
+                    modifier = Modifier.align(Alignment.Center),
+                    text = "Failure",
+                )
             }
         }
+        uiState.render<ProfileUiState.Loading> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+            ) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+        }
+
+
+        uiState.render<ProfileUiState.Success> {
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+            ) {
+                Text("$profile")
+            }
+        }
+
     }
 }
 
 private class UiStateParameterProvider : PreviewParameterProvider<ProfileUiState> {
     override val values: Sequence<ProfileUiState>
         get() = sequenceOf(
-            ProfileUiState(profile = LoadingState.Loading),
-            ProfileUiState(profile = LoadingState.Success(EntityFaker.fakeProfile())),
-            ProfileUiState(profile = LoadingState.Failure),
+            ProfileUiState.Loading(id = "1"),
+            ProfileUiState.Success(id = "1", profile = EntityFaker.fakeProfile()),
+            ProfileUiState.Error(id = "1"),
         )
 }
 

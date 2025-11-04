@@ -16,7 +16,7 @@ sealed interface HomeUiState : State {
 
     data class Error(
         override val tweets: List<Tweet>,
-        val message: String,
+        val cause: Throwable? = null,
     ) : HomeUiState
 
     companion object {

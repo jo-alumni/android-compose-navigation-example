@@ -17,6 +17,7 @@ sealed interface TweetDetailUiState : State {
 
     data class Error(
         override val id: Int,
+        val throwable: Throwable? = null,
     ) : TweetDetailUiState
 
     companion object {
