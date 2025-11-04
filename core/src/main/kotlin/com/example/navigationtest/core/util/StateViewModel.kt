@@ -18,8 +18,8 @@ abstract class StateViewModel<S : State, E : Event>(initialState: S) : ViewModel
 
     init {
         viewModelScope.launch {
-            uiState.collect { uiState -> Log.d(this@StateViewModel.javaClass.simpleName, "uiState: $uiState") }
-            uiEvent.collect { uiEvent -> Log.d(this@StateViewModel.javaClass.simpleName, "uiEvent: $uiEvent") }
+            launch { uiState.collect { uiState -> Log.d(this@StateViewModel.javaClass.simpleName, "uiState: $uiState") } }
+            launch { uiEvent.collect { uiEvent -> Log.d(this@StateViewModel.javaClass.simpleName, "uiEvent: $uiEvent") } }
         }
     }
 }
