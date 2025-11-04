@@ -30,7 +30,7 @@ fun TweetDetailScreen(
     navigateBack: () -> Unit = {},
 ) {
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
                 title = {},
