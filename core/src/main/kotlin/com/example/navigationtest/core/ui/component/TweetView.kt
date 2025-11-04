@@ -6,16 +6,26 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,7 +43,9 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.navigation_test.core.R
 import com.example.navigationtest.core.ui.theme.AppTheme
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TweetView(
     modifier: Modifier = Modifier,
@@ -42,8 +54,9 @@ fun TweetView(
     content: String,
     onClickTweet: () -> Unit = {},
     onClickProfile: () -> Unit = {},
-    onClickMore: () -> Unit = {},
 ) {
+    val scope = rememberCoroutineScope()
+    var showBottomSheet by remember { mutableStateOf(false) }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -79,7 +92,7 @@ fun TweetView(
                 )
                 IconButton(
                     modifier = Modifier.size(20.dp),
-                    onClick = onClickMore,
+                    onClick = { showBottomSheet = true },
                 ) {
                     Icon(
                         modifier = Modifier.size(20.dp),
@@ -90,6 +103,30 @@ fun TweetView(
             }
 
             Text(text = content, overflow = TextOverflow.Ellipsis)
+        }
+    }
+
+    if (showBottomSheet) {
+        val sheetState = rememberModalBottomSheetState()
+        ModalBottomSheet(
+            sheetState = sheetState,
+            onDismissRequest = { showBottomSheet = false },
+        ) {
+            val list = (1..3).toList()
+            list.forEachIndexed { index, it ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(30.dp)
+                        .clickable { scope.launch { sheetState.hide() } },
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text("test $it")
+                }
+                if (index != list.size - 1) {
+                    HorizontalDivider()
+                }
+            }
         }
     }
 }
