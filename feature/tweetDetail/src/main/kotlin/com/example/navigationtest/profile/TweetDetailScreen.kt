@@ -44,38 +44,36 @@ fun TweetDetailScreen(
             )
         },
     ) { paddingValues ->
-        Box(modifier = modifier.padding(paddingValues)) {
-            uiState.render<TweetDetailUiState.Error> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                ) {
-                    Text(
-                        modifier = Modifier.align(Alignment.Center),
-                        text = "Failure",
-                    )
-                }
+        uiState.render<TweetDetailUiState.Error> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+            ) {
+                Text(
+                    modifier = Modifier.align(Alignment.Center),
+                    text = "Failure",
+                )
             }
+        }
 
-            uiState.render<TweetDetailUiState.Loading> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                ) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                }
+        uiState.render<TweetDetailUiState.Loading> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+            ) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
+        }
 
-            uiState.render<TweetDetailUiState.Success> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                ) {
-                    Text("$tweet")
-                }
+        uiState.render<TweetDetailUiState.Success> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+            ) {
+                Text("$tweet")
             }
         }
     }

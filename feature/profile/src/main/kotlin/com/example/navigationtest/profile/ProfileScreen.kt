@@ -56,6 +56,7 @@ fun ProfileScreen(
                 )
             }
         }
+
         uiState.render<ProfileUiState.Loading> {
             Box(
                 modifier = Modifier
@@ -65,7 +66,6 @@ fun ProfileScreen(
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
         }
-
 
         uiState.render<ProfileUiState.Success> {
 
