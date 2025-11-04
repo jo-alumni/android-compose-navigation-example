@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -50,6 +51,16 @@ fun HomeRoot(
     modifier: Modifier = Modifier,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    // handle events
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collect {
+            when (it) {
+                else -> Unit
+            }
+        }
+    }
+
     HomeScreen(
         modifier = modifier,
         uiState = uiState,
@@ -171,7 +182,7 @@ private class UiStateParameterProvider : PreviewParameterProvider<HomeUiState> {
     override val values: Sequence<HomeUiState> = sequenceOf(
         HomeUiState.Success(tweets = tweets),
         HomeUiState.Loading(tweets = listOf()),
-        HomeUiState.Loading(tweets = listOf()),
+        HomeUiState.Loading(tweets = tweets),
         HomeUiState.Error(tweets = listOf(), message = "error"),
         HomeUiState.Error(tweets = tweets, message = "error"),
     )

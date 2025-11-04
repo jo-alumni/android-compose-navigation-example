@@ -1,8 +1,9 @@
 package com.example.navigationtest.home
 
+import com.example.navigationtest.core.util.State
 import com.example.navigationtest.domain.entity.Tweet
 
-sealed interface HomeUiState {
+sealed interface HomeUiState : State {
     val tweets: List<Tweet>
 
     data class Loading(
