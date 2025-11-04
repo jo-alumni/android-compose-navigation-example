@@ -16,9 +16,9 @@ class TweetDetailViewModel(
     initialState = TweetDetailUiState.default(savedStateHandle.toRoute<TweetDetailDestination>().id),
 ) {
     suspend fun load() {
-        _uiState.update { state -> TweetDetailUiState.Loading(state.id) }
+        mutableUiState.update { state -> TweetDetailUiState.Loading(state.id) }
         delay(1000)
-        _uiState.update { state ->
+        mutableUiState.update { state ->
             TweetDetailUiState.Success(
                 id = state.id,
                 tweet =

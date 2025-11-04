@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 abstract class StateViewModel<S : State, E : Event>(initialState: S) : ViewModel() {
-    protected val _uiState = MutableStateFlow(initialState)
-    val uiState: StateFlow<S> = _uiState.asStateFlow()
-    protected val _uiEvent = MutableSharedFlow<E>()
-    val uiEvent = _uiEvent.asSharedFlow()
+    protected val mutableUiState = MutableStateFlow(initialState)
+    val uiState: StateFlow<S> = mutableUiState.asStateFlow()
+    protected val mutableUiEvent = MutableSharedFlow<E>()
+    val uiEvent = mutableUiEvent.asSharedFlow()
 
     init {
         viewModelScope.launch {

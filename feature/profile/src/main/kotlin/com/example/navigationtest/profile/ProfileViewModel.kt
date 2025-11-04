@@ -15,9 +15,9 @@ class ProfileViewModel(
     initialState = ProfileUiState.default(savedStateHandle.toRoute<ProfileDestination>().id),
 ) {
     suspend fun load() {
-        _uiState.update { state -> ProfileUiState.Loading(id = state.id) }
+        mutableUiState.update { state -> ProfileUiState.Loading(id = state.id) }
         delay(1000)
-        _uiState.update { state ->
+        mutableUiState.update { state ->
             ProfileUiState.Success(
                 id = state.id,
                 profile = Profile(

@@ -11,9 +11,9 @@ import kotlinx.coroutines.launch
 class HomeViewModel : StateViewModel<HomeUiState, HomeUiEvent>(initialState = HomeUiState.Default) {
     fun load() {
         viewModelScope.launch {
-            _uiState.update { state -> HomeUiState.Loading(tweets = state.tweets) }
+            mutableUiState.update { state -> HomeUiState.Loading(tweets = state.tweets) }
             delay(1000)
-            _uiState.update { _ ->
+            mutableUiState.update { _ ->
                 HomeUiState.Success(
                     tweets = (1..50).map {
                         Tweet(
