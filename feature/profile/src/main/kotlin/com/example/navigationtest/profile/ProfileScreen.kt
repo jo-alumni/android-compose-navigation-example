@@ -106,7 +106,7 @@ private class UiStateParameterProvider : PreviewParameterProvider<ProfileUiState
         )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 private fun ProfileScreenPreview(
     @PreviewParameter(UiStateParameterProvider::class) uiState: ProfileUiState,

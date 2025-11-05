@@ -190,7 +190,7 @@ private class UiStateParameterProvider : PreviewParameterProvider<HomeUiState> {
     )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview(
     @PreviewParameter(UiStateParameterProvider::class) uiState: HomeUiState,

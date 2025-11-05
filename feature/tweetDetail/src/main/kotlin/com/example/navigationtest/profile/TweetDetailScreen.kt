@@ -101,7 +101,7 @@ private class UiStatePreviewParameter : PreviewParameterProvider<TweetDetailUiSt
         )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 private fun TweetScreenPreview(
     @PreviewParameter(UiStatePreviewParameter::class) uiState: TweetDetailUiState,

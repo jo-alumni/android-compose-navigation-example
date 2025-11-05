@@ -76,7 +76,7 @@ fun AppNavigationDrawer(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 private fun AppNavigationDrawerPreview() {
     AppTheme {
