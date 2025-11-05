@@ -13,18 +13,30 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.render
 import com.example.navigationtest.domain.entity.Tweet
 
+@Composable
+internal fun TweetDetailRoot(
+    viewModel: TweetDetailViewModel = hiltViewModel(),
+    navigateBack: () -> Unit,
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    TweetDetailScreen(uiState = uiState, navigateBack = navigateBack)
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun TweetDetailScreen(
+private fun TweetDetailScreen(
     modifier: Modifier = Modifier,
     uiState: TweetDetailUiState,
     navigateBack: () -> Unit = {},

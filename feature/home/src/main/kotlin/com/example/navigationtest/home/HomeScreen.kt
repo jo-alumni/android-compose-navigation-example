@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.navigationtest.core.ui.component.AppNavigationDrawer
 import com.example.navigationtest.core.ui.component.TweetView
@@ -44,11 +45,11 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun HomeRoot(
-    viewModel: HomeViewModel,
     drawerState: DrawerState,
     navigateProfile: (Profile) -> Unit,
     navigateTweet: (Tweet) -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 

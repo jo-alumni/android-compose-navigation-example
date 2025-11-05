@@ -5,11 +5,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.navigationtest.core.util.StateViewModel
 import com.example.navigationtest.domain.usecase.GetTweetUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class TweetDetailViewModel(
+@HiltViewModel
+internal class TweetDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getTweetUseCase: GetTweetUseCase,
 ) : StateViewModel<TweetDetailUiState, TweetDetailUiEvent>(

@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.navigationTest.feature)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -12,6 +14,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.compose)
+    ksp(libs.hilt.compiler)
     implementation(projects.core)
     implementation(projects.domain)
 }

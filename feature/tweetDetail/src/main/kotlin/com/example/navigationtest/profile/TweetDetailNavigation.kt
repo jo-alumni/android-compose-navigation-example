@@ -16,12 +16,7 @@ fun NavGraphBuilder.tweetDetailScreen(
     navigateBack: () -> Unit,
 ) {
     composable<TweetDetailDestination> {
-        val viewModel = viewModel<TweetDetailViewModel>()
-        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-        TweetDetailScreen(
-            uiState = uiState,
-            navigateBack = navigateBack,
-        )
+        TweetDetailRoot(navigateBack = navigateBack)
     }
 }
 

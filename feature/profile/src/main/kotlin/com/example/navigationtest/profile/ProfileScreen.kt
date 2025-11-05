@@ -13,18 +13,33 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.render
 import com.example.navigationtest.domain.entity.Profile
 
+@Composable
+internal fun ProfileRoot(
+    navigateBack: () -> Unit,
+    viewModel: ProfileViewModel = hiltViewModel(),
+){
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    ProfileScreen(
+        uiState = uiState,
+        navigateBack = navigateBack,
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ProfileScreen(
+private fun ProfileScreen(
     modifier: Modifier = Modifier,
     uiState: ProfileUiState,
     navigateBack: () -> Unit,
