@@ -17,10 +17,6 @@ internal sealed interface TweetDetailUiState : State {
 
     data class Error(
         override val id: Int,
-        val throwable: Throwable? = null,
+        val cause: Throwable? = null,
     ) : TweetDetailUiState
-
-    companion object {
-        fun default(id: Int): TweetDetailUiState = Loading(id)
-    }
 }

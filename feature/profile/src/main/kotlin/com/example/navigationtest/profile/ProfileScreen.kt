@@ -24,7 +24,7 @@ import com.example.navigationtest.domain.entity.Profile
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(
+internal fun ProfileScreen(
     modifier: Modifier = Modifier,
     uiState: ProfileUiState,
     navigateBack: () -> Unit,

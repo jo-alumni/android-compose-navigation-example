@@ -24,7 +24,7 @@ import com.example.navigationtest.domain.entity.Tweet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TweetDetailScreen(
+internal fun TweetDetailScreen(
     modifier: Modifier = Modifier,
     uiState: TweetDetailUiState,
     navigateBack: () -> Unit = {},

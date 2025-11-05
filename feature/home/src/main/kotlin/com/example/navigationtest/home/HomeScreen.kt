@@ -43,7 +43,7 @@ import com.example.navigationtest.domain.entity.Tweet
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeRoot(
+internal fun HomeRoot(
     viewModel: HomeViewModel,
     drawerState: DrawerState,
     navigateProfile: (Profile) -> Unit,

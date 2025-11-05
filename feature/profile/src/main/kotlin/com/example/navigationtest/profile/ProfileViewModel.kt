@@ -4,29 +4,34 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.navigationtest.core.util.StateViewModel
-import com.example.navigationtest.domain.entity.Profile
+import com.example.navigationtest.domain.usecase.GetProfileUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class ProfileViewModel(
     savedStateHandle: SavedStateHandle,
+    private val getProfileUseCase: GetProfileUseCase,
 ) : StateViewModel<ProfileUiState, ProfileUiEvent>(
     initialState = ProfileUiState.Loading(savedStateHandle.toRoute<ProfileDestination>().id),
 ) {
     suspend fun load() {
         mutableUiState.update { state -> ProfileUiState.Loading(id = state.id) }
         delay(1000)
-        mutableUiState.update { state ->
-            ProfileUiState.Success(
-                id = state.id,
-                profile = Profile(
-                    id = state.id,
-                    name = "name ${state.id}",
-                    description = "description ${state.id}",
-                ),
-            )
-        }
+        runCatching {
+            getProfileUseCase.execute(GetProfileUseCase.Args(id = currentState.id))
+        }.fold(
+            onSuccess = {
+                mutableUiState.update { state ->
+                    ProfileUiState.Success(id = state.id, profile = it)
+                }
+            },
+            onFailure = {
+                mutableUiState.update { state ->
+                    ProfileUiState.Error(id = state.id, cause = it)
+                }
+            },
+        )
     }
 
     init {
