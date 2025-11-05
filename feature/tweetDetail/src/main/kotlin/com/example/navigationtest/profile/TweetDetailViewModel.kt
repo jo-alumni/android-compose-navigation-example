@@ -10,7 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class TweetDetailViewModel(
+internal class TweetDetailViewModel(
     savedStateHandle: SavedStateHandle,
 ) : StateViewModel<TweetDetailUiState, TweetDetailUiEvent>(
     initialState = TweetDetailUiState.default(savedStateHandle.toRoute<TweetDetailDestination>().id),

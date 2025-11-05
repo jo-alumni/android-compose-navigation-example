@@ -3,7 +3,7 @@ package com.example.navigationtest.profile
 import com.example.navigationtest.core.util.State
 import com.example.navigationtest.domain.entity.Tweet
 
-sealed interface TweetDetailUiState : State {
+internal sealed interface TweetDetailUiState : State {
     val id: Int
 
     data class Loading(

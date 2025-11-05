@@ -3,7 +3,7 @@ package com.example.navigationtest.profile
 import com.example.navigationtest.core.util.State
 import com.example.navigationtest.domain.entity.Profile
 
-sealed interface ProfileUiState : State {
+internal sealed interface ProfileUiState : State {
     val id: String
 
     data class Loading(
@@ -19,8 +19,4 @@ sealed interface ProfileUiState : State {
         override val id: String,
         val cause: Throwable? = null,
     ) : ProfileUiState
-
-    companion object {
-        fun default(id: String) = Loading(id)
-    }
 }

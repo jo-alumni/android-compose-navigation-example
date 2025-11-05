@@ -8,7 +8,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeViewModel : StateViewModel<HomeUiState, HomeUiEvent>(initialState = HomeUiState.Default) {
+internal class HomeViewModel : StateViewModel<HomeUiState, HomeUiEvent>(
+    initialState = HomeUiState.Loading(emptyList()),
+) {
     fun load() {
         viewModelScope.launch {
             mutableUiState.update { state -> HomeUiState.Loading(tweets = state.tweets) }

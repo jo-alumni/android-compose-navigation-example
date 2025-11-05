@@ -9,10 +9,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(
+internal class ProfileViewModel(
     savedStateHandle: SavedStateHandle,
 ) : StateViewModel<ProfileUiState, ProfileUiEvent>(
-    initialState = ProfileUiState.default(savedStateHandle.toRoute<ProfileDestination>().id),
+    initialState = ProfileUiState.Loading(savedStateHandle.toRoute<ProfileDestination>().id),
 ) {
     suspend fun load() {
         mutableUiState.update { state -> ProfileUiState.Loading(id = state.id) }
