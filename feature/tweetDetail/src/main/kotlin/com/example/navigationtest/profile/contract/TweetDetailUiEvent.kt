@@ -1,4 +1,4 @@
-package com.example.navigationtest.profile
+package com.example.navigationtest.profile.contract
 
 import com.example.navigationtest.core.util.Event
 

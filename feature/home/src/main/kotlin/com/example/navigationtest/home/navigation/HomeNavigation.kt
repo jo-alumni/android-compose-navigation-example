@@ -1,4 +1,4 @@
-package com.example.navigationtest.home
+package com.example.navigationtest.home.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerValue
@@ -10,6 +10,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.example.navigationtest.domain.entity.Profile
 import com.example.navigationtest.domain.entity.Tweet
+import com.example.navigationtest.home.HomeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable

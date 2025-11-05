@@ -24,12 +24,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.render
 import com.example.navigationtest.domain.entity.Profile
+import com.example.navigationtest.profile.contract.ProfileUiState
 
 @Composable
 internal fun ProfileRoot(
     navigateBack: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel(),
-){
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     ProfileScreen(
         uiState = uiState,

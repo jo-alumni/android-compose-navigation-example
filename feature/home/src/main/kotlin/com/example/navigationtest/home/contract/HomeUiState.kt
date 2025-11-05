@@ -1,4 +1,4 @@
-package com.example.navigationtest.home
+package com.example.navigationtest.home.contract
 
 import com.example.navigationtest.core.util.State
 import com.example.navigationtest.domain.entity.Tweet

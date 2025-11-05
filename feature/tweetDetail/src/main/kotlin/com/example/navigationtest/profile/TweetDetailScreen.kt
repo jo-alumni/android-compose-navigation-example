@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.render
 import com.example.navigationtest.domain.entity.Tweet
+import com.example.navigationtest.profile.contract.TweetDetailUiState
 
 @Composable
 internal fun TweetDetailRoot(

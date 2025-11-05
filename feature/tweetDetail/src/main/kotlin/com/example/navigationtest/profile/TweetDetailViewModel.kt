@@ -5,6 +5,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.navigationtest.core.util.StateViewModel
 import com.example.navigationtest.domain.usecase.GetTweetUseCase
+import com.example.navigationtest.profile.contract.TweetDetailUiEvent
+import com.example.navigationtest.profile.contract.TweetDetailUiState
+import com.example.navigationtest.profile.navigation.TweetDetailDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update

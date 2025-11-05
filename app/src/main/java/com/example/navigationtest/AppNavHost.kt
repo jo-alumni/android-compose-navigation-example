@@ -4,12 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.navigationtest.home.HomeDestination
-import com.example.navigationtest.home.homeScreen
-import com.example.navigationtest.profile.navigateToProfile
-import com.example.navigationtest.profile.navigateToTweetDetail
-import com.example.navigationtest.profile.profileScreen
-import com.example.navigationtest.profile.tweetDetailScreen
+import com.example.navigationtest.home.navigation.HomeDestination
+import com.example.navigationtest.home.navigation.homeScreen
+import com.example.navigationtest.profile.navigation.navigateToProfile
+import com.example.navigationtest.profile.navigation.navigateToTweetDetail
+import com.example.navigationtest.profile.navigation.profileScreen
+import com.example.navigationtest.profile.navigation.tweetDetailScreen
 
 @Composable
 fun AppNavHost(
