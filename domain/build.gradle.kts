@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.navigation_test.core.domain"
+    namespace = "com.example.navigation_test.domain"
 
     compileSdk = 36
 
