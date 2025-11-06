@@ -116,13 +116,12 @@ private fun HomeScreen(
             },
         ) { paddingValues ->
             PullToRefreshBox(
+                modifier = Modifier.padding(paddingValues),
                 isRefreshing = uiState is HomeUiState.Loading,
                 onRefresh = onRefresh,
             ) {
                 LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
+                    modifier = Modifier.fillMaxSize(),
                     state = lazyListState,
                 ) {
                     items(items = uiState.tweets, key = { it.id }) {
