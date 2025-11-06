@@ -22,14 +22,14 @@ fun AppNavHost(
         startDestination = HomeDestination,
     ) {
         homeScreen(
-            navigateProfile = { profile -> navController.navigateToProfile(profile.id) },
-            navigateTweet = { tweet -> navController.navigateToTweetDetail(tweet.id) },
+            navigateProfile = navController::navigateToProfile,
+            navigateTweet = navController::navigateToTweetDetail,
         )
         profileScreen(
-            navigateBack = { navController.popBackStack() },
+            navigateBack = navController::popBackStack,
         )
         tweetDetailScreen(
-            navigateBack = { navController.popBackStack() },
+            navigateBack = navController::popBackStack,
         )
     }
 }

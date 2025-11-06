@@ -8,8 +8,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.example.navigationtest.domain.entity.Profile
-import com.example.navigationtest.domain.entity.Tweet
 import com.example.navigationtest.home.HomeRoot
 import kotlinx.serialization.Serializable
 
@@ -17,8 +15,8 @@ import kotlinx.serialization.Serializable
 data object HomeDestination
 
 fun NavGraphBuilder.homeScreen(
-    navigateProfile: (Profile) -> Unit,
-    navigateTweet: (Tweet) -> Unit,
+    navigateProfile: (String) -> Unit,
+    navigateTweet: (String) -> Unit,
 ) {
     composable<HomeDestination> {
         HomeRoot(

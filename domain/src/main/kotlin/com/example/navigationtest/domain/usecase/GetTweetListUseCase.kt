@@ -6,6 +6,6 @@ interface GetTweetListUseCase : UseCase<Unit, List<Tweet>>
 
 class GetTweetListUseCaseImpl() : GetTweetListUseCase {
     override suspend fun execute(argument: Unit): List<Tweet> = (1..50).map {
-        Tweet.fake().copy(id = it)
+        Tweet.fake().copy(id = it.toString())
     }
 }

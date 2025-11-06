@@ -8,7 +8,7 @@ import com.example.navigationtest.profile.TweetDetailRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class TweetDetailDestination(val id: Int)
+internal data class TweetDetailDestination(val id: String)
 
 fun NavGraphBuilder.tweetDetailScreen(
     navigateBack: () -> Unit,
@@ -18,4 +18,4 @@ fun NavGraphBuilder.tweetDetailScreen(
     }
 }
 
-fun NavController.navigateToTweetDetail(id: Int, navOptions: NavOptions? = null) = navigate(TweetDetailDestination(id), navOptions)
+fun NavController.navigateToTweetDetail(id: String, navOptions: NavOptions? = null) = navigate(TweetDetailDestination(id), navOptions)

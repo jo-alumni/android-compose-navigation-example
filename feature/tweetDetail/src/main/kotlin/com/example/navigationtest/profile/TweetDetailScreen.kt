@@ -95,9 +95,9 @@ private fun TweetDetailScreen(
 private class UiStatePreviewParameter : PreviewParameterProvider<TweetDetailUiState> {
     override val values: Sequence<TweetDetailUiState>
         get() = sequenceOf(
-            TweetDetailUiState.Loading(id = 1),
-            TweetDetailUiState.Success(id = 1, tweet = Tweet.fake()),
-            TweetDetailUiState.Error(id = 1),
+            TweetDetailUiState.Loading(id = "1"),
+            TweetDetailUiState.Success(id = "1", tweet = Tweet.fake()),
+            TweetDetailUiState.Error(id = "1"),
         )
 }
 

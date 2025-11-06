@@ -47,8 +47,8 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun HomeRoot(
     drawerState: DrawerState,
-    navigateProfile: (Profile) -> Unit,
-    navigateTweet: (Tweet) -> Unit,
+    navigateProfile: (String) -> Unit,
+    navigateTweet: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
@@ -78,8 +78,8 @@ internal fun HomeRoot(
 private fun HomeScreen(
     uiState: HomeUiState,
     drawerState: DrawerState,
-    navigateProfile: (Profile) -> Unit,
-    navigateTweet: (Tweet) -> Unit,
+    navigateProfile: (String) -> Unit,
+    navigateTweet: (String) -> Unit,
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -87,15 +87,7 @@ private fun HomeScreen(
     val scope = rememberCoroutineScope()
     AppNavigationDrawer(
         modifier = modifier,
-        navigateProfile = {
-            navigateProfile(
-                Profile(
-                    id = "john_doe",
-                    name = "John Doe",
-                    description = "John Doe's description",
-                ),
-            )
-        },
+        navigateProfile = { navigateProfile("john_doe") },
         drawerState = drawerState,
     ) {
         Scaffold(
@@ -141,8 +133,8 @@ private fun HomeScreen(
                             name = it.postUser.name,
                             userId = it.postUser.id,
                             content = it.content,
-                            onClickTweet = { navigateTweet(it) },
-                            onClickProfile = { navigateProfile(it.postUser) },
+                            onClickTweet = { navigateTweet(it.id) },
+                            onClickProfile = { navigateProfile(it.postUser.id) },
                         )
                     }
                 }
@@ -171,7 +163,7 @@ private fun HomeScreen(
 private class UiStateParameterProvider : PreviewParameterProvider<HomeUiState> {
     private val tweets = (1..50).map {
         Tweet(
-            id = it,
+            id = "id_$it",
             content = "content$it",
             postUser = Profile(
                 id = "user_id_$it",

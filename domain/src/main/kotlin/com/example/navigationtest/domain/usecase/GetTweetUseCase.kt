@@ -3,7 +3,7 @@ package com.example.navigationtest.domain.usecase
 import com.example.navigationtest.domain.entity.Tweet
 
 interface GetTweetUseCase : UseCase<GetTweetUseCase.Args, Tweet> {
-    data class Args(val id: Int)
+    data class Args(val id: String)
 }
 
 class GetTweetUseCaseImpl() : GetTweetUseCase {
