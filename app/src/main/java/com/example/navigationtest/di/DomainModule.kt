@@ -13,7 +13,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object DomainModule {
     @Provides
     fun provideGetProfileUseCase(): GetProfileUseCase {
         return GetProfileUseCaseImpl()
