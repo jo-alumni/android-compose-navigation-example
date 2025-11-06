@@ -61,6 +61,7 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 navigationTest-app = { id = "com.exmample.navigation_test.primitive.android.application" }
 navigationTest-compose = { id = "com.example.navigation_test.primitive.android.compose" }
 navigationTest-kotlin = { id = "com.example.navigation_test.primitive.android.kotlin" }
+navigationTest-hilt = { id = "com.example.navigation_test.primitive.android.hilt" }
 navigationTest-feature = { id = "com.example.navigation_test.convention.android.feature" }
 
 

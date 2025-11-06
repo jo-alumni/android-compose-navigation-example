@@ -45,6 +45,10 @@ gradlePlugin {
             id = libs.plugins.navigationTest.kotlin.get().pluginId
             implementationClass = "primitive.AndroidKotlinPlugin"
         }
+        register("android-hilt") {
+            id = libs.plugins.navigationTest.hilt.get().pluginId
+            implementationClass = "primitive.AndroidHiltPlugin"
+        }
 
         // convention plugins
         register("android-feature") {

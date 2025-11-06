@@ -15,6 +15,10 @@ fun DependencyHandlerScope.implementation(artifact: MinimalExternalModuleDepende
     add("implementation", artifact)
 }
 
+fun DependencyHandlerScope.ksp(artifact: MinimalExternalModuleDependency) {
+    add("ksp", artifact)
+}
+
 fun DependencyHandlerScope.debugImplementation(artifact: MinimalExternalModuleDependency) {
     add("debugImplementation", artifact)
 }
