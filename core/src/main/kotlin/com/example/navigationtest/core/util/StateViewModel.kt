@@ -19,6 +19,7 @@ abstract class StateViewModel<S : State, E : Event>(initialState: S) : ViewModel
     val uiEvent: SharedFlow<E> = mutableUiEvent.asSharedFlow()
 
     init {
+        // Logging every state and event
         viewModelScope.launch {
             launch { uiState.collect { uiState -> Log.d(this@StateViewModel.javaClass.simpleName, "uiState: $uiState") } }
             launch { uiEvent.collect { uiEvent -> Log.d(this@StateViewModel.javaClass.simpleName, "uiEvent: $uiEvent") } }
