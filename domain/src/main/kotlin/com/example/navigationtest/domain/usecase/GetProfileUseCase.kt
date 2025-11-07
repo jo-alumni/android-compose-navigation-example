@@ -8,5 +8,5 @@ interface GetProfileUseCase : UseCase<GetProfileUseCase.Args, Profile> {
 
 class GetProfileUseCaseImpl : GetProfileUseCase {
     override suspend fun execute(argument: GetProfileUseCase.Args): Profile =
-        Profile.fake().copy(id = argument.id)
+        Profile.fake(argument.id)
 }

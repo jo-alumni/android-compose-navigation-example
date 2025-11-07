@@ -8,5 +8,5 @@ interface GetTweetUseCase : UseCase<GetTweetUseCase.Args, Tweet> {
 
 class GetTweetUseCaseImpl() : GetTweetUseCase {
     override suspend fun execute(argument: GetTweetUseCase.Args): Tweet =
-        Tweet.fake().copy(id = argument.id)
+        Tweet.fake(argument.id)
 }
