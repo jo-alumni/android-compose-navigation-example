@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Build
@@ -31,15 +33,11 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.navigationtest.core.ui.component.AppNavigationDrawer
@@ -90,10 +88,9 @@ private fun HomeScreen(
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val lazyListState = rememberLazyListState()
+    val lazyListStates = HomeTab.entries.map { rememberLazyListState() }
     val scope = rememberCoroutineScope()
-
-    var selectedTab by rememberSaveable { mutableIntStateOf(HomeTab.Recommended.ordinal) }
+    val pagerState = rememberPagerState { HomeTab.entries.size }
 
     AppNavigationDrawer(
         modifier = modifier,
@@ -105,7 +102,7 @@ private fun HomeScreen(
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
-                        IconButton(onClick = { scope.launch { lazyListState.animateScrollToItem(0) } }) {
+                        IconButton(onClick = { scope.launch { lazyListStates[pagerState.currentPage].animateScrollToItem(0) } }) {
                             Icon(Icons.Default.Build, contentDescription = null)
                         }
                     },
@@ -130,34 +127,38 @@ private fun HomeScreen(
                     .fillMaxSize()
                     .padding(paddingValues),
             ) {
-                SecondaryTabRow(selectedTabIndex = selectedTab) {
+                SecondaryTabRow(selectedTabIndex = pagerState.currentPage) {
                     HomeTab.entries.forEach { tab ->
                         Tab(
-                            selected = selectedTab == tab.ordinal,
-                            onClick = { selectedTab = tab.ordinal },
+                            selected = pagerState.currentPage == tab.ordinal,
+                            onClick = {
+                                scope.launch { pagerState.scrollToPage(tab.ordinal) }
+                            },
                             text = { Text(text = tab.title) },
                         )
                     }
                 }
-                PullToRefreshBox(
-                    isRefreshing = uiState is HomeUiState.Loading,
-                    onRefresh = onRefresh,
-                ) {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        state = lazyListState,
+                HorizontalPager(state = pagerState) { page ->
+                    PullToRefreshBox(
+                        isRefreshing = uiState is HomeUiState.Loading,
+                        onRefresh = onRefresh,
                     ) {
-                        items(items = uiState.tweets, key = { it.id }) {
-                            Column(modifier = Modifier.fillMaxWidth()) {
-                                TweetView(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    name = it.postUser.name,
-                                    userId = it.postUser.id,
-                                    content = it.content,
-                                    onClickTweet = { navigateTweet(it.id) },
-                                    onClickProfile = { navigateProfile(it.postUser.id) },
-                                )
-                                HorizontalDivider()
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            state = lazyListStates[page],
+                        ) {
+                            items(items = uiState.tweets, key = { it.id }) {
+                                Column(modifier = Modifier.fillMaxWidth()) {
+                                    TweetView(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        name = it.postUser.name,
+                                        userId = it.postUser.id,
+                                        content = it.content,
+                                        onClickTweet = { navigateTweet(it.id) },
+                                        onClickProfile = { navigateProfile(it.postUser.id) },
+                                    )
+                                    HorizontalDivider()
+                                }
                             }
                         }
                     }
