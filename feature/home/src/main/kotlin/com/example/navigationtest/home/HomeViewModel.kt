@@ -26,14 +26,11 @@ internal class HomeViewModel @Inject constructor(
                 getTweetListUseCase.execute()
             }.fold(
                 onSuccess = {
-                    mutableUiState.update { _ ->
-                        HomeUiState.Success(tweets = it)
-                    }
+                    mutableUiState.update { _ -> HomeUiState.Success(tweets = it) }
+                    mutableUiEvent.emit(HomeUiEvent.ShowSnackbar("Success"))
                 },
                 onFailure = {
-                    mutableUiState.update { state ->
-                        HomeUiState.Error(tweets = state.tweets, cause = it)
-                    }
+                    mutableUiState.update { state -> HomeUiState.Error(tweets = state.tweets, cause = it) }
                 },
             )
         }

@@ -26,6 +26,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SecondaryTabRow
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -33,6 +35,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,6 +49,7 @@ import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.render
 import com.example.navigationtest.domain.entity.Profile
 import com.example.navigationtest.domain.entity.Tweet
+import com.example.navigationtest.home.contract.HomeUiEvent
 import com.example.navigationtest.home.contract.HomeUiState
 import kotlinx.coroutines.launch
 
@@ -58,12 +62,13 @@ internal fun HomeRoot(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     // handle events
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collect {
             when (it) {
-                else -> Unit
+                is HomeUiEvent.ShowSnackbar -> snackbarHostState.showSnackbar(it.text)
             }
         }
     }
@@ -71,6 +76,7 @@ internal fun HomeRoot(
     HomeScreen(
         modifier = modifier,
         uiState = uiState,
+        snackbarHostState = snackbarHostState,
         navigateProfile = navigateProfile,
         navigateTweet = navigateTweet,
         onRefresh = viewModel::load,
@@ -83,6 +89,7 @@ internal fun HomeRoot(
 private fun HomeScreen(
     uiState: HomeUiState,
     drawerState: DrawerState,
+    snackbarHostState: SnackbarHostState,
     navigateProfile: (String) -> Unit,
     navigateTweet: (String) -> Unit,
     onRefresh: () -> Unit,
@@ -121,6 +128,7 @@ private fun HomeScreen(
                     Icon(Icons.Default.Add, contentDescription = null)
                 }
             },
+            snackbarHost = { SnackbarHost(snackbarHostState) },
         ) { paddingValues ->
             Column(
                 modifier = Modifier
@@ -216,6 +224,7 @@ private fun HomeScreenPreview(
         HomeScreen(
             uiState = uiState,
             drawerState = rememberDrawerState(DrawerValue.Closed),
+            snackbarHostState = remember { SnackbarHostState() },
             navigateProfile = {},
             navigateTweet = {},
             onRefresh = {},
