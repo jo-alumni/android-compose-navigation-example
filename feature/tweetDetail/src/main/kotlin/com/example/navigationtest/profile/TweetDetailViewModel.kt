@@ -9,7 +9,6 @@ import com.example.navigationtest.profile.contract.TweetDetailUiEvent
 import com.example.navigationtest.profile.contract.TweetDetailUiState
 import com.example.navigationtest.profile.navigation.TweetDetailDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,7 +22,6 @@ internal class TweetDetailViewModel @Inject constructor(
 ) {
     suspend fun load() {
         mutableUiState.update { state -> TweetDetailUiState.Loading(state.id) }
-        delay(1000)
         runCatching {
             getTweetUseCase.execute(GetTweetUseCase.Args(currentState.id))
         }.fold(

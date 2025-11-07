@@ -9,7 +9,6 @@ import com.example.navigationtest.profile.contract.ProfileUiEvent
 import com.example.navigationtest.profile.contract.ProfileUiState
 import com.example.navigationtest.profile.navigation.ProfileDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,7 +22,6 @@ internal class ProfileViewModel @Inject constructor(
 ) {
     suspend fun load() {
         mutableUiState.update { state -> ProfileUiState.Loading(id = state.id) }
-        delay(1000)
         runCatching {
             getProfileUseCase.execute(GetProfileUseCase.Args(id = currentState.id))
         }.fold(

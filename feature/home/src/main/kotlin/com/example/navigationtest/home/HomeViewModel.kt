@@ -7,7 +7,6 @@ import com.example.navigationtest.domain.usecase.execute
 import com.example.navigationtest.home.contract.HomeUiEvent
 import com.example.navigationtest.home.contract.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,7 +20,6 @@ internal class HomeViewModel @Inject constructor(
     fun load() {
         viewModelScope.launch {
             mutableUiState.update { state -> HomeUiState.Loading(tweets = state.tweets) }
-            delay(1000)
             runCatching {
                 getTweetListUseCase.execute()
             }.fold(
