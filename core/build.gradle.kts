@@ -8,14 +8,10 @@ android {
     namespace = "com.example.navigation_test.core"
 
     compileSdk = 36
-    
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    buildFeatures {
-        compose = true
     }
 }
 
