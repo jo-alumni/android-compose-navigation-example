@@ -71,9 +71,8 @@ fun AppNavigationDrawer(
                 }
             }
         },
-    ) {
-        content()
-    }
+        content = content,
+    )
 }
 
 @Preview(showBackground = true)
