@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.example.navigationtest.core.extension.LoggingBackStacks
 import com.example.navigationtest.core.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,9 +17,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
             AppTheme {
-                AppNavHost(navController = navController, modifier = Modifier.fillMaxSize())
+                AppNavHost(
+                    modifier = Modifier.fillMaxSize(),
+                    navController = rememberNavController().apply { LoggingBackStacks() },
+                )
             }
         }
     }
