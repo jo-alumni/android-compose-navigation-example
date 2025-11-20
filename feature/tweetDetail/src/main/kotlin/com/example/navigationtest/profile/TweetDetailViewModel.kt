@@ -3,7 +3,7 @@ package com.example.navigationtest.profile
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.example.navigationtest.core.util.StateViewModel
+import com.example.navigationtest.core.util.ContractedViewModel
 import com.example.navigationtest.domain.usecase.GetTweetUseCase
 import com.example.navigationtest.profile.contract.TweetDetailUiEvent
 import com.example.navigationtest.profile.contract.TweetDetailUiState
@@ -17,7 +17,7 @@ import javax.inject.Inject
 internal class TweetDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getTweetUseCase: GetTweetUseCase,
-) : StateViewModel<TweetDetailUiState, TweetDetailUiEvent>(
+) : ContractedViewModel<TweetDetailUiState, TweetDetailUiEvent>(
     initialState = TweetDetailUiState.Loading(savedStateHandle.toRoute<TweetDetailDestination>().id),
 ) {
     suspend fun load() {

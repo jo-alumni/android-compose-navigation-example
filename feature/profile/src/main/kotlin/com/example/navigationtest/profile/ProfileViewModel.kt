@@ -3,7 +3,7 @@ package com.example.navigationtest.profile
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.example.navigationtest.core.util.StateViewModel
+import com.example.navigationtest.core.util.ContractedViewModel
 import com.example.navigationtest.domain.usecase.GetProfileUseCase
 import com.example.navigationtest.profile.contract.ProfileUiEvent
 import com.example.navigationtest.profile.contract.ProfileUiState
@@ -17,7 +17,7 @@ import javax.inject.Inject
 internal class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getProfileUseCase: GetProfileUseCase,
-) : StateViewModel<ProfileUiState, ProfileUiEvent>(
+) : ContractedViewModel<ProfileUiState, ProfileUiEvent>(
     initialState = ProfileUiState.Loading(savedStateHandle.toRoute<ProfileDestination>().id),
 ) {
     suspend fun load() {

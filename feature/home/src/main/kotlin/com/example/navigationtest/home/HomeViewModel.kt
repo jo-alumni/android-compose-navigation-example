@@ -1,7 +1,7 @@
 package com.example.navigationtest.home
 
 import androidx.lifecycle.viewModelScope
-import com.example.navigationtest.core.util.StateViewModel
+import com.example.navigationtest.core.util.ContractedViewModel
 import com.example.navigationtest.domain.usecase.GetTweetListUseCase
 import com.example.navigationtest.domain.usecase.execute
 import com.example.navigationtest.home.contract.HomeUiEvent
@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
     private val getTweetListUseCase: GetTweetListUseCase,
-) : StateViewModel<HomeUiState, HomeUiEvent>(
+) : ContractedViewModel<HomeUiState, HomeUiEvent>(
     initialState = HomeUiState.Loading(emptyList()),
 ) {
     fun load() {

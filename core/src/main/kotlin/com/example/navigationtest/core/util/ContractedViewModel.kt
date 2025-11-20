@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-abstract class StateViewModel<S : State, E : Event>(initialState: S) : ViewModel() {
+abstract class ContractedViewModel<S : State, E : Event>(initialState: S) : ViewModel() {
     protected val mutableUiState: MutableStateFlow<S> = MutableStateFlow(initialState)
     val uiState: StateFlow<S> = mutableUiState.asStateFlow()
     protected val currentState: S get() = mutableUiState.value
@@ -21,8 +21,8 @@ abstract class StateViewModel<S : State, E : Event>(initialState: S) : ViewModel
     init {
         // Logging every state and event
         viewModelScope.launch {
-            launch { uiState.collect { uiState -> Log.d("${this@StateViewModel.javaClass.simpleName}::uiState", "uiState: $uiState") } }
-            launch { uiEvent.collect { uiEvent -> Log.d("${this@StateViewModel.javaClass.simpleName}::uiEvent", "uiEvent: $uiEvent") } }
+            launch { uiState.collect { uiState -> Log.d("${this@ContractedViewModel.javaClass.simpleName}::uiState", "uiState: $uiState") } }
+            launch { uiEvent.collect { uiEvent -> Log.d("${this@ContractedViewModel.javaClass.simpleName}::uiEvent", "uiEvent: $uiEvent") } }
         }
     }
 }
