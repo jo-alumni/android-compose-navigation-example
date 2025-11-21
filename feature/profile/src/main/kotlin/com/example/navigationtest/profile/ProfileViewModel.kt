@@ -20,7 +20,7 @@ internal class ProfileViewModel @Inject constructor(
 ) : ContractedViewModel<ProfileUiState, ProfileUiEvent>(
     initialState = ProfileUiState.Loading(savedStateHandle.toRoute<ProfileDestination>().id),
 ) {
-    suspend fun load() {
+    fun load() = viewModelScope.launch {
         mutableUiState.update { state -> ProfileUiState.Loading(id = state.id) }
         runCatching {
             getProfileUseCase.execute(GetProfileUseCase.Args(id = currentState.id))
@@ -39,6 +39,6 @@ internal class ProfileViewModel @Inject constructor(
     }
 
     init {
-        viewModelScope.launch { load() }
+        load()
     }
 }

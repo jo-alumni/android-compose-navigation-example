@@ -20,7 +20,7 @@ internal class TweetDetailViewModel @Inject constructor(
 ) : ContractedViewModel<TweetDetailUiState, TweetDetailUiEvent>(
     initialState = TweetDetailUiState.Loading(savedStateHandle.toRoute<TweetDetailDestination>().id),
 ) {
-    suspend fun load() {
+    fun load() = viewModelScope.launch {
         mutableUiState.update { state -> TweetDetailUiState.Loading(state.id) }
         runCatching {
             getTweetUseCase.execute(GetTweetUseCase.Args(currentState.id))
@@ -39,6 +39,6 @@ internal class TweetDetailViewModel @Inject constructor(
     }
 
     init {
-        viewModelScope.launch { load() }
+        load()
     }
 }

@@ -17,24 +17,22 @@ internal class HomeViewModel @Inject constructor(
 ) : ContractedViewModel<HomeUiState, HomeUiEvent>(
     initialState = HomeUiState.Loading(emptyList()),
 ) {
-    fun load() {
-        viewModelScope.launch {
-            mutableUiState.update { state -> HomeUiState.Loading(tweets = state.tweets) }
-            runCatching {
-                getTweetListUseCase.execute()
-            }.fold(
-                onSuccess = {
-                    mutableUiState.update { _ -> HomeUiState.Success(tweets = it) }
-                    mutableUiEvent.emit(HomeUiEvent.ShowSnackbar("Success"))
-                },
-                onFailure = {
-                    mutableUiState.update { state -> HomeUiState.Error(tweets = state.tweets, cause = it) }
-                },
-            )
-        }
+    fun load() = viewModelScope.launch {
+        mutableUiState.update { state -> HomeUiState.Loading(tweets = state.tweets) }
+        runCatching {
+            getTweetListUseCase.execute()
+        }.fold(
+            onSuccess = {
+                mutableUiState.update { _ -> HomeUiState.Success(tweets = it) }
+                mutableUiEvent.emit(HomeUiEvent.ShowSnackbar("Success"))
+            },
+            onFailure = {
+                mutableUiState.update { state -> HomeUiState.Error(tweets = state.tweets, cause = it) }
+            },
+        )
     }
 
     init {
-        viewModelScope.launch { load() }
+        load()
     }
 }
