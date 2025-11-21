@@ -2,6 +2,6 @@ package com.example.navigationtest.home.contract
 
 import com.example.navigationtest.core.util.Event
 
-internal interface HomeUiEvent : Event {
-    data class ShowSnackbar(val text: String) : HomeUiEvent
+internal interface HomeEvent : Event {
+    data class ShowSnackbar(val text: String) : HomeEvent
 }

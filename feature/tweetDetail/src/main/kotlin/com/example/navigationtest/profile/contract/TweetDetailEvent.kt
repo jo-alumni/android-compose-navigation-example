@@ -2,4 +2,4 @@ package com.example.navigationtest.profile.contract
 
 import com.example.navigationtest.core.util.Event
 
-internal sealed interface TweetDetailUiEvent : Event
+internal sealed interface TweetDetailEvent : Event

@@ -24,7 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.render
 import com.example.navigationtest.domain.entity.Tweet
-import com.example.navigationtest.profile.contract.TweetDetailUiState
+import com.example.navigationtest.profile.contract.TweetDetailState
 
 @Composable
 internal fun TweetDetailRoot(
@@ -39,7 +39,7 @@ internal fun TweetDetailRoot(
 @Composable
 private fun TweetDetailScreen(
     modifier: Modifier = Modifier,
-    uiState: TweetDetailUiState,
+    uiState: TweetDetailState,
     navigateBack: () -> Unit = {},
 ) {
     Scaffold(
@@ -57,7 +57,7 @@ private fun TweetDetailScreen(
             )
         },
     ) { paddingValues ->
-        uiState.render<TweetDetailUiState.Error> {
+        uiState.render<TweetDetailState.Error> {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -70,7 +70,7 @@ private fun TweetDetailScreen(
             }
         }
 
-        uiState.render<TweetDetailUiState.Loading> {
+        uiState.render<TweetDetailState.Loading> {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -80,7 +80,7 @@ private fun TweetDetailScreen(
             }
         }
 
-        uiState.render<TweetDetailUiState.Success> {
+        uiState.render<TweetDetailState.Success> {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -92,19 +92,19 @@ private fun TweetDetailScreen(
     }
 }
 
-private class UiStatePreviewParameter : PreviewParameterProvider<TweetDetailUiState> {
-    override val values: Sequence<TweetDetailUiState>
+private class UiStatePreviewParameter : PreviewParameterProvider<TweetDetailState> {
+    override val values: Sequence<TweetDetailState>
         get() = sequenceOf(
-            TweetDetailUiState.Loading(id = "1"),
-            TweetDetailUiState.Success(id = "1", tweet = Tweet.fake()),
-            TweetDetailUiState.Error(id = "1"),
+            TweetDetailState.Loading(id = "1"),
+            TweetDetailState.Success(id = "1", tweet = Tweet.fake()),
+            TweetDetailState.Error(id = "1"),
         )
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun TweetScreenPreview(
-    @PreviewParameter(UiStatePreviewParameter::class) uiState: TweetDetailUiState,
+    @PreviewParameter(UiStatePreviewParameter::class) uiState: TweetDetailState,
 ) {
     AppTheme {
         TweetDetailScreen(uiState = uiState)

@@ -49,8 +49,8 @@ import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.render
 import com.example.navigationtest.domain.entity.Profile
 import com.example.navigationtest.domain.entity.Tweet
-import com.example.navigationtest.home.contract.HomeUiEvent
-import com.example.navigationtest.home.contract.HomeUiState
+import com.example.navigationtest.home.contract.HomeEvent
+import com.example.navigationtest.home.contract.HomeState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -68,7 +68,7 @@ internal fun HomeRoot(
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collect {
             when (it) {
-                is HomeUiEvent.ShowSnackbar -> snackbarHostState.showSnackbar(it.text)
+                is HomeEvent.ShowSnackbar -> snackbarHostState.showSnackbar(it.text)
             }
         }
     }
@@ -87,7 +87,7 @@ internal fun HomeRoot(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeScreen(
-    uiState: HomeUiState,
+    uiState: HomeState,
     drawerState: DrawerState,
     snackbarHostState: SnackbarHostState,
     navigateProfile: (String) -> Unit,
@@ -148,7 +148,7 @@ private fun HomeScreen(
                 }
                 HorizontalPager(state = pagerState) { page ->
                     PullToRefreshBox(
-                        isRefreshing = uiState is HomeUiState.Loading,
+                        isRefreshing = uiState is HomeState.Loading,
                         onRefresh = onRefresh,
                     ) {
                         LazyColumn(
@@ -173,7 +173,7 @@ private fun HomeScreen(
                 }
             }
 
-            uiState.render<HomeUiState.Error> {
+            uiState.render<HomeState.Error> {
                 AlertDialog(
                     onDismissRequest = onRefresh,
                     confirmButton = {
@@ -193,7 +193,7 @@ private fun HomeScreen(
     }
 }
 
-private class UiStateParameterProvider : PreviewParameterProvider<HomeUiState> {
+private class UiStateParameterProvider : PreviewParameterProvider<HomeState> {
     private val tweets = (1..50).map {
         Tweet(
             id = "id_$it",
@@ -206,19 +206,19 @@ private class UiStateParameterProvider : PreviewParameterProvider<HomeUiState> {
         )
     }
 
-    override val values: Sequence<HomeUiState> = sequenceOf(
-        HomeUiState.Success(tweets = tweets),
-        HomeUiState.Loading(tweets = listOf()),
-        HomeUiState.Loading(tweets = tweets),
-        HomeUiState.Error(tweets = listOf(), cause = Exception("error")),
-        HomeUiState.Error(tweets = tweets, cause = Exception("error")),
+    override val values: Sequence<HomeState> = sequenceOf(
+        HomeState.Success(tweets = tweets),
+        HomeState.Loading(tweets = listOf()),
+        HomeState.Loading(tweets = tweets),
+        HomeState.Error(tweets = listOf(), cause = Exception("error")),
+        HomeState.Error(tweets = tweets, cause = Exception("error")),
     )
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview(
-    @PreviewParameter(UiStateParameterProvider::class) uiState: HomeUiState,
+    @PreviewParameter(UiStateParameterProvider::class) uiState: HomeState,
 ) {
     AppTheme {
         HomeScreen(

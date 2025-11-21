@@ -24,7 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.render
 import com.example.navigationtest.domain.entity.Profile
-import com.example.navigationtest.profile.contract.ProfileUiState
+import com.example.navigationtest.profile.contract.ProfileState
 
 @Composable
 internal fun ProfileRoot(
@@ -42,7 +42,7 @@ internal fun ProfileRoot(
 @Composable
 private fun ProfileScreen(
     modifier: Modifier = Modifier,
-    uiState: ProfileUiState,
+    uiState: ProfileState,
     navigateBack: () -> Unit,
 ) {
     Scaffold(
@@ -60,7 +60,7 @@ private fun ProfileScreen(
             )
         },
     ) { paddingValues ->
-        uiState.render<ProfileUiState.Error> {
+        uiState.render<ProfileState.Error> {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -73,7 +73,7 @@ private fun ProfileScreen(
             }
         }
 
-        uiState.render<ProfileUiState.Loading> {
+        uiState.render<ProfileState.Loading> {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -83,7 +83,7 @@ private fun ProfileScreen(
             }
         }
 
-        uiState.render<ProfileUiState.Success> {
+        uiState.render<ProfileState.Success> {
 
             Box(
                 modifier = Modifier
@@ -97,19 +97,19 @@ private fun ProfileScreen(
     }
 }
 
-private class UiStateParameterProvider : PreviewParameterProvider<ProfileUiState> {
-    override val values: Sequence<ProfileUiState>
+private class UiStateParameterProvider : PreviewParameterProvider<ProfileState> {
+    override val values: Sequence<ProfileState>
         get() = sequenceOf(
-            ProfileUiState.Loading(id = "1"),
-            ProfileUiState.Success(id = "1", profile = Profile.fake()),
-            ProfileUiState.Error(id = "1"),
+            ProfileState.Loading(id = "1"),
+            ProfileState.Success(id = "1", profile = Profile.fake()),
+            ProfileState.Error(id = "1"),
         )
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun ProfileScreenPreview(
-    @PreviewParameter(UiStateParameterProvider::class) uiState: ProfileUiState,
+    @PreviewParameter(UiStateParameterProvider::class) uiState: ProfileState,
 ) {
     AppTheme {
         ProfileScreen(

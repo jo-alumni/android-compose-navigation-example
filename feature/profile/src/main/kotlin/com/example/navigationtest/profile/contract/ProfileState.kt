@@ -1,22 +1,22 @@
 package com.example.navigationtest.profile.contract
 
 import com.example.navigationtest.core.util.State
-import com.example.navigationtest.domain.entity.Tweet
+import com.example.navigationtest.domain.entity.Profile
 
-internal sealed interface TweetDetailUiState : State {
+internal sealed interface ProfileState : State {
     val id: String
 
     data class Loading(
         override val id: String,
-    ) : TweetDetailUiState
+    ) : ProfileState
 
     data class Success(
         override val id: String,
-        val tweet: Tweet,
-    ) : TweetDetailUiState
+        val profile: Profile,
+    ) : ProfileState
 
     data class Error(
         override val id: String,
         val cause: Throwable? = null,
-    ) : TweetDetailUiState
+    ) : ProfileState
 }
