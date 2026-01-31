@@ -17,10 +17,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController().apply { LoggingBackStacks() }
             AppTheme {
                 AppNavHost(
                     modifier = Modifier.fillMaxSize(),
-                    navController = rememberNavController().apply { LoggingBackStacks() },
+                    navController = navController,
                 )
             }
         }
