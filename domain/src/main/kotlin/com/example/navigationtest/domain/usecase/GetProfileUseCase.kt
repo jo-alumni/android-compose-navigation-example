@@ -1,5 +1,6 @@
 package com.example.navigationtest.domain.usecase
 
+import com.example.navigationtest.domain.core.UseCase
 import com.example.navigationtest.domain.entity.Profile
 import kotlinx.coroutines.delay
 

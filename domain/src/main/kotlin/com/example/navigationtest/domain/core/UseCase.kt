@@ -1,4 +1,4 @@
-package com.example.navigationtest.domain.usecase
+package com.example.navigationtest.domain.core
 
 interface UseCase<A, R> {
     suspend fun execute(argument: A): R

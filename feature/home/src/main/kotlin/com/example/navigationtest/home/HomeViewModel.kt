@@ -2,8 +2,8 @@ package com.example.navigationtest.home
 
 import androidx.lifecycle.viewModelScope
 import com.example.navigationtest.core.util.ContractedViewModel
+import com.example.navigationtest.domain.core.execute
 import com.example.navigationtest.domain.usecase.GetTweetListUseCase
-import com.example.navigationtest.domain.usecase.execute
 import com.example.navigationtest.home.contract.HomeEvent
 import com.example.navigationtest.home.contract.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
