@@ -1,11 +1,11 @@
 package com.example.navigationtest.di
 
 import com.example.navigationtest.domain.usecase.GetProfileUseCase
-import com.example.navigationtest.domain.usecase.GetProfileUseCaseImpl
+import com.example.navigationtest.domain.usecase.GetProfileUseCaseExecutor
 import com.example.navigationtest.domain.usecase.GetTweetListUseCase
-import com.example.navigationtest.domain.usecase.GetTweetListUseCaseImpl
+import com.example.navigationtest.domain.usecase.GetTweetListUseCaseExecutor
 import com.example.navigationtest.domain.usecase.GetTweetUseCase
-import com.example.navigationtest.domain.usecase.GetTweetUseCaseImpl
+import com.example.navigationtest.domain.usecase.GetTweetUseCaseExecutor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,16 +16,16 @@ import dagger.hilt.components.SingletonComponent
 object DomainModule {
     @Provides
     fun provideGetProfileUseCase(): GetProfileUseCase {
-        return GetProfileUseCaseImpl()
+        return GetProfileUseCaseExecutor()
     }
 
     @Provides
     fun provideGetTweetUseCase(): GetTweetUseCase {
-        return GetTweetUseCaseImpl()
+        return GetTweetUseCaseExecutor()
     }
 
     @Provides
     fun provideGetTweetListUseCase(): GetTweetListUseCase {
-        return GetTweetListUseCaseImpl()
+        return GetTweetListUseCaseExecutor()
     }
 }

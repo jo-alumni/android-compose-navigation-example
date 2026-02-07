@@ -7,7 +7,7 @@ interface GetProfileUseCase : UseCase<GetProfileUseCase.Args, Profile> {
     data class Args(val id: String)
 }
 
-class GetProfileUseCaseImpl : GetProfileUseCase {
+class GetProfileUseCaseExecutor : GetProfileUseCase {
     override suspend fun execute(argument: GetProfileUseCase.Args): Profile {
         delay(1000)
         return Profile.fake(argument.id)
