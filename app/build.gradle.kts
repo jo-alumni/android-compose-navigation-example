@@ -66,7 +66,6 @@ dependencies {
     implementation(projects.core)
     implementation(projects.domain)
     implementation(projects.api)
-    implementation(projects.feature.home)
-    implementation(projects.feature.profile)
-    implementation(projects.feature.tweetDetail)
+    implementation(projects.feature.posts)
+    implementation(projects.feature.postDetail)
 }

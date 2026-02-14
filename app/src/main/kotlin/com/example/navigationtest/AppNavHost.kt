@@ -4,12 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.navigationtest.home.navigation.HomeDestination
-import com.example.navigationtest.home.navigation.homeScreen
-import com.example.navigationtest.profile.navigation.navigateToProfile
-import com.example.navigationtest.profile.navigation.navigateToTweetDetail
-import com.example.navigationtest.profile.navigation.profileScreen
-import com.example.navigationtest.profile.navigation.tweetDetailScreen
+import com.example.navigationtest.postDetail.navigation.navigateToPostDetail
+import com.example.navigationtest.postDetail.navigation.tweetDetailScreen
+import com.example.navigationtest.posts.navigation.PostsDestination
+import com.example.navigationtest.posts.navigation.homeScreen
 
 @Composable
 fun AppNavHost(
@@ -19,14 +17,11 @@ fun AppNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = HomeDestination,
+        startDestination = PostsDestination,
     ) {
         homeScreen(
-            navigateProfile = navController::navigateToProfile,
-            navigateTweet = navController::navigateToTweetDetail,
-        )
-        profileScreen(
-            navigateBack = navController::popBackStack,
+            navigateProfile = {},
+            navigatePostDetail = navController::navigateToPostDetail,
         )
         tweetDetailScreen(
             navigateBack = navController::popBackStack,
