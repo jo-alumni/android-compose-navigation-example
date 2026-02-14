@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.material.icon)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.bundles.ktor)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -64,6 +65,7 @@ dependencies {
 
     implementation(projects.core)
     implementation(projects.domain)
+    implementation(projects.api)
     implementation(projects.feature.home)
     implementation(projects.feature.profile)
     implementation(projects.feature.tweetDetail)
