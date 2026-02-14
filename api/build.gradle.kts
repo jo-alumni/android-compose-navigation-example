@@ -18,4 +18,5 @@ dependencies {
     implementation(projects.domain)
 
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.bundles.ktor)
 }
