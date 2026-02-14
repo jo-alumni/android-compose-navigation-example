@@ -17,7 +17,7 @@ class PostApiDataSource @Inject constructor(
         httpClient.get<List<PostApiModel>>(path = "posts")
 
     suspend fun getPost(postId: Int): PostApiModel =
-        httpClient.post<PostApiModel>(path = "posts/$postId")
+        httpClient.get<PostApiModel>(path = "posts/$postId")
 
     suspend fun deletePost(postId: Int) =
         httpClient.delete<Unit>(path = "posts/$postId")
