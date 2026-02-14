@@ -1,4 +1,4 @@
-package com.example.navigationtest.di
+package com.example.navigation_test.api.di
 
 import android.util.Log
 import dagger.Module

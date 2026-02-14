@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     alias(libs.plugins.navigationTest.kotlin)
+    alias(libs.plugins.navigationTest.hilt)
 }
 
 android {
