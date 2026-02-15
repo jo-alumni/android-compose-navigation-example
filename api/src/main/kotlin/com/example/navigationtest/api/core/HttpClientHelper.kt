@@ -20,7 +20,7 @@ internal object HttpClientHelper {
         defaultUrl: String,
         block: HttpClientConfig<*>.() -> Unit = {},
     ): HttpClient = HttpClient {
-        install(plugin = ContentNegotiation) {
+        install(ContentNegotiation) {
             json(
                 Json {
                     prettyPrint = true
@@ -29,12 +29,12 @@ internal object HttpClientHelper {
                 },
             )
         }
-        install(plugin = HttpTimeout) {
+        install(HttpTimeout) {
             requestTimeoutMillis = 15000
             socketTimeoutMillis = 15000
             connectTimeoutMillis = 15000
         }
-        install(plugin = Logging) {
+        install(Logging) {
             level = LogLevel.ALL
             logger = object : Logger {
                 override fun log(message: String) {
@@ -42,7 +42,7 @@ internal object HttpClientHelper {
                 }
             }
         }
-        install(plugin = DefaultRequest.Plugin) {
+        install(DefaultRequest.Plugin) {
             header(HttpHeaders.ContentType, ContentType.Application.Json)
             url(defaultUrl)
         }
