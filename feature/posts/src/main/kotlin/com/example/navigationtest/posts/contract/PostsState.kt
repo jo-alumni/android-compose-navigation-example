@@ -6,11 +6,15 @@ import com.example.navigationtest.domain.entity.Post
 internal sealed interface PostsState : State {
     val posts: List<Post>
 
+    data class Initial(
+        override val posts: List<Post> = emptyList(),
+    ) : PostsState
+
     data class Loading(
         override val posts: List<Post>,
     ) : PostsState
 
-    data class Success(
+    data class Stable(
         override val posts: List<Post>,
     ) : PostsState
 

@@ -10,9 +10,9 @@ import jakarta.inject.Inject
 class PostRepository @Inject constructor(
     private val postApiDataSource: PostApiDataSource,
 ) {
-    suspend fun getPosts(): List<Post> =
+    suspend fun getPosts(page: Int, limit: Int): List<Post> =
         postApiDataSource
-            .getPosts()
+            .getPosts(page, limit)
             .map(PostApiMapper::toEntity)
 
     suspend fun getComments(postId: Int): List<Comment> =

@@ -202,7 +202,7 @@ private class UiStateParameterProvider : PreviewParameterProvider<PostsState> {
     }
 
     override val values: Sequence<PostsState> = sequenceOf(
-        PostsState.Success(posts = tweets),
+        PostsState.Stable(posts = tweets),
         PostsState.Loading(posts = listOf()),
         PostsState.Loading(posts = tweets),
         PostsState.Error(posts = listOf(), cause = Exception("error")),

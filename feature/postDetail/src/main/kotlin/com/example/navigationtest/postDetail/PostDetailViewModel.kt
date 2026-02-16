@@ -21,17 +21,17 @@ internal class PostDetailViewModel @Inject constructor(
     initialState = PostDetailState.Loading(savedStateHandle.toRoute<PostDetailDetailDestination>().id),
 ) {
     fun load() = viewModelScope.launch {
-        mutableUiState.update { state -> PostDetailState.Loading(state.id) }
+        _uiState.update { state -> PostDetailState.Loading(state.id) }
         runCatching {
             postRepository.getPost(currentState.id)
         }.fold(
             onSuccess = {
-                mutableUiState.update { state ->
+                _uiState.update { state ->
                     PostDetailState.Success(id = state.id, post = it)
                 }
             },
             onFailure = {
-                mutableUiState.update { state ->
+                _uiState.update { state ->
                     PostDetailState.Error(id = state.id, cause = it)
                 }
             },

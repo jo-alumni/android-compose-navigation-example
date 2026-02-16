@@ -14,24 +14,28 @@ import javax.inject.Inject
 internal class PostsViewModel @Inject constructor(
     private val postRepository: PostRepository,
 ) : ContractedViewModel<PostsState, PostsEvent>(
-    initialState = PostsState.Loading(emptyList()),
+    initialState = PostsState.Initial(emptyList()),
 ) {
     fun load() = viewModelScope.launch {
-        mutableUiState.update { state -> PostsState.Loading(posts = state.posts) }
+        _uiState.update { state -> PostsState.Loading(posts = state.posts) }
         runCatching {
-            postRepository.getPosts()
+            postRepository.getPosts(page = 1, POSTS_LIMIT)
         }.fold(
             onSuccess = {
-                mutableUiState.update { _ -> PostsState.Success(posts = it) }
-                mutableUiEvent.emit(PostsEvent.ShowSnackbar("Success"))
+                _uiState.update { _ -> PostsState.Stable(posts = it) }
+                _uiEvent.emit(PostsEvent.ShowSnackbar("Success"))
             },
             onFailure = {
-                mutableUiState.update { state -> PostsState.Error(posts = state.posts, cause = it) }
+                _uiState.update { state -> PostsState.Error(posts = state.posts, cause = it) }
             },
         )
     }
 
     init {
         load()
+    }
+
+    companion object {
+        private const val POSTS_LIMIT = 10
     }
 }
