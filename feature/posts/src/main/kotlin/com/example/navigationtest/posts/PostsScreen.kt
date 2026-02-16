@@ -78,7 +78,8 @@ internal fun PostsRoot(
         snackbarHostState = snackbarHostState,
         navigateProfile = navigateProfile,
         navigatePostDetail = navigatePostDetail,
-        onRefresh = viewModel::load,
+        onRefresh = viewModel::refresh,
+        onLoadMore = viewModel::loadMore,
         drawerState = drawerState,
     )
 }
@@ -92,6 +93,7 @@ private fun PostScreen(
     navigateProfile: (String) -> Unit,
     navigatePostDetail: (Int) -> Unit,
     onRefresh: () -> Unit,
+    onLoadMore: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val lazyListStates = PostsTab.entries.map { rememberLazyListState() }
@@ -223,6 +225,7 @@ private fun PostScreenPreview(
             navigateProfile = {},
             navigatePostDetail = {},
             onRefresh = {},
+            onLoadMore = {},
         )
     }
 }

@@ -16,23 +16,39 @@ internal class PostsViewModel @Inject constructor(
 ) : ContractedViewModel<PostsState, PostsEvent>(
     initialState = PostsState.Initial(emptyList()),
 ) {
-    fun load() = viewModelScope.launch {
+    fun refresh() = viewModelScope.launch {
         _uiState.update { state -> PostsState.Loading(posts = state.posts) }
         runCatching {
             postRepository.getPosts(page = 1, POSTS_LIMIT)
         }.fold(
             onSuccess = {
-                _uiState.update { _ -> PostsState.Stable(posts = it) }
+                _uiState.emit(PostsState.Stable(posts = it))
                 _uiEvent.emit(PostsEvent.ShowSnackbar("Success"))
             },
-            onFailure = {
-                _uiState.update { state -> PostsState.Error(posts = state.posts, cause = it) }
+            onFailure = { cause ->
+                _uiState.update { state -> PostsState.Error(posts = state.posts, cause = cause) }
+            },
+        )
+    }
+
+    fun loadMore() = viewModelScope.launch {
+        _uiState.update { state -> PostsState.Loading(posts = state.posts) }
+        runCatching {
+            val nextPage = (currentState.posts.size / POSTS_LIMIT) + 1
+            postRepository.getPosts(page = nextPage, POSTS_LIMIT)
+        }.fold(
+            onSuccess = { newPosts ->
+                _uiState.emit(PostsState.Stable(posts = currentState.posts + newPosts))
+                _uiEvent.emit(PostsEvent.ShowSnackbar("Success"))
+            },
+            onFailure = { cause ->
+                _uiState.update { state -> PostsState.Error(posts = state.posts, cause = cause) }
             },
         )
     }
 
     init {
-        load()
+        refresh()
     }
 
     companion object {
