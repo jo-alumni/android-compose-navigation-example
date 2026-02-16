@@ -19,8 +19,8 @@ class PostApiDataSource @Inject constructor(
 ) {
     suspend fun getPosts(page: Int, limit: Int): List<PostApiModel> = httpClient.get {
         url(path = "posts")
-        parameter("page", page)
-        parameter("limit", limit)
+        parameter("_page", page)
+        parameter("_limit", limit)
     }.body()
 
     suspend fun getPost(postId: Int): PostApiModel = httpClient.get {
