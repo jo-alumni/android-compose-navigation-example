@@ -1,5 +1,7 @@
 package com.example.navigationtest.posts
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -149,7 +151,12 @@ private fun PostScreen(
                         Tab(
                             selected = pagerState.currentPage == tab.ordinal,
                             onClick = {
-                                scope.launch { pagerState.scrollToPage(tab.ordinal) }
+                                scope.launch {
+                                    pagerState.animateScrollToPage(
+                                        page = tab.ordinal,
+                                        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+                                    )
+                                }
                             },
                             text = { Text(text = tab.title) },
                         )
