@@ -1,9 +1,11 @@
 package com.example.navigationtest.posts
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -16,6 +18,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,8 +43,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.navigationtest.core.extension.copy
 import com.example.navigationtest.core.ui.component.AppNavigationDrawer
 import com.example.navigationtest.core.ui.component.PostView
 import com.example.navigationtest.core.ui.theme.AppTheme
@@ -130,7 +135,7 @@ private fun PostScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues),
+                    .padding(paddingValues.copy(bottom = 0.dp)),
             ) {
                 SecondaryTabRow(selectedTabIndex = pagerState.currentPage) {
                     PostsTab.entries.forEach { tab ->
@@ -145,12 +150,13 @@ private fun PostScreen(
                 }
                 HorizontalPager(state = pagerState) { page ->
                     PullToRefreshBox(
-                        isRefreshing = uiState is PostsState.Loading,
+                        isRefreshing = uiState is PostsState.Loading && uiState.type == PostsState.Loading.Type.REFRESH,
                         onRefresh = onRefresh,
                     ) {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize(),
                             state = lazyListStates[page],
+                            contentPadding = PaddingValues(bottom = paddingValues.calculateBottomPadding()),
                         ) {
                             items(items = uiState.posts, key = { it.id }) {
                                 Column(modifier = Modifier.fillMaxWidth()) {
@@ -165,33 +171,43 @@ private fun PostScreen(
                                     HorizontalDivider()
                                 }
                             }
+                            if (uiState is PostsState.Loading && uiState.type == PostsState.Loading.Type.LOAD_MORE) {
+                                item {
+                                    CircularProgressIndicator(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(16.dp)
+                                            .wrapContentWidth(),
+                                    )
+                                }
+                            }
                         }
                     }
                 }
-            }
 
-            uiState.render<PostsState.Error> {
-                AlertDialog(
-                    onDismissRequest = onRefresh,
-                    confirmButton = {
-                        Button(onClick = onRefresh) {
-                            Text(text = "Retry")
-                        }
-                    },
-                    dismissButton = {
-                        Button(onClick = {}) {
-                            Text(text = "Cancel")
-                        }
-                    },
-                    text = { Text(text = cause?.message ?: "Unknown error") },
-                )
+                uiState.render<PostsState.Error> {
+                    AlertDialog(
+                        onDismissRequest = onRefresh,
+                        confirmButton = {
+                            Button(onClick = onRefresh) {
+                                Text(text = "Retry")
+                            }
+                        },
+                        dismissButton = {
+                            Button(onClick = {}) {
+                                Text(text = "Cancel")
+                            }
+                        },
+                        text = { Text(text = cause?.message ?: "Unknown error") },
+                    )
+                }
             }
         }
     }
 }
 
 private class UiStateParameterProvider : PreviewParameterProvider<PostsState> {
-    private val tweets = (1..50).map {
+    private val tweets = (1..5).map {
         Post(
             id = it,
             userId = it,
@@ -202,8 +218,9 @@ private class UiStateParameterProvider : PreviewParameterProvider<PostsState> {
 
     override val values: Sequence<PostsState> = sequenceOf(
         PostsState.Stable(posts = tweets),
-        PostsState.Loading(posts = listOf()),
-        PostsState.Loading(posts = tweets),
+        PostsState.Loading(posts = listOf(), type = PostsState.Loading.Type.REFRESH),
+        PostsState.Loading(posts = tweets, type = PostsState.Loading.Type.REFRESH),
+        PostsState.Loading(posts = tweets, type = PostsState.Loading.Type.LOAD_MORE),
         PostsState.Error(posts = listOf(), cause = Exception("error")),
         PostsState.Error(posts = tweets, cause = Exception("error")),
     )

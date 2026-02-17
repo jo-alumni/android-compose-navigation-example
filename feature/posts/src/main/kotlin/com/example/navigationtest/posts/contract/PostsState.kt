@@ -12,7 +12,10 @@ internal sealed interface PostsState : State {
 
     data class Loading(
         override val posts: List<Post>,
-    ) : PostsState
+        val type: Type,
+    ) : PostsState {
+        enum class Type { REFRESH, LOAD_MORE }
+    }
 
     data class Stable(
         override val posts: List<Post>,

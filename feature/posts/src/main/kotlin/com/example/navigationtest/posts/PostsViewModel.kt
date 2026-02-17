@@ -17,8 +17,14 @@ internal class PostsViewModel @Inject constructor(
     initialState = PostsState.Initial(emptyList()),
 ) {
     fun refresh() {
+        if (currentState is PostsState.Loading) return
         viewModelScope.launch {
-            _uiState.update { state -> PostsState.Loading(posts = state.posts) }
+            _uiState.update { state ->
+                PostsState.Loading(
+                    posts = state.posts,
+                    type = PostsState.Loading.Type.REFRESH,
+                )
+            }
             runCatching {
                 postRepository.getPosts(page = 1, POSTS_LIMIT)
             }.fold(
@@ -34,8 +40,14 @@ internal class PostsViewModel @Inject constructor(
     }
 
     fun loadMore() {
+        if (currentState is PostsState.Loading) return
         viewModelScope.launch {
-            _uiState.update { state -> PostsState.Loading(posts = state.posts) }
+            _uiState.update { state ->
+                PostsState.Loading(
+                    posts = state.posts,
+                    type = PostsState.Loading.Type.LOAD_MORE,
+                )
+            }
             runCatching {
                 val nextPage = (currentState.posts.size / POSTS_LIMIT) + 1
                 postRepository.getPosts(page = nextPage, POSTS_LIMIT)
