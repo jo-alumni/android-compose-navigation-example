@@ -40,12 +40,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.navigation_test.feature.posts.R
 import com.example.navigationtest.core.extension.copy
 import com.example.navigationtest.core.ui.component.AppNavigationDrawer
 import com.example.navigationtest.core.ui.component.PostView
@@ -68,9 +70,14 @@ internal fun PostsRoot(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
+    val successMessage = stringResource(R.string.success)
+    val errorMessage = stringResource(R.string.error)
     viewModel.handleEvents {
         when (it) {
-            is PostsEvent.ShowSnackbar -> snackbarHostState.showSnackbar(it.text)
+            is PostsEvent.ShowSnackbar -> when (it) {
+                PostsEvent.ShowSnackbar.Success -> snackbarHostState.showSnackbar(successMessage)
+                PostsEvent.ShowSnackbar.Error -> snackbarHostState.showSnackbar(errorMessage)
+            }
         }
     }
 

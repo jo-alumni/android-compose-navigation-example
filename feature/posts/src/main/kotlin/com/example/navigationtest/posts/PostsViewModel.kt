@@ -30,10 +30,11 @@ internal class PostsViewModel @Inject constructor(
             }.fold(
                 onSuccess = {
                     _uiState.emit(PostsState.Stable(posts = it))
-                    _uiEvent.emit(PostsEvent.ShowSnackbar("Success"))
+                    _uiEvent.emit(PostsEvent.ShowSnackbar.Success)
                 },
                 onFailure = { cause ->
                     _uiState.update { state -> PostsState.Error(posts = state.posts, cause = cause) }
+                    _uiEvent.emit(PostsEvent.ShowSnackbar.Error)
                 },
             )
         }
@@ -54,10 +55,11 @@ internal class PostsViewModel @Inject constructor(
             }.fold(
                 onSuccess = { newPosts ->
                     _uiState.emit(PostsState.Stable(posts = currentState.posts + newPosts))
-                    _uiEvent.emit(PostsEvent.ShowSnackbar("Success"))
+                    _uiEvent.emit(PostsEvent.ShowSnackbar.Success)
                 },
                 onFailure = { cause ->
                     _uiState.update { state -> PostsState.Error(posts = state.posts, cause = cause) }
+                    _uiEvent.emit(PostsEvent.ShowSnackbar.Error)
                 },
             )
         }
