@@ -33,7 +33,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -46,6 +45,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.navigationtest.core.ui.component.AppNavigationDrawer
 import com.example.navigationtest.core.ui.component.PostView
 import com.example.navigationtest.core.ui.theme.AppTheme
+import com.example.navigationtest.core.util.handleEvents
 import com.example.navigationtest.core.util.render
 import com.example.navigationtest.domain.entity.Post
 import com.example.navigationtest.posts.contract.PostsEvent
@@ -63,12 +63,9 @@ internal fun PostsRoot(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    // handle events
-    LaunchedEffect(Unit) {
-        viewModel.uiEvent.collect {
-            when (it) {
-                is PostsEvent.ShowSnackbar -> snackbarHostState.showSnackbar(it.text)
-            }
+    viewModel.handleEvents {
+        when (it) {
+            is PostsEvent.ShowSnackbar -> snackbarHostState.showSnackbar(it.text)
         }
     }
 
