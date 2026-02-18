@@ -15,14 +15,12 @@ import kotlinx.serialization.Serializable
 data object PostsDestination
 
 fun NavGraphBuilder.homeScreen(
-    navigateProfile: (String) -> Unit,
     navigatePostDetail: (Int) -> Unit,
 ) {
     composable<PostsDestination> {
         PostsRoot(
             modifier = Modifier.fillMaxSize(),
             drawerState = rememberDrawerState(DrawerValue.Closed),
-            navigateProfile = navigateProfile,
             navigatePostDetail = navigatePostDetail,
         )
     }

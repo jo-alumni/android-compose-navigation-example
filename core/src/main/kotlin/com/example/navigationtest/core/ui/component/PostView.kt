@@ -52,15 +52,21 @@ fun PostView(
     name: String,
     userId: String,
     content: String,
-    onClickTweet: () -> Unit = {},
-    onClickProfile: () -> Unit = {},
+    onClickPost: (() -> Unit)? = null,
+    onClickProfile: (() -> Unit)? = null,
 ) {
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onClickTweet() }
+            .then(
+                if (onClickPost != null) {
+                    Modifier.clickable { onClickPost() }
+                } else {
+                    Modifier
+                },
+            )
             .heightIn(min = 100.dp, max = 200.dp)
             .background(color = Color.White)
             .padding(all = 8.dp),
@@ -71,7 +77,13 @@ fun PostView(
                 .size(35.dp)
                 .clip(CircleShape)
                 .background(Color.Black)
-                .clickable { onClickProfile() },
+                .then(
+                    if (onClickProfile != null) {
+                        Modifier.clickable { onClickProfile() }
+                    } else {
+                        Modifier
+                    },
+                ),
             model = "https://placehold.jp/200x200.png",
             contentScale = ContentScale.Crop,
             contentDescription = null,

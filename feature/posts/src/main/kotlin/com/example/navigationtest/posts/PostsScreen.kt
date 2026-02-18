@@ -64,7 +64,6 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun PostsRoot(
     drawerState: DrawerState,
-    navigateProfile: (String) -> Unit,
     navigatePostDetail: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PostsViewModel = hiltViewModel(),
@@ -87,7 +86,6 @@ internal fun PostsRoot(
         modifier = modifier,
         uiState = uiState,
         snackbarHostState = snackbarHostState,
-        navigateProfile = navigateProfile,
         navigatePostDetail = navigatePostDetail,
         onRefresh = viewModel::refresh,
         onLoadMore = viewModel::loadMore,
@@ -101,7 +99,6 @@ private fun PostScreen(
     uiState: PostsState,
     drawerState: DrawerState,
     snackbarHostState: SnackbarHostState,
-    navigateProfile: (String) -> Unit,
     navigatePostDetail: (Int) -> Unit,
     onRefresh: () -> Unit,
     onLoadMore: () -> Unit,
@@ -179,8 +176,7 @@ private fun PostScreen(
                                         name = it.userId.toString(),
                                         userId = it.title,
                                         content = it.body,
-                                        onClickTweet = { navigatePostDetail(it.id) },
-                                        // onClickProfile = { navigateProfile(it.postUser.id) },
+                                        onClickPost = { navigatePostDetail(it.id) },
                                     )
                                     HorizontalDivider()
                                 }
@@ -250,7 +246,6 @@ private fun PostScreenPreview(
             uiState = uiState,
             drawerState = rememberDrawerState(DrawerValue.Closed),
             snackbarHostState = remember { SnackbarHostState() },
-            navigateProfile = {},
             navigatePostDetail = {},
             onRefresh = {},
             onLoadMore = {},
