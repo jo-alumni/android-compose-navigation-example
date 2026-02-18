@@ -56,7 +56,7 @@ fun PostView(
     onClickProfile: (() -> Unit)? = null,
 ) {
     val scope = rememberCoroutineScope()
-    var showBottomSheet by remember { mutableStateOf(false) }
+    val showBottomSheet = remember { mutableStateOf(false) }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -104,7 +104,7 @@ fun PostView(
                 )
                 IconButton(
                     modifier = Modifier.size(20.dp),
-                    onClick = { showBottomSheet = true },
+                    onClick = { showBottomSheet.value = true },
                 ) {
                     Icon(
                         modifier = Modifier.size(20.dp),
@@ -118,11 +118,11 @@ fun PostView(
         }
     }
 
-    if (showBottomSheet) {
+    if (showBottomSheet.value) {
         val sheetState = rememberModalBottomSheetState()
         ModalBottomSheet(
             sheetState = sheetState,
-            onDismissRequest = { showBottomSheet = false },
+            onDismissRequest = { showBottomSheet.value = false },
         ) {
             val list = (1..3).toList()
             list.forEachIndexed { index, it ->
