@@ -23,7 +23,6 @@ internal class PostsViewModel @Inject constructor(
     fun refresh() {
         viewModelScope.launch {
             mutex.withLock {
-                if (currentState is PostsState.Loading) return@withLock
                 _uiState.update { state ->
                     PostsState.Loading(
                         posts = state.posts,
@@ -49,7 +48,6 @@ internal class PostsViewModel @Inject constructor(
     fun loadMore() {
         viewModelScope.launch {
             mutex.withLock {
-                if (currentState is PostsState.Loading) return@withLock
                 _uiState.update { state ->
                     PostsState.Loading(
                         posts = state.posts,
