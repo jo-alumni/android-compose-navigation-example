@@ -41,9 +41,11 @@ class PostApiDataSource @Inject constructor(
         }
     }
 
-    suspend fun getCommentsRelatedPost(postId: Int): List<CommentApiModel> = withContext(Dispatchers.IO) {
+    suspend fun getCommentsRelatedPost(postId: Int, page: Int, limit: Int): List<CommentApiModel> = withContext(Dispatchers.IO) {
         httpClient.get {
             url(path = "posts/$postId/comments")
+            parameter("_page", page)
+            parameter("_limit", limit)
         }.body()
     }
 

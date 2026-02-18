@@ -15,9 +15,9 @@ class PostRepository @Inject constructor(
             .getPosts(page, limit)
             .map(PostApiMapper::toEntity)
 
-    suspend fun getComments(postId: Int): List<Comment> =
+    suspend fun getComments(postId: Int, page: Int, limit: Int): List<Comment> =
         postApiDataSource
-            .getCommentsRelatedPost(postId)
+            .getCommentsRelatedPost(postId, page, limit)
             .map(CommentApiMapper::toEntity)
 
     suspend fun getPost(postId: Int): Post =

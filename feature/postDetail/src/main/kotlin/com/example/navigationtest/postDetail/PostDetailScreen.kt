@@ -2,11 +2,15 @@ package com.example.navigationtest.postDetail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -21,6 +25,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.navigationtest.core.ui.component.CommentView
+import com.example.navigationtest.core.ui.component.PostView
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.render
 import com.example.navigationtest.domain.entity.Post
@@ -80,13 +86,30 @@ private fun TweetDetailScreen(
             }
         }
 
-        uiState.render<PostDetailState.Success> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
+        uiState.render<PostDetailState.Stable> {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = paddingValues,
             ) {
-                Text("$post")
+                item {
+                    PostView(
+                        modifier = Modifier.fillMaxWidth(),
+                        name = post.userId.toString(),
+                        userId = post.title,
+                        content = post.body,
+                    )
+                    HorizontalDivider()
+                }
+
+                items(comments) { comment ->
+                    CommentView(
+                        modifier = Modifier.fillMaxWidth(),
+                        name = comment.email,
+                        userId = comment.id.toString(),
+                        content = comment.body,
+                    )
+                    HorizontalDivider()
+                }
             }
         }
     }
@@ -96,7 +119,7 @@ private class UiStatePreviewParameter : PreviewParameterProvider<PostDetailState
     override val values: Sequence<PostDetailState>
         get() = sequenceOf(
             PostDetailState.Loading(id = 1),
-            PostDetailState.Success(
+            PostDetailState.Stable.Initial(
                 id = 1,
                 post = Post(
                     userId = 1,
@@ -104,6 +127,43 @@ private class UiStatePreviewParameter : PreviewParameterProvider<PostDetailState
                     title = "title",
                     body = "body",
                 ),
+                comments = emptyList(),
+                page = 1,
+            ),
+            PostDetailState.Stable.Loading(
+                id = 1,
+                post = Post(
+                    userId = 1,
+                    id = 1,
+                    title = "title",
+                    body = "body",
+                ),
+                comments = emptyList(),
+                page = 1,
+                type = PostDetailState.Stable.Loading.Type.REFRESH,
+            ),
+            PostDetailState.Stable.Loading(
+                id = 1,
+                post = Post(
+                    userId = 1,
+                    id = 1,
+                    title = "title",
+                    body = "body",
+                ),
+                comments = emptyList(),
+                page = 1,
+                type = PostDetailState.Stable.Loading.Type.LOAD_MORE,
+            ),
+            PostDetailState.Stable.Error(
+                id = 1,
+                post = Post(
+                    userId = 1,
+                    id = 1,
+                    title = "title",
+                    body = "body",
+                ),
+                comments = emptyList(),
+                page = 1,
             ),
             PostDetailState.Error(id = 1),
         )
