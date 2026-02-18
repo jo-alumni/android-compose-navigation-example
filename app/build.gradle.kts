@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.navigationTest.app)
     alias(libs.plugins.navigationTest.compose)
@@ -6,6 +8,14 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
 }
+
+val localProperties = Properties().apply {
+    rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+}
+
+fun Properties.get(key: String, default: String? = null): String =
+    getProperty(key) ?: default ?: throw IllegalArgumentException("Property $key not found in local.properties")
+
 
 android {
     namespace = "com.example.navigation_test"
@@ -19,14 +29,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_BASE_URL", "\"${localProperties["API_BASE_URL"]}\"")
     }
 
     buildTypes {
-        debug {
-            buildConfigField("String", "API_BASE_URL", "\"https://api.example.com/\"")
-        }
         release {
-            buildConfigField("String", "API_BASE_URL", "\"https://api.example.com/\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
