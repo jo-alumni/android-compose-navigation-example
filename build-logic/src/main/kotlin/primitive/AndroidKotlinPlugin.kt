@@ -20,6 +20,11 @@ class AndroidKotlinPlugin : Plugin<Project> {
             }
 
             android {
+                compileSdkVersion(35)
+                defaultConfig {
+                    minSdk = 31
+                    targetSdk = 35
+                }
                 kotlinAndroidOptions {
                     compilerOptions {
                         // Treat all Kotlin warnings as errors (disabled by default)

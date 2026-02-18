@@ -37,9 +37,11 @@ fun Project.setupAndroid() {
         compileSdkVersion(35)
 
         defaultConfig {
-            minSdk = 24
+            minSdk = 31
             targetSdk = 35
         }
+
+        buildFeatures.buildConfig = true
 
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_11
