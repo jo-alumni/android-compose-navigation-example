@@ -17,12 +17,14 @@ internal sealed interface PostDetailState : State {
 
     sealed interface Stable : PostDetailState {
         val page: Int
+        val canLoadMore: Boolean
         val post: Post
         val comments: List<Comment>
 
         data class Initial(
             override val id: Int,
             override val page: Int,
+            override val canLoadMore: Boolean,
             override val post: Post,
             override val comments: List<Comment>,
         ) : Stable
@@ -30,6 +32,7 @@ internal sealed interface PostDetailState : State {
         data class Loading(
             override val id: Int,
             override val page: Int,
+            override val canLoadMore: Boolean,
             override val post: Post,
             override val comments: List<Comment>,
             val type: Type,
@@ -40,6 +43,7 @@ internal sealed interface PostDetailState : State {
         data class Error(
             override val id: Int,
             override val page: Int,
+            override val canLoadMore: Boolean,
             override val post: Post,
             override val comments: List<Comment>,
             val cause: Throwable? = null,

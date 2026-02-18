@@ -32,7 +32,8 @@ internal class PostDetailViewModel @Inject constructor(
                 if (it !is PostDetailState.Stable) return@updateAndGet it
                 PostDetailState.Stable.Loading(
                     id = it.id,
-                    page = 1,
+                    page = it.page,
+                    canLoadMore = it.canLoadMore,
                     post = it.post,
                     comments = it.comments,
                     type = PostDetailState.Stable.Loading.Type.REFRESH,
@@ -41,17 +42,23 @@ internal class PostDetailViewModel @Inject constructor(
             if (state !is PostDetailState.Stable.Loading) return@launch
             runCatching {
                 val post = async { postRepository.getPost(currentState.id) }
-                val comments = async { postRepository.getComments(postId = currentState.id, page = 1, limit = COMMENTS_LIMIT) }
+                val comments = async { postRepository.getComments(postId = currentState.id, page = 1, limit = COMMENTS_PAGE_LIMIT) }
                 return@runCatching post.await() to comments.await()
             }.fold(
                 onSuccess = { (post, comments) ->
                     _uiState.update { state ->
-                        PostDetailState.Stable.Initial(id = state.id, page = 1, post = post, comments = comments)
+                        PostDetailState.Stable.Initial(
+                            id = state.id,
+                            page = 1,
+                            post = post,
+                            comments = comments,
+                            canLoadMore = comments.size >= COMMENTS_PAGE_LIMIT,
+                        )
                     }
                 },
-                onFailure = {
+                onFailure = { cause ->
                     _uiState.update { state ->
-                        PostDetailState.Error(id = state.id, cause = it)
+                        PostDetailState.Error(id = state.id, cause = cause)
                     }
                 },
             )
@@ -68,12 +75,13 @@ internal class PostDetailViewModel @Inject constructor(
                     comments = it.comments,
                     page = it.page,
                     type = PostDetailState.Stable.Loading.Type.LOAD_MORE,
+                    canLoadMore = it.canLoadMore,
                 )
             }
             if (state !is PostDetailState.Stable.Loading) return@launch
-            val nextPage = (state.comments.size / COMMENTS_LIMIT) + 1
+            val nextPage = state.page + 1
             runCatching {
-                postRepository.getComments(postId = state.id, page = nextPage, limit = COMMENTS_LIMIT)
+                postRepository.getComments(postId = state.id, page = nextPage, limit = COMMENTS_PAGE_LIMIT)
             }.fold(
                 onSuccess = { comments ->
                     _uiState.update { state ->
@@ -81,19 +89,22 @@ internal class PostDetailViewModel @Inject constructor(
                         PostDetailState.Stable.Initial(
                             id = state.id,
                             post = state.post,
-                            comments = comments,
+                            comments = state.comments + comments,
                             page = nextPage,
+                            canLoadMore = comments.size >= COMMENTS_PAGE_LIMIT,
                         )
                     }
                 },
-                onFailure = {
+                onFailure = { cause ->
                     _uiState.update { state ->
                         if (state !is PostDetailState.Stable) return@update state
                         PostDetailState.Stable.Error(
                             id = state.id,
                             post = state.post,
                             comments = state.comments,
-                            page = nextPage,
+                            page = state.page,
+                            canLoadMore = state.canLoadMore,
+                            cause = cause,
                         )
                     }
                 },
@@ -110,7 +121,7 @@ internal class PostDetailViewModel @Inject constructor(
             }
             runCatching {
                 val post = async { postRepository.getPost(currentState.id) }
-                val comments = async { postRepository.getComments(postId = currentState.id, page = 1, limit = COMMENTS_LIMIT) }
+                val comments = async { postRepository.getComments(postId = currentState.id, page = 1, limit = COMMENTS_PAGE_LIMIT) }
                 return@runCatching post.await() to comments.await()
             }.fold(
                 onSuccess = { (post, comments) ->
@@ -120,6 +131,7 @@ internal class PostDetailViewModel @Inject constructor(
                             post = post,
                             comments = comments,
                             page = 1,
+                            canLoadMore = comments.size >= COMMENTS_PAGE_LIMIT,
                         )
                     }
                 },
@@ -137,6 +149,6 @@ internal class PostDetailViewModel @Inject constructor(
     }
 
     companion object {
-        private const val COMMENTS_LIMIT = 10
+        private const val COMMENTS_PAGE_LIMIT = 10
     }
 }
