@@ -18,14 +18,13 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -120,24 +119,40 @@ fun PostView(
 
     if (showBottomSheet.value) {
         val sheetState = rememberModalBottomSheetState()
-        ModalBottomSheet(
+        PostBottomSheet(
             sheetState = sheetState,
-            onDismissRequest = { showBottomSheet.value = false },
-        ) {
-            val list = (1..3).toList()
-            list.forEachIndexed { index, it ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(30.dp)
-                        .clickable { scope.launch { sheetState.hide() } },
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text("test $it")
-                }
-                if (index != list.size - 1) {
-                    HorizontalDivider()
-                }
+            onDismissRequest = {
+                showBottomSheet.value = false
+                scope.launch { sheetState.hide() }
+            },
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun PostBottomSheet(
+    sheetState: SheetState,
+    onDismissRequest: () -> Unit,
+) {
+    ModalBottomSheet(
+        sheetState = sheetState,
+        onDismissRequest = onDismissRequest,
+    ) {
+        val list = (1..3).toList()
+        list.forEachIndexed { index, it ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .height(30.dp)
+                    .clickable { onDismissRequest() },
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text("test $it")
+            }
+            if (index != list.size - 1) {
+                HorizontalDivider()
             }
         }
     }
@@ -170,6 +185,19 @@ private fun PostViewPreview(@PreviewParameter(TweetParameterProvider::class) par
             name = parameter.name,
             userId = parameter.userId,
             content = parameter.content,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+private fun PostBottomSheetPreview() {
+    AppTheme {
+        val sheetState = rememberModalBottomSheetState()
+        PostBottomSheet(
+            sheetState = sheetState,
+            onDismissRequest = { },
         )
     }
 }
