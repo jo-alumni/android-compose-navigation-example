@@ -13,8 +13,8 @@ val localProperties = Properties().apply {
     rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
 }
 
-fun Properties.get(key: String, default: String? = null): String =
-    getProperty(key) ?: default ?: throw IllegalArgumentException("Property $key not found in local.properties")
+fun Properties.getEnv(key: String, default: String? = null): String =
+    getProperty(key) ?: System.getenv(key) ?: default ?: throw IllegalArgumentException("Property '$key' not found in local.properties or environment variables")
 
 
 android {
@@ -30,7 +30,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_BASE_URL", "\"${localProperties["API_BASE_URL"]}\"")
+        buildConfigField("String", "API_BASE_URL", "\"${localProperties.getEnv("API_BASE_URL")}\"")
     }
 
     buildTypes {
