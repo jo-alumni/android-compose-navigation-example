@@ -20,7 +20,6 @@ fun AppNavHost(
         startDestination = PostsDestination,
     ) {
         homeScreen(
-            navigateProfile = {},
             navigatePostDetail = navController::navigateToPostDetail,
         )
         tweetDetailScreen(
