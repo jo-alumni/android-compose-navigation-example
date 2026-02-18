@@ -129,6 +129,7 @@ private class UiStatePreviewParameter : PreviewParameterProvider<PostDetailState
                 ),
                 comments = emptyList(),
                 page = 1,
+                canLoadMore = true,
             ),
             PostDetailState.Stable.Loading(
                 id = 1,
@@ -141,6 +142,7 @@ private class UiStatePreviewParameter : PreviewParameterProvider<PostDetailState
                 comments = emptyList(),
                 page = 1,
                 type = PostDetailState.Stable.Loading.Type.REFRESH,
+                canLoadMore = true,
             ),
             PostDetailState.Stable.Loading(
                 id = 1,
@@ -153,6 +155,7 @@ private class UiStatePreviewParameter : PreviewParameterProvider<PostDetailState
                 comments = emptyList(),
                 page = 1,
                 type = PostDetailState.Stable.Loading.Type.LOAD_MORE,
+                canLoadMore = true,
             ),
             PostDetailState.Stable.Error(
                 id = 1,
@@ -164,6 +167,7 @@ private class UiStatePreviewParameter : PreviewParameterProvider<PostDetailState
                 ),
                 comments = emptyList(),
                 page = 1,
+                canLoadMore = true,
             ),
             PostDetailState.Error(id = 1),
         )
