@@ -5,6 +5,7 @@ import com.example.navigationtest.core.util.ContractedViewModel
 import com.example.navigationtest.domain.repository.PostRepository
 import com.example.navigationtest.posts.contract.PostsEvent
 import com.example.navigationtest.posts.contract.PostsState
+import com.example.navigationtest.posts.contract.PostsState.Companion.POSTS_PAGE_LIMIT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ import javax.inject.Inject
 internal class PostsViewModel @Inject constructor(
     private val postRepository: PostRepository,
 ) : ContractedViewModel<PostsState, PostsEvent>(
-    initialState = PostsState.Initial(emptyList()),
+    initialState = PostsState.Initial(),
 ) {
     private val mutex = Mutex()
 
@@ -27,17 +28,32 @@ internal class PostsViewModel @Inject constructor(
                     PostsState.Loading(
                         posts = state.posts,
                         type = PostsState.Loading.Type.REFRESH,
+                        page = 1,
+                        canLoadMore = true,
                     )
                 }
                 runCatching {
-                    postRepository.getPosts(page = 1, POSTS_LIMIT)
+                    postRepository.getPosts(page = 1, POSTS_PAGE_LIMIT)
                 }.fold(
                     onSuccess = {
-                        _uiState.emit(PostsState.Stable(posts = it))
+                        _uiState.emit(
+                            PostsState.Stable(
+                                posts = it,
+                                page = 1,
+                                canLoadMore = it.size >= POSTS_PAGE_LIMIT,
+                            ),
+                        )
                         _uiEvent.emit(PostsEvent.ShowSnackbar.Success)
                     },
                     onFailure = { cause ->
-                        _uiState.update { state -> PostsState.Error(posts = state.posts, cause = cause) }
+                        _uiState.update { state ->
+                            PostsState.Error(
+                                posts = state.posts,
+                                page = 1,
+                                canLoadMore = state.canLoadMore,
+                                cause = cause,
+                            )
+                        }
                         _uiEvent.emit(PostsEvent.ShowSnackbar.Error)
                     },
                 )
@@ -48,22 +64,38 @@ internal class PostsViewModel @Inject constructor(
     fun loadMore() {
         viewModelScope.launch {
             mutex.withLock {
+                if (!currentState.canLoadMore) return@withLock
                 _uiState.update { state ->
                     PostsState.Loading(
                         posts = state.posts,
                         type = PostsState.Loading.Type.LOAD_MORE,
+                        page = state.page,
+                        canLoadMore = state.canLoadMore,
                     )
                 }
+                val nextPage = currentState.page + 1
                 runCatching {
-                    val nextPage = (currentState.posts.size / POSTS_LIMIT) + 1
-                    postRepository.getPosts(page = nextPage, POSTS_LIMIT)
+                    postRepository.getPosts(page = nextPage, POSTS_PAGE_LIMIT)
                 }.fold(
                     onSuccess = { newPosts ->
-                        _uiState.emit(PostsState.Stable(posts = currentState.posts + newPosts))
+                        _uiState.emit(
+                            PostsState.Stable(
+                                posts = currentState.posts + newPosts,
+                                page = nextPage,
+                                canLoadMore = newPosts.size >= POSTS_PAGE_LIMIT,
+                            ),
+                        )
                         _uiEvent.emit(PostsEvent.ShowSnackbar.Success)
                     },
                     onFailure = { cause ->
-                        _uiState.update { state -> PostsState.Error(posts = state.posts, cause = cause) }
+                        _uiState.update { state ->
+                            PostsState.Error(
+                                posts = state.posts,
+                                page = state.page,
+                                cause = cause,
+                                canLoadMore = state.canLoadMore,
+                            )
+                        }
                         _uiEvent.emit(PostsEvent.ShowSnackbar.Error)
                     },
                 )
@@ -73,9 +105,5 @@ internal class PostsViewModel @Inject constructor(
 
     init {
         refresh()
-    }
-
-    companion object {
-        private const val POSTS_LIMIT = 10
     }
 }
