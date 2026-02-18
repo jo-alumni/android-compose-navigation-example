@@ -17,7 +17,7 @@ import kotlinx.serialization.json.Json
 
 internal object HttpClientHelper {
     internal fun createHttpClient(
-        defaultUrl: String,
+        baseUrl: String,
         block: HttpClientConfig<*>.() -> Unit = {},
     ): HttpClient = HttpClient {
         install(ContentNegotiation) {
@@ -44,7 +44,7 @@ internal object HttpClientHelper {
         }
         install(DefaultRequest.Plugin) {
             header(HttpHeaders.ContentType, ContentType.Application.Json)
-            url(defaultUrl)
+            url(baseUrl)
         }
         block()
     }

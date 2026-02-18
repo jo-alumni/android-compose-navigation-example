@@ -7,11 +7,16 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import jakarta.inject.Singleton
+import javax.inject.Qualifier
 
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
     @Provides
     @Singleton
-    fun provideHttpClient(): HttpClient = createHttpClient("https://jsonplaceholder.typicode.com")
+    fun provideHttpClient(@ApiBaseUrl baseUrl: String): HttpClient = createHttpClient(baseUrl)
 }
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ApiBaseUrl
