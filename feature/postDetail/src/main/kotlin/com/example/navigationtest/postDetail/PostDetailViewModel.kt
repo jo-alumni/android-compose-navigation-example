@@ -1,151 +1,154 @@
 package com.example.navigationtest.postDetail
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
-import com.example.navigationtest.core.util.ContractedViewModel
 import com.example.navigationtest.domain.repository.PostRepository
 import com.example.navigationtest.postDetail.contract.PostDetailEvent
 import com.example.navigationtest.postDetail.contract.PostDetailState
 import com.example.navigationtest.postDetail.navigation.PostDetailDetailDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.flow.updateAndGet
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
 internal class PostDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val postRepository: PostRepository,
-) : ContractedViewModel<PostDetailState, PostDetailEvent>(
-    initialState = PostDetailState.Initial(savedStateHandle.toRoute<PostDetailDetailDestination>().id),
-) {
-    private val mutex = Mutex()
-
-    fun refresh() = viewModelScope.launch {
-        mutex.withLock {
-            val state = _uiState.updateAndGet {
-                if (it !is PostDetailState.Stable) return@updateAndGet it
-                PostDetailState.Stable.Loading(
-                    id = it.id,
-                    page = it.page,
-                    canLoadMore = it.canLoadMore,
-                    post = it.post,
-                    comments = it.comments,
-                    type = PostDetailState.Stable.Loading.Type.REFRESH,
-                )
-            }
-            if (state !is PostDetailState.Stable.Loading) return@launch
-            runCatching {
-                val post = async { postRepository.getPost(currentState.id) }
-                val comments = async { postRepository.getComments(postId = currentState.id, page = 1, limit = COMMENTS_PAGE_LIMIT) }
-                return@runCatching post.await() to comments.await()
-            }.fold(
-                onSuccess = { (post, comments) ->
-                    _uiState.update { state ->
-                        PostDetailState.Stable.Initial(
-                            id = state.id,
-                            page = 1,
-                            post = post,
-                            comments = comments,
-                            canLoadMore = comments.size >= COMMENTS_PAGE_LIMIT,
-                        )
-                    }
-                },
-                onFailure = { cause ->
-                    _uiState.update { state ->
-                        PostDetailState.Error(id = state.id, cause = cause)
-                    }
-                },
-            )
-        }
-    }
-
-    fun loadMoreComments() = viewModelScope.launch {
-        mutex.withLock {
-            val state = _uiState.updateAndGet {
-                if (it !is PostDetailState.Stable) return@updateAndGet it
-                PostDetailState.Stable.Loading(
-                    id = it.id,
-                    post = it.post,
-                    comments = it.comments,
-                    page = it.page,
-                    type = PostDetailState.Stable.Loading.Type.LOAD_MORE,
-                    canLoadMore = it.canLoadMore,
-                )
-            }
-            if (state !is PostDetailState.Stable.Loading) return@launch
-            val nextPage = state.page + 1
-            runCatching {
-                postRepository.getComments(postId = state.id, page = nextPage, limit = COMMENTS_PAGE_LIMIT)
-            }.fold(
-                onSuccess = { comments ->
-                    _uiState.update { state ->
-                        if (state !is PostDetailState.Stable) return@update state
-                        PostDetailState.Stable.Initial(
-                            id = state.id,
-                            post = state.post,
-                            comments = state.comments + comments,
-                            page = nextPage,
-                            canLoadMore = comments.size >= COMMENTS_PAGE_LIMIT,
-                        )
-                    }
-                },
-                onFailure = { cause ->
-                    _uiState.update { state ->
-                        if (state !is PostDetailState.Stable) return@update state
-                        PostDetailState.Stable.Error(
-                            id = state.id,
-                            post = state.post,
-                            comments = state.comments,
-                            page = state.page,
-                            canLoadMore = state.canLoadMore,
-                            cause = cause,
-                        )
-                    }
-                },
-            )
-        }
-    }
-
-    private fun init() = viewModelScope.launch {
-        mutex.withLock {
-            _uiState.update { state ->
-                PostDetailState.Loading(
-                    id = state.id,
-                )
-            }
-            runCatching {
-                val post = async { postRepository.getPost(currentState.id) }
-                val comments = async { postRepository.getComments(postId = currentState.id, page = 1, limit = COMMENTS_PAGE_LIMIT) }
-                return@runCatching post.await() to comments.await()
-            }.fold(
-                onSuccess = { (post, comments) ->
-                    _uiState.update { state ->
-                        PostDetailState.Stable.Initial(
-                            id = state.id,
-                            post = post,
-                            comments = comments,
-                            page = 1,
-                            canLoadMore = comments.size >= COMMENTS_PAGE_LIMIT,
-                        )
-                    }
-                },
-                onFailure = {
-                    _uiState.update { state ->
-                        PostDetailState.Error(id = state.id, cause = it)
-                    }
-                },
-            )
-        }
-    }
-
-    init {
+) : ViewModel(), ContainerHost<PostDetailState, PostDetailEvent> {
+    override val container = container<PostDetailState, PostDetailEvent>(
+        initialState = PostDetailState.Loading(
+            id = savedStateHandle.toRoute<PostDetailDetailDestination>().id,
+        ),
+    ) {
         init()
+    }
+
+    fun refresh() = intent {
+        reduce {
+            val currentState = state
+            if (currentState !is PostDetailState.Stable) return@reduce state
+            PostDetailState.Stable.Loading(
+                id = currentState.id,
+                page = currentState.page,
+                canLoadMore = currentState.canLoadMore,
+                post = currentState.post,
+                comments = currentState.comments,
+                type = PostDetailState.Stable.Loading.Type.REFRESH,
+            )
+        }
+        val currentState = state
+        if (currentState !is PostDetailState.Stable.Loading) return@intent
+        runCatching {
+            coroutineScope {
+                val post = async { postRepository.getPost(postId = state.id) }
+                val comments = async { postRepository.getComments(postId = state.id, page = 1, limit = COMMENTS_PAGE_LIMIT) }
+                return@coroutineScope post.await() to comments.await()
+            }
+        }.fold(
+            onSuccess = { (post, comments) ->
+                reduce {
+                    PostDetailState.Stable.Initial(
+                        id = state.id,
+                        page = 1,
+                        post = post,
+                        comments = comments,
+                        canLoadMore = comments.size >= COMMENTS_PAGE_LIMIT,
+                    )
+                }
+            },
+            onFailure = { cause ->
+                reduce {
+                    PostDetailState.Stable.Error(
+                        id = currentState.id,
+                        page = currentState.page,
+                        canLoadMore = currentState.canLoadMore,
+                        post = currentState.post,
+                        comments = currentState.comments,
+                        cause = cause,
+                    )
+                }
+            },
+        )
+    }
+
+    fun loadMoreComments() = intent {
+        reduce {
+            val currentState = state
+            if (currentState !is PostDetailState.Stable) return@reduce state
+            PostDetailState.Stable.Loading(
+                id = currentState.id,
+                post = currentState.post,
+                comments = currentState.comments,
+                page = currentState.page,
+                type = PostDetailState.Stable.Loading.Type.LOAD_MORE,
+                canLoadMore = currentState.canLoadMore,
+            )
+        }
+        val currentState = state
+        if (currentState !is PostDetailState.Stable.Loading) return@intent
+        val nextPage = currentState.page + 1
+        runCatching {
+            postRepository.getComments(postId = state.id, page = nextPage, limit = COMMENTS_PAGE_LIMIT)
+        }.fold(
+            onSuccess = { comments ->
+                reduce {
+                    PostDetailState.Stable.Initial(
+                        id = currentState.id,
+                        post = currentState.post,
+                        comments = currentState.comments + comments,
+                        page = nextPage,
+                        canLoadMore = comments.size >= COMMENTS_PAGE_LIMIT,
+                    )
+                }
+            },
+            onFailure = { cause ->
+                reduce {
+                    PostDetailState.Stable.Error(
+                        id = currentState.id,
+                        post = currentState.post,
+                        comments = currentState.comments,
+                        page = currentState.page,
+                        canLoadMore = currentState.canLoadMore,
+                        cause = cause,
+                    )
+                }
+            },
+        )
+    }
+
+    private fun init() = intent {
+        reduce {
+            PostDetailState.Loading(id = state.id)
+        }
+        runCatching {
+            coroutineScope {
+                val post = async { postRepository.getPost(state.id) }
+                val comments = async { postRepository.getComments(postId = state.id, page = 1, limit = COMMENTS_PAGE_LIMIT) }
+                return@coroutineScope post.await() to comments.await()
+            }
+        }.fold(
+            onSuccess = { (post, comments) ->
+                reduce {
+                    PostDetailState.Stable.Initial(
+                        id = state.id,
+                        post = post,
+                        comments = comments,
+                        page = 1,
+                        canLoadMore = comments.size >= COMMENTS_PAGE_LIMIT,
+                    )
+                }
+            },
+            onFailure = {
+                reduce {
+                    PostDetailState.Error(id = state.id, cause = it)
+                }
+            },
+        )
     }
 
     companion object {

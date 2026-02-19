@@ -1,8 +1,12 @@
 package com.example.navigationtest.postDetail
 
+import android.database.sqlite.SQLiteBindOrColumnIndexOutOfRangeException
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -23,21 +27,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.navigationtest.core.ui.component.CommentView
+import com.example.navigationtest.core.extension.copy
+import com.example.navigationtest.core.ui.component.Comment
 import com.example.navigationtest.core.ui.component.PostView
 import com.example.navigationtest.core.ui.theme.AppTheme
 import com.example.navigationtest.core.util.render
+import com.example.navigationtest.domain.entity.Comment
 import com.example.navigationtest.domain.entity.Post
 import com.example.navigationtest.postDetail.contract.PostDetailState
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 internal fun TweetDetailRoot(
     viewModel: PostDetailViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.collectAsState()
+    viewModel.collectSideEffect {
+        when (it) {
+            else -> {}
+        }
+    }
     TweetDetailScreen(uiState = uiState, navigateBack = navigateBack)
 }
 
@@ -87,28 +100,45 @@ private fun TweetDetailScreen(
         }
 
         uiState.render<PostDetailState.Stable> {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = paddingValues,
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues.copy(bottom = 0.dp)),
             ) {
-                item {
-                    PostView(
-                        modifier = Modifier.fillMaxWidth(),
-                        name = post.userId.toString(),
-                        userId = post.title,
-                        content = post.body,
-                    )
-                    HorizontalDivider()
-                }
+                PostView(
+                    modifier = Modifier.fillMaxWidth(),
+                    name = post.userId.toString(),
+                    userId = post.title,
+                    content = post.body,
+                )
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = paddingValues.copy(top = 0.dp, start = 0.dp, end = 0.dp),
+                ) {
+                    items(comments) { comment ->
+                        Comment(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp),
+                            name = comment.email,
+                            userId = comment.id.toString(),
+                            content = comment.body,
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
 
-                items(comments) { comment ->
-                    CommentView(
-                        modifier = Modifier.fillMaxWidth(),
-                        name = comment.email,
-                        userId = comment.id.toString(),
-                        content = comment.body,
-                    )
-                    HorizontalDivider()
+                    if (uiState is PostDetailState.Stable.Loading && uiState.type == PostDetailState.Stable.Loading.Type.LOAD_MORE) {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                CircularProgressIndicator()
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -116,6 +146,15 @@ private fun TweetDetailScreen(
 }
 
 private class UiStatePreviewParameter : PreviewParameterProvider<PostDetailState> {
+    private val comments = (1..5).map {
+        Comment(
+            postId = it,
+            id = it,
+            name = "name",
+            email = "email",
+            body = "comment body",
+        )
+    }
     override val values: Sequence<PostDetailState>
         get() = sequenceOf(
             PostDetailState.Loading(id = 1),
@@ -127,7 +166,7 @@ private class UiStatePreviewParameter : PreviewParameterProvider<PostDetailState
                     title = "title",
                     body = "body",
                 ),
-                comments = emptyList(),
+                comments = comments,
                 page = 1,
                 canLoadMore = true,
             ),
@@ -139,7 +178,7 @@ private class UiStatePreviewParameter : PreviewParameterProvider<PostDetailState
                     title = "title",
                     body = "body",
                 ),
-                comments = emptyList(),
+                comments = comments,
                 page = 1,
                 type = PostDetailState.Stable.Loading.Type.REFRESH,
                 canLoadMore = true,
@@ -152,7 +191,7 @@ private class UiStatePreviewParameter : PreviewParameterProvider<PostDetailState
                     title = "title",
                     body = "body",
                 ),
-                comments = emptyList(),
+                comments = comments,
                 page = 1,
                 type = PostDetailState.Stable.Loading.Type.LOAD_MORE,
                 canLoadMore = true,
@@ -165,7 +204,7 @@ private class UiStatePreviewParameter : PreviewParameterProvider<PostDetailState
                     title = "title",
                     body = "body",
                 ),
-                comments = emptyList(),
+                comments = comments,
                 page = 1,
                 canLoadMore = true,
             ),
