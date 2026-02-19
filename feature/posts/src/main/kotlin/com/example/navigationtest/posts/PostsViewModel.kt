@@ -1,109 +1,96 @@
 package com.example.navigationtest.posts
 
-import androidx.lifecycle.viewModelScope
-import com.example.navigationtest.core.util.ContractedViewModel
+import androidx.lifecycle.ViewModel
+import com.example.navigationtest.core.extension.toUnit
 import com.example.navigationtest.domain.repository.PostRepository
 import com.example.navigationtest.posts.contract.PostsEvent
 import com.example.navigationtest.posts.contract.PostsState
-import com.example.navigationtest.posts.contract.PostsState.Companion.POSTS_PAGE_LIMIT
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
+import org.orbitmvi.orbit.Container
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
 internal class PostsViewModel @Inject constructor(
     private val postRepository: PostRepository,
-) : ContractedViewModel<PostsState, PostsEvent>(
-    initialState = PostsState.Initial(),
-) {
-    private val mutex = Mutex()
-
-    fun refresh() {
-        viewModelScope.launch {
-            mutex.withLock {
-                _uiState.update { state ->
-                    PostsState.Loading(
-                        posts = state.posts,
-                        type = PostsState.Loading.Type.REFRESH,
-                        page = 1,
-                        canLoadMore = true,
-                    )
-                }
-                runCatching {
-                    postRepository.getPosts(page = 1, POSTS_PAGE_LIMIT)
-                }.fold(
-                    onSuccess = {
-                        _uiState.emit(
-                            PostsState.Stable(
-                                posts = it,
-                                page = 1,
-                                canLoadMore = it.size >= POSTS_PAGE_LIMIT,
-                            ),
-                        )
-                        _uiEvent.emit(PostsEvent.ShowSnackbar.Success)
-                    },
-                    onFailure = { cause ->
-                        _uiState.update { state ->
-                            PostsState.Error(
-                                posts = state.posts,
-                                page = 1,
-                                canLoadMore = state.canLoadMore,
-                                cause = cause,
-                            )
-                        }
-                        _uiEvent.emit(PostsEvent.ShowSnackbar.Error)
-                    },
-                )
-            }
-        }
-    }
-
-    fun loadMore() {
-        viewModelScope.launch {
-            mutex.withLock {
-                if (!currentState.canLoadMore) return@withLock
-                _uiState.update { state ->
-                    PostsState.Loading(
-                        posts = state.posts,
-                        type = PostsState.Loading.Type.LOAD_MORE,
-                        page = state.page,
-                        canLoadMore = state.canLoadMore,
-                    )
-                }
-                val nextPage = currentState.page + 1
-                runCatching {
-                    postRepository.getPosts(page = nextPage, POSTS_PAGE_LIMIT)
-                }.fold(
-                    onSuccess = { newPosts ->
-                        _uiState.emit(
-                            PostsState.Stable(
-                                posts = currentState.posts + newPosts,
-                                page = nextPage,
-                                canLoadMore = newPosts.size >= POSTS_PAGE_LIMIT,
-                            ),
-                        )
-                        _uiEvent.emit(PostsEvent.ShowSnackbar.Success)
-                    },
-                    onFailure = { cause ->
-                        _uiState.update { state ->
-                            PostsState.Error(
-                                posts = state.posts,
-                                page = state.page,
-                                cause = cause,
-                                canLoadMore = state.canLoadMore,
-                            )
-                        }
-                        _uiEvent.emit(PostsEvent.ShowSnackbar.Error)
-                    },
-                )
-            }
-        }
-    }
-
-    init {
+) : ViewModel(), ContainerHost<PostsState, PostsEvent> {
+    override val container: Container<PostsState, PostsEvent> = container(
+        initialState = PostsState.Initial(),
+    ) {
         refresh()
     }
+
+    fun refresh() = intent {
+        reduce {
+            PostsState.Loading(
+                posts = state.posts,
+                type = PostsState.Loading.Type.REFRESH,
+                page = 1,
+                canLoadMore = true,
+            )
+        }
+        runCatching {
+            postRepository.getPosts(page = 1, PostsState.POSTS_PAGE_LIMIT)
+        }.fold(
+            onSuccess = { posts ->
+                reduce {
+                    PostsState.Stable(
+                        posts = posts,
+                        page = 1,
+                        canLoadMore = posts.size >= PostsState.POSTS_PAGE_LIMIT,
+                    )
+                }
+                postSideEffect(PostsEvent.ShowSnackbar.Success)
+            },
+            onFailure = { cause ->
+                reduce {
+                    PostsState.Error(
+                        posts = state.posts,
+                        page = 1,
+                        canLoadMore = state.canLoadMore,
+                        cause = cause,
+                    )
+                }
+                postSideEffect(PostsEvent.ShowSnackbar.Error)
+            },
+        )
+    }.toUnit
+
+    fun loadMore() = intent {
+        if (state is PostsState.Loading || !state.canLoadMore) return@intent
+        val currentPage = state.page
+        reduce {
+            PostsState.Loading(
+                posts = state.posts,
+                type = PostsState.Loading.Type.LOAD_MORE,
+                page = currentPage,
+                canLoadMore = state.canLoadMore,
+            )
+        }
+        runCatching {
+            postRepository.getPosts(page = currentPage + 1, PostsState.POSTS_PAGE_LIMIT)
+        }.fold(
+            onSuccess = { posts ->
+                reduce {
+                    PostsState.Stable(
+                        posts = state.posts + posts,
+                        page = currentPage + 1,
+                        canLoadMore = posts.size >= PostsState.POSTS_PAGE_LIMIT,
+                    )
+                }
+            },
+            onFailure = { cause ->
+                reduce {
+                    PostsState.Error(
+                        posts = state.posts,
+                        page = currentPage,
+                        canLoadMore = state.canLoadMore,
+                        cause = cause,
+                    )
+                }
+                postSideEffect(PostsEvent.ShowSnackbar.Error)
+            },
+        )
+    }.toUnit
 }
