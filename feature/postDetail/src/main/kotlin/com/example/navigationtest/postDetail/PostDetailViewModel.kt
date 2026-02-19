@@ -78,7 +78,7 @@ internal class PostDetailViewModel @Inject constructor(
     fun loadMoreComments() = intent {
         reduce {
             val currentState = state
-            if (currentState !is PostDetailState.Stable) return@reduce state
+            if (currentState !is PostDetailState.Stable || !currentState.canLoadMore) return@reduce state
             PostDetailState.Stable.Loading(
                 id = currentState.id,
                 post = currentState.post,
