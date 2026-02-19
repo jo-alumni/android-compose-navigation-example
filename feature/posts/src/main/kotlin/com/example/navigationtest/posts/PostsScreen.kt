@@ -49,6 +49,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.navigation_test.feature.posts.R
+import com.example.navigationtest.core.extension.OnBottomReached
 import com.example.navigationtest.core.extension.copy
 import com.example.navigationtest.core.ui.component.AppNavigationDrawer
 import com.example.navigationtest.core.ui.component.PostView
@@ -106,6 +107,12 @@ private fun PostScreen(
     val lazyListStates = PostsTab.entries.map { rememberLazyListState() }
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState { PostsTab.entries.size }
+
+    lazyListStates.forEachIndexed { index, state ->
+        if (pagerState.currentPage == index) {
+            state.OnBottomReached { onLoadMore() }
+        }
+    }
 
     AppNavigationDrawer(
         modifier = modifier,
