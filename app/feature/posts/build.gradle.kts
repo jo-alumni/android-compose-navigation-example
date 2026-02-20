@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.navigation_test.feature.postDetail"
+    namespace = "com.example.navigation_test.app.feature.posts"
     compileSdk = 36
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

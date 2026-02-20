@@ -78,6 +78,6 @@ dependencies {
     implementation(projects.core)
     implementation(projects.domain)
     implementation(projects.api)
-    implementation(projects.feature.posts)
-    implementation(projects.feature.postDetail)
+    implementation(projects.app.feature.posts)
+    implementation(projects.app.feature.postDetail)
 }

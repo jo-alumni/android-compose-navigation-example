@@ -29,8 +29,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "navigation-test"
 include(":app")
-include(":feature:posts")
-include(":feature:postDetail")
+include(":app:feature:posts")
+include(":app:feature:postDetail")
 include(":core")
 include(":data")
 include(":domain")
