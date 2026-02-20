@@ -2,7 +2,7 @@ package com.example.navigationtest.posts
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.example.navigation_test.feature.posts.R
+import com.example.navigation_test.app.feature.posts.R
 
 enum class PostsTab {
     Recommended,
