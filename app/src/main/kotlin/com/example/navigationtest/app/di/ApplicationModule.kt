@@ -1,7 +1,7 @@
 package com.example.navigationtest.app.di
 
 import com.example.navigation_test.BuildConfig
-import com.example.navigationtest.api.di.ApiBaseUrl
+import com.example.navigationtest.core.di.ApiBaseUrl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
