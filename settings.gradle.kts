@@ -36,5 +36,6 @@ include(":core")
 include(":data")
 include(":domain")
 include(":api")
-include(":local")
+include(":local:datastore")
+include(":local:database")
 

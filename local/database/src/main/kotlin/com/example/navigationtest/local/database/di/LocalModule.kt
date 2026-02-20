@@ -1,4 +1,4 @@
-package com.example.navigationtest.local.di
+package com.example.navigationtest.local.database.di
 
 import dagger.Module
 import dagger.hilt.InstallIn

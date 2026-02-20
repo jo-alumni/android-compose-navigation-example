@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.navigation_test.local"
+    namespace = "com.example.navigation_test.local.datastore"
 
     compileSdk = 36
 
@@ -18,4 +18,6 @@ android {
 dependencies {
     implementation(projects.data)
     implementation(projects.core)
+
+    implementation(libs.bundles.datastore)
 }

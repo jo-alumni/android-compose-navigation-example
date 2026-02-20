@@ -1,5 +1,6 @@
 [versions]
 agp = "8.12.3"
+dataStore = "1.2.0"
 kotlin = "2.2.20"
 coreKtx = "1.17.0"
 junit = "4.13.2"
@@ -21,6 +22,8 @@ orbit = "11.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "dataStore" }
+androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "dataStore" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -99,4 +102,8 @@ orbit = [
     "orbit-core",
     "orbit-viewmodel",
     "orbit-compose"
+]
+datastore = [
+    "androidx-datastore",
+    "androidx-datastore-core"
 ]
