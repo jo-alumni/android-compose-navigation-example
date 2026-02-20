@@ -48,7 +48,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.example.navigation_test.feature.posts.R
+import com.example.navigation_test.app.feature.posts.R
 import com.example.navigationtest.core.extension.OnBottomReached
 import com.example.navigationtest.core.extension.copy
 import com.example.navigationtest.core.ui.component.AppNavigationDrawer
