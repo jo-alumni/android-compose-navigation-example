@@ -1,7 +1,8 @@
-package com.example.navigationtest.api.datasource
+package com.example.navigationtest.api.provider
 
-import com.example.navigationtest.api.model.CommentApiModel
-import com.example.navigationtest.api.model.PostApiModel
+import com.example.navigationtest.data.datasource.AppApiDataSource
+import com.example.navigationtest.data.model.CommentModel
+import com.example.navigationtest.data.model.PostModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
@@ -16,10 +17,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class PostApiDataSource @Inject constructor(
+class AppApiDataProvider @Inject constructor(
     private val httpClient: HttpClient,
-) {
-    suspend fun getPosts(page: Int, limit: Int): List<PostApiModel> = withContext(Dispatchers.IO) {
+) : AppApiDataSource {
+    override suspend fun getPosts(page: Int, limit: Int): List<PostModel> = withContext(Dispatchers.IO) {
         httpClient.get {
             url(path = "posts")
             parameter("_page", page)
@@ -27,13 +28,13 @@ class PostApiDataSource @Inject constructor(
         }.body()
     }
 
-    suspend fun getPost(postId: Int): PostApiModel = withContext(Dispatchers.IO) {
+    override suspend fun getPost(postId: Int): PostModel = withContext(Dispatchers.IO) {
         httpClient.get {
             url(path = "posts/$postId")
         }.body()
     }
 
-    suspend fun deletePost(postId: Int) {
+    override suspend fun deletePost(postId: Int) {
         withContext(Dispatchers.IO) {
             httpClient.delete {
                 url(path = "posts/$postId")
@@ -41,7 +42,7 @@ class PostApiDataSource @Inject constructor(
         }
     }
 
-    suspend fun getCommentsRelatedPost(postId: Int, page: Int, limit: Int): List<CommentApiModel> = withContext(Dispatchers.IO) {
+    override suspend fun getCommentsRelatedPost(postId: Int, page: Int, limit: Int): List<CommentModel> = withContext(Dispatchers.IO) {
         httpClient.get {
             url(path = "posts/$postId/comments")
             parameter("_page", page)
@@ -49,7 +50,7 @@ class PostApiDataSource @Inject constructor(
         }.body()
     }
 
-    suspend fun createPost(post: PostApiModel) {
+    override suspend fun createPost(post: PostModel) {
         withContext(Dispatchers.IO) {
             httpClient.post {
                 url(path = "posts")
@@ -58,7 +59,7 @@ class PostApiDataSource @Inject constructor(
         }
     }
 
-    suspend fun patchPost(post: PostApiModel) {
+    override suspend fun patchPost(post: PostModel) {
         withContext(Dispatchers.IO) {
             httpClient.patch {
                 url(path = "posts/${post.id}")
@@ -67,7 +68,7 @@ class PostApiDataSource @Inject constructor(
         }
     }
 
-    suspend fun putPost(post: PostApiModel) {
+    override suspend fun putPost(post: PostModel) {
         withContext(Dispatchers.IO) {
             httpClient.put {
                 url(path = "posts/${post.id}")

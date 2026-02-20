@@ -1,9 +1,9 @@
-package com.example.navigationtest.api.model
+package com.example.navigationtest.data.model
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CommentApiModel(
+data class CommentModel(
     val postId: Int,
     val id: Int,
     val name: String,

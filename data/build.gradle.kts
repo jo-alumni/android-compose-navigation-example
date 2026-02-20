@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.navigation_test.domain"
+    namespace = "com.example.navigation_test.data"
 
     compileSdk = 36
 
@@ -16,5 +16,6 @@ android {
 }
 
 dependencies {
+    implementation(projects.domain)
     implementation(libs.kotlinx.serialization.json)
 }

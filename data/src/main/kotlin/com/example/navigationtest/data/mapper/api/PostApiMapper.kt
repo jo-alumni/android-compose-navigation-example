@@ -1,17 +1,17 @@
-package com.example.navigationtest.domain.mapper
+package com.example.navigationtest.data.mapper.api
 
-import com.example.navigationtest.api.model.PostApiModel
+import com.example.navigationtest.data.model.PostModel
 import com.example.navigationtest.domain.entity.Post
 
 object PostApiMapper {
-    fun toApiModel(entity: Post): PostApiModel = PostApiModel(
+    fun toModel(entity: Post): PostModel = PostModel(
         id = entity.id,
         userId = entity.userId,
         title = entity.title,
         body = entity.body,
     )
 
-    fun toEntity(apiModel: PostApiModel): Post = Post(
+    fun toEntity(apiModel: PostModel): Post = Post(
         id = apiModel.id,
         userId = apiModel.userId,
         title = apiModel.title,

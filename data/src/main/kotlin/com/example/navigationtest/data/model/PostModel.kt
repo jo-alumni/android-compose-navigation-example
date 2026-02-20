@@ -1,9 +1,9 @@
-package com.example.navigationtest.api.model
+package com.example.navigationtest.data.model
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PostApiModel(
+data class PostModel(
     val userId: Int,
     val id: Int,
     val title: String,

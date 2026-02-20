@@ -1,10 +1,10 @@
-package com.example.navigationtest.domain.mapper
+package com.example.navigationtest.data.mapper.api
 
-import com.example.navigationtest.api.model.CommentApiModel
+import com.example.navigationtest.data.model.CommentModel
 import com.example.navigationtest.domain.entity.Comment
 
 object CommentApiMapper {
-    fun toEntity(apiModel: CommentApiModel): Comment = Comment(
+    fun toEntity(apiModel: CommentModel): Comment = Comment(
         id = apiModel.id,
         postId = apiModel.postId,
         name = apiModel.name,
@@ -12,7 +12,7 @@ object CommentApiMapper {
         body = apiModel.body,
     )
 
-    fun toApiModel(entity: Comment): CommentApiModel = CommentApiModel(
+    fun toModel(entity: Comment): CommentModel = CommentModel(
         postId = entity.postId,
         id = entity.id,
         name = entity.name,

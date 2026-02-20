@@ -3,6 +3,7 @@ package com.example.navigationtest.postDetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
+import com.example.navigationtest.domain.repository.CommentRepository
 import com.example.navigationtest.domain.repository.PostRepository
 import com.example.navigationtest.postDetail.contract.PostDetailEvent
 import com.example.navigationtest.postDetail.contract.PostDetailState
@@ -18,6 +19,7 @@ import javax.inject.Inject
 internal class PostDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val postRepository: PostRepository,
+    private val commentRepository: CommentRepository,
 ) : ViewModel(), ContainerHost<PostDetailState, PostDetailEvent> {
     override val container = container<PostDetailState, PostDetailEvent>(
         initialState = PostDetailState.Loading(
@@ -45,7 +47,7 @@ internal class PostDetailViewModel @Inject constructor(
         runCatching {
             coroutineScope {
                 val post = async { postRepository.getPost(postId = state.id) }
-                val comments = async { postRepository.getComments(postId = state.id, page = 1, limit = COMMENTS_PAGE_LIMIT) }
+                val comments = async { commentRepository.getComments(postId = state.id, page = 1, limit = COMMENTS_PAGE_LIMIT) }
                 return@coroutineScope post.await() to comments.await()
             }
         }.fold(
@@ -92,7 +94,7 @@ internal class PostDetailViewModel @Inject constructor(
         if (currentState !is PostDetailState.Stable.Loading) return@intent
         val nextPage = currentState.page + 1
         runCatching {
-            postRepository.getComments(postId = state.id, page = nextPage, limit = COMMENTS_PAGE_LIMIT)
+            commentRepository.getComments(postId = state.id, page = nextPage, limit = COMMENTS_PAGE_LIMIT)
         }.fold(
             onSuccess = { comments ->
                 reduce {
@@ -127,7 +129,7 @@ internal class PostDetailViewModel @Inject constructor(
         runCatching {
             coroutineScope {
                 val post = async { postRepository.getPost(state.id) }
-                val comments = async { postRepository.getComments(postId = state.id, page = 1, limit = COMMENTS_PAGE_LIMIT) }
+                val comments = async { commentRepository.getComments(postId = state.id, page = 1, limit = COMMENTS_PAGE_LIMIT) }
                 return@coroutineScope post.await() to comments.await()
             }
         }.fold(
