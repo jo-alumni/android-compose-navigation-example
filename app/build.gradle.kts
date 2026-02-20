@@ -73,10 +73,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // core modules
     implementation(projects.core)
     implementation(projects.domain)
     implementation(projects.api)
     implementation(projects.data)
+
+    // app modules
     implementation(projects.app.core)
     implementation(projects.app.feature.posts)
     implementation(projects.app.feature.postDetail)
