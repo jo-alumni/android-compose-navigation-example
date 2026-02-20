@@ -78,6 +78,7 @@ dependencies {
     implementation(projects.core)
     implementation(projects.domain)
     implementation(projects.api)
+    implementation(projects.app.core)
     implementation(projects.app.feature.posts)
     implementation(projects.app.feature.postDetail)
 }

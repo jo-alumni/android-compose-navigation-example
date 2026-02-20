@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.navigation_test.app.feature.posts"
+    namespace = "com.example.navigation_test.app.core"
     compileSdk = 36
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -14,5 +14,4 @@ android {
 dependencies {
     implementation(projects.core)
     implementation(projects.domain)
-    implementation(projects.app.core)
 }
