@@ -36,3 +36,5 @@ include(":core")
 include(":data")
 include(":domain")
 include(":api")
+include(":local")
+

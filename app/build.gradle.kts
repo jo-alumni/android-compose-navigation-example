@@ -64,8 +64,9 @@ dependencies {
     // core modules
     implementation(projects.core)
     implementation(projects.domain)
-    implementation(projects.api)
     implementation(projects.data)
+    implementation(projects.api)
+    implementation(projects.local)
 
     // app modules
     implementation(projects.app.core)
