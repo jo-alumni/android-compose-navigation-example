@@ -45,6 +45,7 @@ class AndroidKotlinPlugin : Plugin<Project> {
             }
             dependencies {
                 implementation(libs.library("kotlinx-coroutines-core"))
+                implementation(libs.library("kotlinx-serialization-json"))
             }
         }
     }

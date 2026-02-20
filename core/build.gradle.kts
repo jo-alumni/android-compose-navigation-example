@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     alias(libs.plugins.navigationTest.kotlin)
-    alias(libs.plugins.navigationTest.compose)
+    alias(libs.plugins.navigationTest.hilt)
 }
 
 android {
@@ -16,7 +16,4 @@ android {
 }
 
 dependencies {
-    implementation(projects.domain)
-    
-    implementation(libs.kotlinx.serialization.json)
 }

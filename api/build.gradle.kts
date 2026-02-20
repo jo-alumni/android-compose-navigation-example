@@ -17,7 +17,7 @@ android {
 
 dependencies {
     implementation(projects.data)
+    implementation(projects.core)
 
-    implementation(libs.kotlinx.serialization.json)
     implementation(libs.bundles.ktor)
 }
