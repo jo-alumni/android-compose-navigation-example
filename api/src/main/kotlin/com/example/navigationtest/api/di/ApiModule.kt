@@ -25,5 +25,5 @@ object ApiProvideModule {
 abstract class ApiBindModule {
     @Binds
     @Singleton
-    abstract fun providePostApiDataSource(appApiDataProvider: AppApiDataProvider): AppApiDataSource
+    abstract fun bindPostApiDataSource(appApiDataProvider: AppApiDataProvider): AppApiDataSource
 }
