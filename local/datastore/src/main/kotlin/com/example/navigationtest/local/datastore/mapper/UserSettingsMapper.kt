@@ -9,4 +9,10 @@ object UserSettingsMapper {
             userName = dataStoreModel.userName,
             notificationsEnabled = dataStoreModel.notificationsEnabled,
         )
+
+    fun toDataStoreModel(dataModel: UserSettingsModel): UserSettingsDatastoreModel =
+        UserSettingsDatastoreModel(
+            userName = dataModel.userName,
+            notificationsEnabled = dataModel.notificationsEnabled,
+        )
 }

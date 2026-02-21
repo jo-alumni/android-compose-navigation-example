@@ -5,4 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserSettingsLocalDataSource {
     fun getUserSettings(): Flow<UserSettingsModel>
+
+    suspend fun setUserSettings(userSettings: UserSettingsModel)
 }

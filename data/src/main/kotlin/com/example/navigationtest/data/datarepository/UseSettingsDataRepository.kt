@@ -14,4 +14,10 @@ class UseSettingsDataRepository(
         userSettingsLocalDataSource
             .getUserSettings()
             .map(UserSettingsMapper::toEntity)
+
+    override suspend fun setUserSettings(userSettings: UserSettings) {
+        userSettingsLocalDataSource.setUserSettings(
+            userSettings.let(UserSettingsMapper::toDataModel),
+        )
+    }
 }

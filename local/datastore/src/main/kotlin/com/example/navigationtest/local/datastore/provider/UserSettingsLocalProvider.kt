@@ -15,4 +15,10 @@ class UserSettingsLocalProvider @Inject constructor(
     override fun getUserSettings(): Flow<UserSettingsModel> {
         return datastore.data.map(UserSettingsMapper::toDataModel)
     }
+
+    override suspend fun setUserSettings(userSettings: UserSettingsModel) {
+        datastore.updateData {
+            userSettings.let(UserSettingsMapper::toDataStoreModel)
+        }
+    }
 }
