@@ -1,5 +1,9 @@
 package com.example.navigationtest.api.provider
 
+import com.example.navigationtest.api.mapper.CommentMapper
+import com.example.navigationtest.api.mapper.PostMapper
+import com.example.navigationtest.api.model.CommentApiModel
+import com.example.navigationtest.api.model.PostApiModel
 import com.example.navigationtest.data.datasource.AppApiDataSource
 import com.example.navigationtest.data.model.CommentModel
 import com.example.navigationtest.data.model.PostModel
@@ -20,18 +24,21 @@ import javax.inject.Inject
 class AppApiDataProvider @Inject constructor(
     private val httpClient: HttpClient,
 ) : AppApiDataSource {
-    override suspend fun getPosts(page: Int, limit: Int): List<PostModel> = withContext(Dispatchers.IO) {
-        httpClient.get {
-            url(path = "posts")
-            parameter("_page", page)
-            parameter("_limit", limit)
-        }.body()
-    }
+    override suspend fun getPosts(page: Int, limit: Int): List<PostModel> =
+        withContext(Dispatchers.IO) {
+            httpClient.get {
+                url(path = "posts")
+                parameter("_page", page)
+                parameter("_limit", limit)
+            }.body<List<PostApiModel>>()
+                .map(PostMapper::toDataModel)
+        }
 
     override suspend fun getPost(postId: Int): PostModel = withContext(Dispatchers.IO) {
         httpClient.get {
             url(path = "posts/$postId")
-        }.body()
+        }.body<PostApiModel>()
+            .let(PostMapper::toDataModel)
     }
 
     override suspend fun deletePost(postId: Int) {
@@ -47,14 +54,15 @@ class AppApiDataProvider @Inject constructor(
             url(path = "posts/$postId/comments")
             parameter("_page", page)
             parameter("_limit", limit)
-        }.body()
+        }.body<List<CommentApiModel>>()
+            .map(CommentMapper::toDataModel)
     }
 
     override suspend fun createPost(post: PostModel) {
         withContext(Dispatchers.IO) {
             httpClient.post {
                 url(path = "posts")
-                setBody(post)
+                setBody(post.let(PostMapper::toApiModel))
             }
         }
     }
@@ -63,7 +71,7 @@ class AppApiDataProvider @Inject constructor(
         withContext(Dispatchers.IO) {
             httpClient.patch {
                 url(path = "posts/${post.id}")
-                setBody(post)
+                setBody(post.let(PostMapper::toApiModel))
             }
         }
     }
@@ -72,7 +80,7 @@ class AppApiDataProvider @Inject constructor(
         withContext(Dispatchers.IO) {
             httpClient.put {
                 url(path = "posts/${post.id}")
-                setBody(post)
+                setBody(post.let(PostMapper::toApiModel))
             }
         }
     }
