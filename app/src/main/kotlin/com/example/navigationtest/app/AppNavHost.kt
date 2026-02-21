@@ -8,6 +8,8 @@ import com.example.navigationtest.app.feature.postDetail.navigation.navigateToPo
 import com.example.navigationtest.app.feature.postDetail.navigation.tweetDetailScreen
 import com.example.navigationtest.app.feature.posts.navigation.PostsDestination
 import com.example.navigationtest.app.feature.posts.navigation.homeScreen
+import com.example.navigationtest.app.feature.todo.navigation.navigateTodo
+import com.example.navigationtest.app.feature.todo.navigation.todoScreen
 
 @Composable
 fun AppNavHost(
@@ -21,9 +23,11 @@ fun AppNavHost(
     ) {
         homeScreen(
             navigatePostDetail = navController::navigateToPostDetail,
+            navigateTodo = navController::navigateTodo,
         )
         tweetDetailScreen(
             navigateBack = navController::popBackStack,
         )
+        todoScreen()
     }
 }

@@ -6,8 +6,9 @@ import com.example.navigationtest.domain.entity.Todo
 import com.example.navigationtest.domain.repository.TodoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class TodoDataRepository(
+class TodoDataRepository @Inject constructor(
     private val todoLocalDataSource: TodoLocalDataSource,
 ) : TodoRepository {
     override fun getAll(): Flow<List<Todo>> =

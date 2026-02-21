@@ -1,8 +1,6 @@
 package com.example.navigationtest.app.feature.todo.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -14,14 +12,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object TodoDestination
 
-fun NavGraphBuilder.todoScreen(
-    navigatePostDetail: (Int) -> Unit,
-) {
+fun NavGraphBuilder.todoScreen() {
     composable<TodoDestination> {
         TodoRoot(
             modifier = Modifier.fillMaxSize(),
-            drawerState = rememberDrawerState(DrawerValue.Closed),
-            navigatePostDetail = navigatePostDetail,
         )
     }
 }

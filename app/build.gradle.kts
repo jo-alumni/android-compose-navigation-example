@@ -73,4 +73,5 @@ dependencies {
     implementation(projects.app.core)
     implementation(projects.app.feature.posts)
     implementation(projects.app.feature.postDetail)
+    implementation(projects.app.feature.todo)
 }

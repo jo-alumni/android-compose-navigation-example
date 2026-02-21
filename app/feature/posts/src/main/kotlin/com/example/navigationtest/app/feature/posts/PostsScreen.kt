@@ -66,6 +66,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 internal fun PostsRoot(
     drawerState: DrawerState,
     navigatePostDetail: (Int) -> Unit,
+    navigateTodo: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PostsViewModel = hiltViewModel(),
 ) {
@@ -87,6 +88,7 @@ internal fun PostsRoot(
         uiState = uiState,
         snackbarHostState = snackbarHostState,
         navigatePostDetail = navigatePostDetail,
+        navigateTodo = navigateTodo,
         onRefresh = viewModel::refresh,
         onLoadMore = viewModel::loadMore,
         drawerState = drawerState,
@@ -100,6 +102,7 @@ private fun PostScreen(
     drawerState: DrawerState,
     snackbarHostState: SnackbarHostState,
     navigatePostDetail: (Int) -> Unit,
+    navigateTodo: () -> Unit,
     onRefresh: () -> Unit,
     onLoadMore: () -> Unit,
     modifier: Modifier = Modifier,
@@ -117,6 +120,7 @@ private fun PostScreen(
     AppNavigationDrawer(
         modifier = modifier,
         drawerState = drawerState,
+        navigateTodo = navigateTodo,
     ) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -277,6 +281,7 @@ private fun PostScreenPreview(
             drawerState = rememberDrawerState(DrawerValue.Closed),
             snackbarHostState = remember { SnackbarHostState() },
             navigatePostDetail = {},
+            navigateTodo = {},
             onRefresh = {},
             onLoadMore = {},
         )

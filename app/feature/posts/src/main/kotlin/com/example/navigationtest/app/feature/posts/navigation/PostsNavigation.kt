@@ -16,12 +16,14 @@ data object PostsDestination
 
 fun NavGraphBuilder.homeScreen(
     navigatePostDetail: (Int) -> Unit,
+    navigateTodo: () -> Unit,
 ) {
     composable<PostsDestination> {
         PostsRoot(
             modifier = Modifier.fillMaxSize(),
             drawerState = rememberDrawerState(DrawerValue.Closed),
             navigatePostDetail = navigatePostDetail,
+            navigateTodo = navigateTodo,
         )
     }
 }

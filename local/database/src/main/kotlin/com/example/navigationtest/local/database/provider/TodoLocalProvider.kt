@@ -6,8 +6,9 @@ import com.example.navigationtest.local.database.app.dao.TodoDao
 import com.example.navigationtest.local.database.mapper.TodoMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class TodoLocalProvider(
+class TodoLocalProvider @Inject constructor(
     private val todoDao: TodoDao,
 ) : TodoLocalDataSource {
     override fun getTodos(): Flow<List<TodoModel>> =
