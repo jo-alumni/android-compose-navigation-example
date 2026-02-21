@@ -2,9 +2,11 @@ package com.example.navigationtest.data.di
 
 import com.example.navigationtest.data.datarepository.CommentDataRepository
 import com.example.navigationtest.data.datarepository.PostDataRepository
+import com.example.navigationtest.data.datarepository.TodoDataRepository
 import com.example.navigationtest.data.datarepository.UseSettingsDataRepository
 import com.example.navigationtest.domain.repository.CommentRepository
 import com.example.navigationtest.domain.repository.PostRepository
+import com.example.navigationtest.domain.repository.TodoRepository
 import com.example.navigationtest.domain.repository.UserSettingsRepository
 import dagger.Binds
 import dagger.Module
@@ -26,4 +28,8 @@ abstract class DataModule {
     @Binds
     @Singleton
     abstract fun bindUserSettingsRepository(useSettingsDataRepository: UseSettingsDataRepository): UserSettingsRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindTodoRepository(todoDataRepository: TodoDataRepository): TodoRepository
 }
