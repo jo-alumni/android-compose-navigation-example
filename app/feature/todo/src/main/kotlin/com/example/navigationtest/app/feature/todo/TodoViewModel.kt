@@ -21,7 +21,6 @@ internal class TodoViewModel @Inject constructor(
             todos = emptyList(),
         ),
     ) {
-        // intent {
         coroutineScope {
             launch {
                 todoRepository.getAll().collect { todos ->
@@ -31,6 +30,5 @@ internal class TodoViewModel @Inject constructor(
                 }
             }
         }
-        // }
     }
 }
