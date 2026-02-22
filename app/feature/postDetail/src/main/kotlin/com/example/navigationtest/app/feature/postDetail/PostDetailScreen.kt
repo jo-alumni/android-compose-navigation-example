@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -43,8 +44,9 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 internal fun TweetDetailRoot(
-    viewModel: PostDetailViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: PostDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.collectAsState()
     viewModel.collectSideEffect {
@@ -53,6 +55,7 @@ internal fun TweetDetailRoot(
         }
     }
     TweetDetailScreen(
+        modifier = modifier,
         uiState = uiState,
         navigateBack = navigateBack,
         onRefresh = viewModel::refresh,
