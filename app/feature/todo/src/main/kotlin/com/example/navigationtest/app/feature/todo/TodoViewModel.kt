@@ -45,6 +45,7 @@ internal class TodoViewModel @Inject constructor(
 
     fun registerTodo() {
         intent {
+            if (state.input.isBlank()) return@intent
             todoRepository.upsert(
                 Todo(
                     id = 0L,
