@@ -57,7 +57,7 @@ import com.example.navigationtest.app.core.ui.theme.AppTheme
 import com.example.navigationtest.app.core.util.render
 import com.example.navigationtest.app.feature.posts.contract.PostsEvent
 import com.example.navigationtest.app.feature.posts.contract.PostsState
-import com.example.navigationtest.domain.entity.Post
+import com.example.navigationtest.core.domain.entity.Post
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect

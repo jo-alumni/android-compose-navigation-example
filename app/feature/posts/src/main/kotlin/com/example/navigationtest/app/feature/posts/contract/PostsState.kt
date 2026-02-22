@@ -1,7 +1,7 @@
 package com.example.navigationtest.app.feature.posts.contract
 
 import com.example.navigationtest.app.core.util.State
-import com.example.navigationtest.domain.entity.Post
+import com.example.navigationtest.core.domain.entity.Post
 
 internal sealed interface PostsState : State {
     val posts: List<Post>

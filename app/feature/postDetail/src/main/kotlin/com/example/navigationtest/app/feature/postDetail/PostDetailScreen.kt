@@ -36,8 +36,8 @@ import com.example.navigationtest.app.core.ui.component.PostView
 import com.example.navigationtest.app.core.ui.theme.AppTheme
 import com.example.navigationtest.app.core.util.render
 import com.example.navigationtest.app.feature.postDetail.contract.PostDetailState
-import com.example.navigationtest.domain.entity.Comment
-import com.example.navigationtest.domain.entity.Post
+import com.example.navigationtest.core.domain.entity.Comment
+import com.example.navigationtest.core.domain.entity.Post
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

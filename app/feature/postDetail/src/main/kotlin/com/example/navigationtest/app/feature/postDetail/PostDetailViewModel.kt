@@ -6,8 +6,8 @@ import androidx.navigation.toRoute
 import com.example.navigationtest.app.feature.postDetail.contract.PostDetailEvent
 import com.example.navigationtest.app.feature.postDetail.contract.PostDetailState
 import com.example.navigationtest.app.feature.postDetail.navigation.PostDetailDetailDestination
-import com.example.navigationtest.domain.repository.CommentRepository
-import com.example.navigationtest.domain.repository.PostRepository
+import com.example.navigationtest.core.domain.repository.CommentRepository
+import com.example.navigationtest.core.domain.repository.PostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope

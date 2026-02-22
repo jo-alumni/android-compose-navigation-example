@@ -1,8 +1,8 @@
 package com.example.navigationtest.app.feature.postDetail.contract
 
 import com.example.navigationtest.app.core.util.State
-import com.example.navigationtest.domain.entity.Comment
-import com.example.navigationtest.domain.entity.Post
+import com.example.navigationtest.core.domain.entity.Comment
+import com.example.navigationtest.core.domain.entity.Post
 
 internal sealed interface PostDetailState : State {
     val id: Int

@@ -3,8 +3,8 @@ package com.example.navigationtest.app.feature.todo
 import androidx.lifecycle.ViewModel
 import com.example.navigationtest.app.feature.todo.contract.TodoEvent
 import com.example.navigationtest.app.feature.todo.contract.TodoState
-import com.example.navigationtest.domain.entity.Todo
-import com.example.navigationtest.domain.repository.TodoRepository
+import com.example.navigationtest.core.domain.entity.Todo
+import com.example.navigationtest.core.domain.repository.TodoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch

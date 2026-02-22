@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.example.navigationtest.app.core.ui.theme.AppTheme
-import com.example.navigationtest.domain.entity.Comment
+import com.example.navigationtest.core.domain.entity.Comment
 
 @Composable
 fun Comment(
