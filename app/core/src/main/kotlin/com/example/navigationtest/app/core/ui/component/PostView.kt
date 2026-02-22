@@ -40,7 +40,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.navigation_test.core.R
+import com.example.navigation_test.app.core.R
 import com.example.navigationtest.app.core.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
