@@ -20,6 +20,7 @@ internal class TodoViewModel @Inject constructor(
     override val container: Container<TodoState, TodoEvent> = container(
         initialState = TodoState(
             todos = emptyList(),
+            input = "",
         ),
     ) {
         coroutineScope {
@@ -28,20 +29,32 @@ internal class TodoViewModel @Inject constructor(
                     reduce {
                         state.copy(todos = todos)
                     }
+                    postSideEffect(TodoEvent.LoadTodos)
                 }
             }
         }
     }
 
-    fun registerTodo(content: String) {
+    fun changeInput(input: String) {
+        intent {
+            reduce {
+                state.copy(input = input)
+            }
+        }
+    }
+
+    fun registerTodo() {
         intent {
             todoRepository.upsert(
                 Todo(
                     id = 0L,
-                    content = content,
+                    content = state.input,
                     isDone = false,
                 ),
             )
+            reduce {
+                state.copy(input = "")
+            }
         }
     }
 }

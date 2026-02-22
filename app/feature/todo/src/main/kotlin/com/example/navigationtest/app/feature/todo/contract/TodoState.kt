@@ -5,4 +5,5 @@ import com.example.navigationtest.core.domain.entity.Todo
 
 data class TodoState(
     val todos: List<Todo>,
+    val input: String,
 ) : State
