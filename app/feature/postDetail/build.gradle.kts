@@ -12,7 +12,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.core)
-    implementation(projects.domain)
+    implementation(projects.core.common)
+    implementation(projects.core.domain)
     implementation(projects.app.core)
 }

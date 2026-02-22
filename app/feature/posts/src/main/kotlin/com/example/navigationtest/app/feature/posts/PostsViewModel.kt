@@ -3,7 +3,7 @@ package com.example.navigationtest.app.feature.posts
 import androidx.lifecycle.ViewModel
 import com.example.navigationtest.app.feature.posts.contract.PostsEvent
 import com.example.navigationtest.app.feature.posts.contract.PostsState
-import com.example.navigationtest.core.extension.toUnit
+import com.example.navigationtest.core.common.extension.toUnit
 import com.example.navigationtest.domain.repository.PostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container

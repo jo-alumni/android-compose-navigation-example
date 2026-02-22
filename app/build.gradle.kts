@@ -62,12 +62,12 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
     // core modules
-    implementation(projects.core)
-    implementation(projects.domain)
-    implementation(projects.data)
-    implementation(projects.api)
-    implementation(projects.local.datastore)
-    implementation(projects.local.database)
+    implementation(projects.core.common)
+    implementation(projects.core.domain)
+    implementation(projects.core.data)
+    implementation(projects.core.api)
+    implementation(projects.core.local.datastore)
+    implementation(projects.core.local.database)
 
     // app modules
     implementation(projects.app.core)
