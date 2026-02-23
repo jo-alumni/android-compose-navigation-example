@@ -84,13 +84,9 @@ private fun TodoScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             CenterAlignedTopAppBar(
-                title = {
-                    Text(stringResource(R.string.screen_title))
-                },
+                title = { Text(stringResource(R.string.screen_title)) },
                 navigationIcon = {
-                    IconButton(
-                        onClick = navigateBack,
-                    ) {
+                    IconButton(onClick = navigateBack) {
                         Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
                     }
                 },
