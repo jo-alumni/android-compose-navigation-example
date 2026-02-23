@@ -120,7 +120,7 @@ private fun TodoScreen(
                     modifier = Modifier.weight(1f),
                     value = uiState.input,
                     onValueChange = onInputValueChange,
-                    placeholder = { Text(text = "Todoを入力") },
+                    placeholder = { Text(text = stringResource(R.string.todo_placeholder)) },
                     keyboardActions = KeyboardActions(onSend = { registerTodo() }),
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
                 )
