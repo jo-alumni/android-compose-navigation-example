@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="success">Success</string>
-    <string name="error">Error</string>
+    <string name="screen_title">Todo</string>
 </resources>

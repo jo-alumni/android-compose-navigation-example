@@ -28,6 +28,8 @@ fun AppNavHost(
         tweetDetailScreen(
             navigateBack = navController::popBackStack,
         )
-        todoScreen()
+        todoScreen(
+            navigateBack = navController::popBackStack,
+        )
     }
 }

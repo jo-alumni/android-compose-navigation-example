@@ -12,10 +12,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object TodoDestination
 
-fun NavGraphBuilder.todoScreen() {
+fun NavGraphBuilder.todoScreen(
+    navigateBack: () -> Unit,
+) {
     composable<TodoDestination> {
         TodoRoot(
             modifier = Modifier.fillMaxSize(),
+            navigateBack = navigateBack,
         )
     }
 }
