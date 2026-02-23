@@ -19,18 +19,29 @@ internal class TodoViewModel @Inject constructor(
 ) : ViewModel(), ContainerHost<TodoState, TodoEvent> {
     override val container: Container<TodoState, TodoEvent> = container(
         initialState = TodoState(
-            todos = emptyList(),
+            doneTodos = emptyList(),
+            notDoneTodos = emptyList(),
             input = "",
         ),
     ) {
         coroutineScope {
             launch {
-                todoRepository.getAll().collect { todos ->
+                todoRepository.getDone().collect { todos ->
                     reduce {
-                        state.copy(todos = todos)
+                        state.copy(doneTodos = todos)
                     }
                     postSideEffect(TodoEvent.LoadTodos)
                 }
+            }
+
+            launch {
+                todoRepository.getNotDone().collect { todos ->
+                    reduce {
+                        state.copy(notDoneTodos = todos)
+                    }
+                    postSideEffect(TodoEvent.LoadTodos)
+                }
+
             }
         }
     }

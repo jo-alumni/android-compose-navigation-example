@@ -14,6 +14,12 @@ class TodoLocalProvider @Inject constructor(
     override fun getTodos(): Flow<List<TodoModel>> =
         todoDao.getAll().map { it.map(TodoMapper::toDataModel) }
 
+    override fun getDoneTodos(): Flow<List<TodoModel>> =
+        todoDao.getDoneAll().map { it.map(TodoMapper::toDataModel) }
+
+    override fun getNotDoneTodos(): Flow<List<TodoModel>> =
+        todoDao.getNotDoneAll().map { it.map(TodoMapper::toDataModel) }
+
     override fun getTodoById(id: Long): Flow<TodoModel?> =
         todoDao.getById(id).map { it?.let(TodoMapper::toDataModel) }
 

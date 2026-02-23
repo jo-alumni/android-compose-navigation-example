@@ -16,6 +16,16 @@ class TodoDataRepository @Inject constructor(
             .getTodos()
             .map { it.map(TodoMapper::toEntity) }
 
+    override fun getDone(): Flow<List<Todo>> =
+        todoLocalDataSource
+            .getDoneTodos()
+            .map { it.map(TodoMapper::toEntity) }
+
+    override fun getNotDone(): Flow<List<Todo>> =
+        todoLocalDataSource
+            .getNotDoneTodos()
+            .map { it.map(TodoMapper::toEntity) }
+
     override fun getById(id: Long): Flow<Todo?> =
         todoLocalDataSource
             .getTodoById(id)

@@ -100,7 +100,7 @@ private fun TodoScreen(
                 modifier = Modifier.weight(1f),
                 state = lazyListState,
             ) {
-                items(items = uiState.todos, key = { it.id }) {
+                items(items = uiState.notDoneTodos, key = { it.id }) {
                     Column(modifier = Modifier.fillMaxWidth()) {
                         PostView(
                             modifier = Modifier.fillMaxWidth(),
@@ -132,11 +132,24 @@ private fun TodoScreen(
 private class UiStateParameterProvider : PreviewParameterProvider<TodoState> {
     override val values: Sequence<TodoState> = sequenceOf(
         TodoState(
-            todos = emptyList(),
+            notDoneTodos = emptyList(),
+            doneTodos = emptyList(),
             input = "",
         ),
         TodoState(
-            todos = listOf(
+            notDoneTodos = listOf(
+                Todo(
+                    id = 1L,
+                    content = "Todo 1",
+                    isDone = false,
+                ),
+                Todo(
+                    id = 2L,
+                    content = "Todo 2",
+                    isDone = true,
+                ),
+            ),
+            doneTodos = listOf(
                 Todo(
                     id = 1L,
                     content = "Todo 1",
@@ -151,7 +164,8 @@ private class UiStateParameterProvider : PreviewParameterProvider<TodoState> {
             input = "",
         ),
         TodoState(
-            todos = emptyList(),
+            doneTodos = emptyList(),
+            notDoneTodos = emptyList(),
             input = "input value",
         ),
     )
