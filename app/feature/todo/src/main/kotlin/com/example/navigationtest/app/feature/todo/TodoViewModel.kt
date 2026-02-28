@@ -18,11 +18,7 @@ internal class TodoViewModel @Inject constructor(
     private val todoRepository: TodoRepository,
 ) : ViewModel(), ContainerHost<TodoState, TodoEvent> {
     override val container: Container<TodoState, TodoEvent> = container(
-        initialState = TodoState(
-            doneTodos = emptyList(),
-            notDoneTodos = emptyList(),
-            input = "",
-        ),
+        initialState = TodoState(),
     ) {
         coroutineScope {
             launch {
