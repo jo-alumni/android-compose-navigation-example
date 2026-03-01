@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.navigationTest.app)
@@ -9,14 +8,6 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
 }
-
-val localProperties = Properties().apply {
-    rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
-}
-
-fun Properties.getEnv(key: String, default: String? = null): String =
-    getProperty(key) ?: System.getenv(key) ?: default ?: throw IllegalArgumentException("Property '$key' not found in local.properties or environment variables")
-
 
 android {
     namespace = "com.example.navigation_test"
@@ -31,7 +22,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_BASE_URL", "\"${localProperties.getEnv("API_BASE_URL")}\"")
+        buildConfigField("String", "API_BASE_URL", "\"${getEnv("API_BASE_URL")}\"")
     }
 
     buildTypes {
