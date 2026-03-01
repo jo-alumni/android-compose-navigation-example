@@ -30,15 +30,12 @@ fun Project.libraryAndroidOptions(configure: LibraryAndroidComponentsExtension.(
 }
 
 fun Project.setupAndroid() {
-    android {
+    androidApplication {
         namespace?.let {
             this.namespace = it
         }
-        // compileSdkVersion(35)
 
         defaultConfig {
-            minSdk = 31
-            // targetSdk = 35
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
 
