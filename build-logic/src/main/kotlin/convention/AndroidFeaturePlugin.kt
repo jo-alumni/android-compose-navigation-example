@@ -20,7 +20,7 @@ class AndroidFeaturePlugin : Plugin<Project> {
             }
 
             dependencies {
-                libs.bundle("orbit").forEach { implementation(it) }
+                implementation(libs.bundle("orbit"))
             }
         }
     }
