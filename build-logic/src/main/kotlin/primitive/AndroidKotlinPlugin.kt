@@ -20,10 +20,10 @@ class AndroidKotlinPlugin : Plugin<Project> {
             }
 
             android {
-                compileSdkVersion(35)
+                compileSdkVersion(36)
                 defaultConfig {
                     minSdk = 31
-                    targetSdk = 35
+                    targetSdk = 36
                 }
                 kotlinAndroidOptions {
                     compilerOptions {
