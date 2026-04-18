@@ -40,7 +40,6 @@ import com.example.navigationtest.app.feature.postDetail.contract.PostDetailStat
 import com.example.navigationtest.core.domain.entity.Comment
 import com.example.navigationtest.core.domain.entity.Post
 import org.orbitmvi.orbit.compose.collectAsState
-import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 internal fun TweetDetailRoot(
@@ -49,11 +48,6 @@ internal fun TweetDetailRoot(
     viewModel: PostDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.collectAsState()
-    viewModel.collectSideEffect {
-        when (it) {
-            else -> {}
-        }
-    }
     TweetDetailScreen(
         modifier = modifier,
         uiState = uiState,
