@@ -43,7 +43,7 @@ class AndroidKotlinPlugin : Plugin<Project> {
 //                                "-opt-in=kotlin.RequiresOptIn",
                             // Enable experimental coroutines APIs, including Flow
 //                                 "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                            "-Xcontext-receivers",
+                            "-Xcontext-parameters",
                         ),
                     )
 
