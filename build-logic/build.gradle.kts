@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -18,8 +19,11 @@ repositories {
 
 // We are using JDK 17 for build process but we are targeting JDK 11 for the app
 // If we use jvmToolchain, we need to install JDK 11
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions.jvmTarget = "17"
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
+}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
