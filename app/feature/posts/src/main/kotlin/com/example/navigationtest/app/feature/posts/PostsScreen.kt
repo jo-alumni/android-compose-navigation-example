@@ -65,10 +65,10 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 internal fun PostsRoot(
-    drawerState: DrawerState,
     navigatePostDetail: (Int) -> Unit,
     navigateTodo: () -> Unit,
     modifier: Modifier = Modifier,
+    drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     viewModel: PostsViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.collectAsState()
