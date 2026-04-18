@@ -44,6 +44,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -73,13 +74,13 @@ internal fun PostsRoot(
 ) {
     val uiState by viewModel.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
-    val context = LocalContext.current
+    val resources = LocalResources.current
 
     viewModel.collectSideEffect {
         when (it) {
             is PostsEvent.ShowSnackbar -> when (it) {
-                PostsEvent.ShowSnackbar.Success -> snackbarHostState.showSnackbar(context.getString(R.string.success))
-                PostsEvent.ShowSnackbar.Error -> snackbarHostState.showSnackbar(context.getString(R.string.error))
+                PostsEvent.ShowSnackbar.Success -> snackbarHostState.showSnackbar(resources.getString(R.string.success))
+                PostsEvent.ShowSnackbar.Error -> snackbarHostState.showSnackbar(resources.getString(R.string.error))
             }
         }
     }
