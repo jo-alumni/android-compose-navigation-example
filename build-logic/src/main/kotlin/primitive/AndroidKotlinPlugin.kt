@@ -1,5 +1,7 @@
 package primitive
 
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -10,7 +12,6 @@ class AndroidKotlinPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply(libs.findPlugin("kotlin-android").get().get().pluginId)
                 apply(libs.findPlugin("kotlin-serialization").get().get().pluginId)
             }
             tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java) {
@@ -19,28 +20,34 @@ class AndroidKotlinPlugin : Plugin<Project> {
                 }
             }
 
-            android {
-                compileSdkVersion(36)
+            extensions.findByType(ApplicationExtension::class.java)?.apply {
+                compileSdk = 36
                 defaultConfig {
                     minSdk = 31
                     targetSdk = 36
                 }
-                kotlinAndroidOptions {
-                    compilerOptions {
-                        // Treat all Kotlin warnings as errors (disabled by default)
-                        allWarningsAsErrors.set(properties["warningsAsErrors"] as? Boolean ?: false)
+            }
+            extensions.findByType(LibraryExtension::class.java)?.apply {
+                compileSdk = 36
+                defaultConfig {
+                    minSdk = 31
+                }
+            }
+            kotlinAndroidOptions {
+                compilerOptions {
+                    // Treat all Kotlin warnings as errors (disabled by default)
+                    allWarningsAsErrors.set(properties["warningsAsErrors"] as? Boolean ?: false)
 
-                        freeCompilerArgs.addAll(
-                            listOf(
+                    freeCompilerArgs.addAll(
+                        listOf(
 //                                "-opt-in=kotlin.RequiresOptIn",
-                                // Enable experimental coroutines APIs, including Flow
+                            // Enable experimental coroutines APIs, including Flow
 //                                 "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                                "-Xcontext-receivers",
-                            ),
-                        )
+                            "-Xcontext-receivers",
+                        ),
+                    )
 
-                        jvmTarget.set(JVM_11)
-                    }
+                    jvmTarget.set(JVM_11)
                 }
             }
             dependencies {

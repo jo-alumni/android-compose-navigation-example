@@ -1,24 +1,36 @@
 package primitive
 
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
-import com.android.build.gradle.LibraryExtension
-import com.android.build.gradle.TestedExtension
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
-fun Project.androidApplication(action: BaseAppModuleExtension.() -> Unit) {
-    extensions.configure(action)
+fun Project.androidApplication(action: ApplicationExtension.() -> Unit) {
+    extensions.configure<ApplicationExtension>(action)
 }
 
 fun Project.androidLibrary(action: LibraryExtension.() -> Unit) {
-    extensions.configure(action)
+    extensions.configure<LibraryExtension>(action)
 }
 
-fun Project.android(action: TestedExtension.() -> Unit) {
-    extensions.configure(action)
+fun Project.android(action: CommonExtension.() -> Unit) {
+    val app = extensions.findByType(ApplicationExtension::class.java)
+    if (app != null) {
+        action(app)
+        return
+    }
+
+    val library = extensions.findByType(LibraryExtension::class.java)
+    if (library != null) {
+        action(library)
+        return
+    }
+
+    error("Android extension is not registered in project: $path")
 }
 
 fun Project.kotlinAndroidOptions(configure: KotlinAndroidProjectExtension.() -> Unit) {
