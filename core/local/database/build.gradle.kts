@@ -4,6 +4,10 @@ plugins {
     alias(libs.plugins.navigationTest.hilt)
 }
 
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 android {
     namespace = "com.example.navigation_test.local.database"
 
