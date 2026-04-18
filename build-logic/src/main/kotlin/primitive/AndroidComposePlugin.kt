@@ -14,9 +14,6 @@ class AndroidComposePlugin : Plugin<Project> {
             android {
                 buildFeatures.compose = true
             }
-            composeCompiler {
-                enableStrongSkippingMode.set(true)
-            }
             dependencies {
                 implementation(platform(libs.library("androidx-compose-bom")))
                 implementation(libs.library("androidx-core-ktx"))
