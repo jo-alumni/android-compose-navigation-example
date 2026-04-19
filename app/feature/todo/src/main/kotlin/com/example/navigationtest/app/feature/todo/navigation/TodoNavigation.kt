@@ -10,7 +10,7 @@ import com.example.navigationtest.app.feature.todo.TodoRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object TodoDestination
+internal data object TodoDestination
 
 fun NavGraphBuilder.todoScreen(
     navigateBack: () -> Unit,
