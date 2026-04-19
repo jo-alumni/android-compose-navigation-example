@@ -3,7 +3,6 @@ package com.example.navigationtest.core.local.datastore.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
-import androidx.datastore.dataStoreFile
 import com.example.navigationtest.core.data.datasource.UserSettingsLocalDataSource
 import com.example.navigationtest.core.local.datastore.model.UserSettingsDatastoreModel
 import com.example.navigationtest.core.local.datastore.model.UserSettingsSerializer
@@ -25,9 +24,10 @@ object LocalProvideModule {
     @Singleton
     fun provideUserPreferencesDataStore(
         @ApplicationContext context: Context,
-    ): DataStore<UserSettingsDatastoreModel> = DataStoreFactory.create(
+    ): DataStore<UserSettingsDatastoreModel> = DataStoreFactory.createInDeviceProtectedStorage(
+        context = context,
+        fileName = USER_SETTINGS,
         serializer = UserSettingsSerializer,
-        produceFile = { context.dataStoreFile(USER_SETTINGS) },
     )
 }
 
