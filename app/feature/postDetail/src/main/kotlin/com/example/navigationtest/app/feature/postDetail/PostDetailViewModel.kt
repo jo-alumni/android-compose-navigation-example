@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
 import com.example.navigationtest.app.feature.postDetail.contract.PostDetailEvent
 import com.example.navigationtest.app.feature.postDetail.contract.PostDetailState
-import com.example.navigationtest.app.feature.postDetail.navigation.PostDetailDetailDestination
+import com.example.navigationtest.app.feature.postDetail.navigation.PostDetailDestination
 import com.example.navigationtest.core.domain.repository.CommentRepository
 import com.example.navigationtest.core.domain.repository.PostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +23,7 @@ internal class PostDetailViewModel @Inject constructor(
 ) : ViewModel(), ContainerHost<PostDetailState, PostDetailEvent> {
     override val container = container<PostDetailState, PostDetailEvent>(
         initialState = PostDetailState.Loading(
-            id = savedStateHandle.toRoute<PostDetailDetailDestination>().id,
+            id = savedStateHandle.toRoute<PostDetailDestination>().id,
         ),
     ) {
         init()
