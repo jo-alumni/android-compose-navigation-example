@@ -16,27 +16,25 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object LocalProvideModule {
-    @Provides
-    @Singleton
-    fun provideAppDatabase(
-        @ApplicationContext context: Context,
-    ): AppDatabase = Room.databaseBuilder<AppDatabase>(
-        context = context,
-        name = "app_database",
-    ).build()
-
-    @Provides
-    @Singleton
-    fun provideTodoDao(
-        appDatabase: AppDatabase,
-    ): TodoDao = appDatabase.todoDao()
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class LocalBindModule {
+abstract class LocalModule {
     @Binds
     @Singleton
     abstract fun bindTodoLocalDataSource(provider: TodoLocalProvider): TodoLocalDataSource
+
+    companion object {
+        @Provides
+        @Singleton
+        fun provideAppDatabase(
+            @ApplicationContext context: Context,
+        ): AppDatabase = Room.databaseBuilder<AppDatabase>(
+            context = context,
+            name = "app_database",
+        ).build()
+
+        @Provides
+        @Singleton
+        fun provideTodoDao(
+            appDatabase: AppDatabase,
+        ): TodoDao = appDatabase.todoDao()
+    }
 }

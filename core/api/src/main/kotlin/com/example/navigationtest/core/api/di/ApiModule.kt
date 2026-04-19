@@ -14,16 +14,14 @@ import jakarta.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiProvideModule {
-    @Provides
-    @Singleton
-    fun provideHttpClient(@ApiBaseUrl baseUrl: String): HttpClient = createHttpClient(baseUrl)
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class ApiBindModule {
+abstract class ApiModule {
     @Binds
     @Singleton
     abstract fun bindPostApiDataSource(appApiDataProvider: AppApiDataProvider): AppApiDataSource
+
+    companion object {
+        @Provides
+        @Singleton
+        fun provideHttpClient(@ApiBaseUrl baseUrl: String): HttpClient = createHttpClient(baseUrl)
+    }
 }

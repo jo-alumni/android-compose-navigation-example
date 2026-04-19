@@ -19,22 +19,20 @@ private const val USER_SETTINGS = "user_settings.json"
 
 @Module
 @InstallIn(SingletonComponent::class)
-object LocalProvideModule {
-    @Provides
-    @Singleton
-    fun provideUserPreferencesDataStore(
-        @ApplicationContext context: Context,
-    ): DataStore<UserSettingsDatastoreModel> = DataStoreFactory.createInDeviceProtectedStorage(
-        context = context,
-        fileName = USER_SETTINGS,
-        serializer = UserSettingsSerializer,
-    )
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class LocalBindModule {
+abstract class LocalModule {
     @Binds
     @Singleton
     abstract fun bindUserSettingsLocalProvider(provider: UserSettingsLocalProvider): UserSettingsLocalDataSource
+
+    companion object {
+        @Provides
+        @Singleton
+        fun provideUserPreferencesDataStore(
+            @ApplicationContext context: Context,
+        ): DataStore<UserSettingsDatastoreModel> = DataStoreFactory.createInDeviceProtectedStorage(
+            context = context,
+            fileName = USER_SETTINGS,
+            serializer = UserSettingsSerializer,
+        )
+    }
 }
