@@ -8,14 +8,14 @@ import com.example.navigationtest.app.feature.postDetail.TweetDetailRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class PostDetailDetailDestination(val id: Int)
+data class PostDetailDestination(val id: Int)
 
-fun NavGraphBuilder.tweetDetailScreen(
+fun NavGraphBuilder.postDetailScreen(
     navigateBack: () -> Unit,
 ) {
-    composable<PostDetailDetailDestination> {
+    composable<PostDetailDestination> {
         TweetDetailRoot(navigateBack = navigateBack)
     }
 }
 
-fun NavController.navigateToPostDetail(id: Int, navOptions: NavOptions? = null) = navigate(PostDetailDetailDestination(id), navOptions)
+fun NavController.navigateToPostDetail(id: Int, navOptions: NavOptions? = null) = navigate(PostDetailDestination(id), navOptions)

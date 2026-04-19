@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object PostsDestination
 
-fun NavGraphBuilder.homeScreen(
+fun NavGraphBuilder.postsScreen(
     navigatePostDetail: (Int) -> Unit,
     navigateTodo: () -> Unit,
 ) {
