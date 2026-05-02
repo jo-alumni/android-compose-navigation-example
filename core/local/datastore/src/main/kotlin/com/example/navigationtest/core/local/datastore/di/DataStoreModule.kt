@@ -19,7 +19,7 @@ private const val USER_SETTINGS = "user_settings.json"
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class LocalModule {
+abstract class DataStoreModule {
     @Binds
     @Singleton
     abstract fun bindUserSettingsLocalProvider(provider: UserSettingsLocalProvider): UserSettingsLocalDataSource

@@ -16,7 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class LocalModule {
+abstract class DatabaseModule {
     @Binds
     @Singleton
     abstract fun bindTodoLocalDataSource(provider: TodoLocalProvider): TodoLocalDataSource
