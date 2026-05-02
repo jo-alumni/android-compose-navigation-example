@@ -5,22 +5,30 @@ import com.example.navigationtest.core.data.mapper.api.PostApiMapper
 import com.example.navigationtest.core.domain.entity.Post
 import com.example.navigationtest.core.domain.repository.PostRepository
 import jakarta.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class PostDataRepository @Inject constructor(
     private val appApiDataSource: AppApiDataSource,
 ) : PostRepository {
-    override suspend fun getPosts(page: Int, limit: Int): List<Post> =
+    override suspend fun getPosts(
+        page: Int,
+        limit: Int,
+    ): List<Post> = withContext(Dispatchers.IO) {
         appApiDataSource
             .getPosts(page, limit)
             .map(PostApiMapper::toEntity)
+    }
 
-    override suspend fun getPost(postId: Int): Post =
+    override suspend fun getPost(postId: Int): Post = withContext(Dispatchers.IO) {
         appApiDataSource
             .getPost(postId)
             .let(PostApiMapper::toEntity)
+    }
 
-    override suspend fun deletePost(postId: Int) =
+    override suspend fun deletePost(postId: Int) = withContext(Dispatchers.IO) {
         appApiDataSource.deletePost(postId)
+    }
 
     override suspend fun createPost() = TODO("postApiDataSource.createPost()")
     override suspend fun patchPost() = TODO("postApiDataSource.patchPost()")
