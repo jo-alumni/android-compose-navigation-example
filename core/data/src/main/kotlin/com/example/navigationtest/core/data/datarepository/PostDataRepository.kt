@@ -1,5 +1,6 @@
 package com.example.navigationtest.core.data.datarepository
 
+import com.example.navigationtest.core.common.di.DefaultDispatcher
 import com.example.navigationtest.core.common.di.IoDispatcher
 import com.example.navigationtest.core.data.datasource.AppApiDataSource
 import com.example.navigationtest.core.data.mapper.api.PostApiMapper
@@ -12,14 +13,18 @@ import kotlinx.coroutines.withContext
 class PostDataRepository @Inject constructor(
     private val appApiDataSource: AppApiDataSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) : PostRepository {
     override suspend fun getPosts(
         page: Int,
         limit: Int,
-    ): List<Post> = withContext(ioDispatcher) {
-        appApiDataSource
-            .getPosts(page, limit)
-            .map(PostApiMapper::toEntity)
+    ): List<Post> {
+        val response = withContext(ioDispatcher) {
+            appApiDataSource.getPosts(page, limit)
+        }
+        return withContext(defaultDispatcher) {
+            response.map(PostApiMapper::toEntity)
+        }
     }
 
     override suspend fun getPost(postId: Int): Post = withContext(ioDispatcher) {

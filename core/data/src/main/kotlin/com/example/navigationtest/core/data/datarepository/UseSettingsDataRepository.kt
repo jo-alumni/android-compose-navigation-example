@@ -1,5 +1,6 @@
 package com.example.navigationtest.core.data.datarepository
 
+import com.example.navigationtest.core.common.di.DefaultDispatcher
 import com.example.navigationtest.core.common.di.IoDispatcher
 import com.example.navigationtest.core.data.datasource.UserSettingsLocalDataSource
 import com.example.navigationtest.core.data.mapper.local.UserSettingsMapper
@@ -15,12 +16,14 @@ import javax.inject.Inject
 class UseSettingsDataRepository @Inject constructor(
     private val userSettingsLocalDataSource: UserSettingsLocalDataSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) : UserSettingsRepository {
     override fun getUserSettings(): Flow<UserSettings> =
         userSettingsLocalDataSource
             .getUserSettings()
-            .map(UserSettingsMapper::toEntity)
             .flowOn(ioDispatcher)
+            .map(UserSettingsMapper::toEntity)
+            .flowOn(defaultDispatcher)
 
     override suspend fun setUserSettings(userSettings: UserSettings) = withContext(ioDispatcher) {
         userSettingsLocalDataSource.setUserSettings(

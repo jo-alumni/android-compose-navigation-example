@@ -1,5 +1,6 @@
 package com.example.navigationtest.core.data.datarepository
 
+import com.example.navigationtest.core.common.di.DefaultDispatcher
 import com.example.navigationtest.core.common.di.IoDispatcher
 import com.example.navigationtest.core.data.datasource.TodoLocalDataSource
 import com.example.navigationtest.core.data.mapper.local.TodoMapper
@@ -15,35 +16,39 @@ import javax.inject.Inject
 class TodoDataRepository @Inject constructor(
     private val todoLocalDataSource: TodoLocalDataSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) : TodoRepository {
     override fun getAll(): Flow<List<Todo>> =
         todoLocalDataSource
             .getTodos()
-            .map { it.map(TodoMapper::toEntity) }
             .flowOn(ioDispatcher)
+            .map { it.map(TodoMapper::toEntity) }
+            .flowOn(defaultDispatcher)
 
     override fun getDone(): Flow<List<Todo>> =
         todoLocalDataSource
             .getDoneTodos()
-            .map { it.map(TodoMapper::toEntity) }
             .flowOn(ioDispatcher)
+            .map { it.map(TodoMapper::toEntity) }
+            .flowOn(defaultDispatcher)
 
     override fun getNotDone(): Flow<List<Todo>> =
         todoLocalDataSource
             .getNotDoneTodos()
-            .map { it.map(TodoMapper::toEntity) }
             .flowOn(ioDispatcher)
+            .map { it.map(TodoMapper::toEntity) }
+            .flowOn(defaultDispatcher)
 
     override fun getById(id: Long): Flow<Todo?> =
         todoLocalDataSource
             .getTodoById(id)
-            .map { it?.let(TodoMapper::toEntity) }
             .flowOn(ioDispatcher)
+            .map { it?.let(TodoMapper::toEntity) }
+            .flowOn(defaultDispatcher)
 
     override suspend fun upsert(todo: Todo) = withContext(ioDispatcher) {
-        todoLocalDataSource
-            .upsertTodo(
-                todo.let(TodoMapper::toDataModel),
-            )
+        todoLocalDataSource.upsertTodo(
+            todo.let(TodoMapper::toDataModel),
+        )
     }
 }
